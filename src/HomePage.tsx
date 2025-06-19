@@ -2,12 +2,12 @@ import bgVideo from "./assets/bg.mp4";
 import { Footer } from "./components/Footer/footer";
 import Manifesto from "./components/ManifestoPage/manifestoPage";
 import { Navbar } from "./components/Navbar/navbar";
-import {LogoSlider} from "./components/LogoSlider/logoSlider"
+import { LogoSlider } from "./components/LogoSlider/logoSlider";
 const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <div className="fixed w-full -z-10 h-screen overflow-x-hidden">
+      <div className="fixed w-full -z-10 h-screen overflow-x-hidden ">
         <video
           autoPlay
           loop
@@ -37,10 +37,11 @@ const HomePage = () => {
               100+
             </span>
           </h1>
-        <div className="pt-20">
-          <LogoSlider/>
+          <div className="absolute bottom-0  bg-purple-800/30 backdrop-blur-sm ">
+            <LogoSlider />
+          </div>
         </div>
-        </div>
+
         <div>
           <Manifesto />
         </div>
