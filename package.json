@@ -14,6 +14,7 @@
     "lucide-react": "^0.344.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-infinite-logo-slider": "^1.1.4",
     "vite-tsconfig-paths": "^5.1.4"
   },
   "devDependencies": {

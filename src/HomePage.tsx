@@ -1,7 +1,7 @@
 import bgVideo from "./assets/bg.mp4";
 import { Footer } from "./components/Footer/footer";
 import { Navbar } from "./components/Navbar/navbar";
-
+import {LogoSlider} from "./components/LogoSlider/logoSlider"
 const HomePage = () => {
   return (
     <div>
@@ -36,6 +36,9 @@ const HomePage = () => {
               100+
             </span>
           </h1>
+        <div className="pt-20">
+          <LogoSlider/>
+        </div>
         </div>
         <Footer />
       </div>
