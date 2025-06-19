@@ -1,11 +1,5 @@
-import { Footer } from "./components/Footer/footer";
+import Home from "./HomePage";
 
-function App() {
-  return (
-    <>
-      <Footer />
-    </>
-  );
+export default function App() {
+  return <Home />;
 }
-
-export default App;
