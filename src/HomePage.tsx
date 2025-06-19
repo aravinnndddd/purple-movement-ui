@@ -1,5 +1,6 @@
 import bgVideo from "./assets/bg.mp4";
 import { Footer } from "./components/Footer/footer";
+import Manifesto from "./components/ManifestoPage/manifestoPage";
 import { Navbar } from "./components/Navbar/navbar";
 
 const HomePage = () => {
@@ -37,6 +38,10 @@ const HomePage = () => {
             </span>
           </h1>
         </div>
+        <div>
+          <Manifesto />
+        </div>
+
         <Footer />
       </div>
     </div>
