@@ -3,6 +3,7 @@ import { Footer } from "./components/Footer/footer";
 import Manifesto from "./components/ManifestoPage/manifestoPage";
 import { Navbar } from "./components/Navbar/navbar";
 import { LogoSlider } from "./components/LogoSlider/logoSlider";
+import { Muverse } from "./components/muVresePage/muVersePage";
 const HomePage = () => {
   return (
     <div>
@@ -37,12 +38,13 @@ const HomePage = () => {
               100+
             </span>
           </h1>
-          <div className="absolute bottom-0  bg-purple-800/30 backdrop-blur-sm ">
+          <div className="absolute bottom-0  bg-purple-800/30 backdrop-blur-sm  ">
             <LogoSlider />
           </div>
         </div>
 
         <div>
+          <Muverse/>
           <Manifesto />
         </div>
 
