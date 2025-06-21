@@ -6,7 +6,7 @@ export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="w-full fixed top-0 z-5  backdrop-blur-md shadow-md">
+    <nav className="w-full fixed top-0 z-50 bg-black/5 backdrop-blur-md">
       <div className="max-w-[1440px] mx-auto flex items-center justify-between px-4 py-8 h-[5vh]">
         {/* Logo */}
         <div className="">
@@ -14,7 +14,7 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop Nav */}
-        <div className="hidden md:flex items-center gap-10 border border-purple-500 px-10 py-2 rounded-[20px]">
+        <div className="hidden md:flex items-center gap-10 border border-purple-500 px-10 py-2 rounded-[20px] backdrop-blur-sm">
           <a href="#home" className="text-purple-600 font-bold">
             Home
           </a>
@@ -50,7 +50,7 @@ export const Navbar = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden flex flex-col   items-center gap-3 pb-4  ">
+        <div className="md:hidden flex flex-col items-center gap-3 pb-4 bg-black/20 backdrop-blur-sm">
           <a
             href="#home"
             className="border-4 rounded-[20px] px-4 border-purple-500 text-purple-600 font-bold"
