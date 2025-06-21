@@ -1,5 +1,5 @@
 import { useState } from "react";
-import logo from "../../assets/images/logo.png";
+import logo from "../../assets/logos/logo_pm.png";
 import { Menu, X } from "lucide-react"; // optional icons
 
 export const Navbar = () => {
@@ -14,24 +14,41 @@ export const Navbar = () => {
         </div>
 
         {/* Desktop Nav */}
+
         <div className="hidden md:flex items-center gap-10 border border-purple-500 px-10 py-2 rounded-[20px] backdrop-blur-sm">
           <a href="#home" className="text-purple-600 font-bold">
+
+        <div className="hidden md:flex items-center gap-10 border border-purple-500 px-10 py-2 rounded-[20px]">
+          <a
+            href="#home"
+            className="text-purple-600 font-bold hover:text-white transition-all ease duration-300"
+          >
+
             Home
           </a>
-          <a href="#about" className="text-purple-600 font-bold">
+          <a
+            href="#about"
+            className="text-purple-600 font-bold hover:text-white transition-all ease duration-300"
+          >
             About
           </a>
-          <a href="#verse" className="text-purple-600 font-bold">
+          <a
+            href="#verse"
+            className="text-purple-600 font-bold hover:text-white transition-all ease duration-300"
+          >
             μVerse
           </a>
-          <a href="#vision" className="text-purple-600 font-bold">
+          <a
+            href="#vision"
+            className="text-purple-600 font-bold hover:text-white transition-all ease duration-300"
+          >
             Vision
           </a>
         </div>
 
         {/* Join Us button (visible on all sizes) */}
         <div className="hidden md:block">
-          <button className="bg-purple-600 text-white px-5 py-2 rounded-[20px]">
+          <button className="bg-purple-600 text-white px-5 font-bold border-2 border-purple-600 hover:border-2 hover:bg-transparent ease transition-all duration-400 py-2 rounded-[20px]">
             Join Us
           </button>
         </div>

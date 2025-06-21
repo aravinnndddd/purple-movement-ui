@@ -12,22 +12,46 @@ export const LogoSlider = () => {
       blurBorderColor={"#fff"}
     >
       <Slider.Slide>
-        <img src={mulearn} alt="mulearn" className="w-32" />
+        <img
+          src={mulearn}
+          alt="mulearn"
+          className="w-32 grayscale brightness-200"
+        />
       </Slider.Slide>
       <Slider.Slide>
-        <img src={keralaStartup} alt="keralaStartup" className="w-32" />
+        <img
+          src={keralaStartup}
+          alt="keralaStartup"
+          className="w-32 grayscale brightness-200"
+        />
       </Slider.Slide>
       <Slider.Slide>
-        <img src={tinkerhub} alt="tinkerhub" className="w-32" />
+        <img
+          src={tinkerhub}
+          alt="tinkerhub"
+          className="w-32 grayscale brightness-200"
+        />
       </Slider.Slide>
       <Slider.Slide>
-        <img src={mulearn} alt="mulearn" className="w-32" />
+        <img
+          src={mulearn}
+          alt="mulearn"
+          className="w-32 grayscale brightness-200"
+        />
       </Slider.Slide>
       <Slider.Slide>
-        <img src={keralaStartup} alt="keralaStartup" className="w-32" />
+        <img
+          src={keralaStartup}
+          alt="keralaStartup"
+          className="w-32 grayscale brightness-200"
+        />
       </Slider.Slide>
       <Slider.Slide>
-        <img src={tinkerhub} alt="tinkerhub" className="w-32" />
+        <img
+          src={tinkerhub}
+          alt="tinkerhub"
+          className="w-32 grayscale brightness-200"
+        />
       </Slider.Slide>
     </Slider>
   );
