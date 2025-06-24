@@ -5,7 +5,7 @@ import { Navbar } from "./components/Navbar/navbar";
 import { LogoSlider } from "./components/LogoSlider/logoSlider";
 import { Muverse } from "./components/muVresePage/muVersePage";
 import { WhyNow } from "./components/Whynow/whyNow";
-
+import { VideoSection } from "./components/VideoSection/VideoSection";
 const HomePage = () => {
   return (
     <div>
@@ -45,6 +45,9 @@ const HomePage = () => {
           <div className="absolute bottom-0   bg-purple-800/30 backdrop-blur-sm  ">
             <LogoSlider />
           </div>
+        </div>
+        <div className="relative">
+          <VideoSection />
         </div>
         <div className="relative">
           <WhyNow />
