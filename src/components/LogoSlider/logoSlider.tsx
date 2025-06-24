@@ -15,42 +15,42 @@ export const LogoSlider = () => {
         <img
           src={mulearn}
           alt="mulearn"
-          className="w-32 grayscale brightness-200"
+          className="lg:w-32 w-20  grayscale brightness-200"
         />
       </Slider.Slide>
       <Slider.Slide>
         <img
           src={keralaStartup}
           alt="keralaStartup"
-          className="w-32 grayscale brightness-200"
+          className="lg:w-32 w-20 grayscale brightness-200"
         />
       </Slider.Slide>
       <Slider.Slide>
         <img
           src={tinkerhub}
           alt="tinkerhub"
-          className="w-32 grayscale brightness-200"
+          className="lg:w-32  w-20 grayscale brightness-200"
         />
       </Slider.Slide>
       <Slider.Slide>
         <img
           src={mulearn}
           alt="mulearn"
-          className="w-32 grayscale brightness-200"
+          className="lg:w-32  w-20  grayscale brightness-200"
         />
       </Slider.Slide>
       <Slider.Slide>
         <img
           src={keralaStartup}
           alt="keralaStartup"
-          className="w-32 grayscale brightness-200"
+          className="lg:w-32  w-20  grayscale brightness-200"
         />
       </Slider.Slide>
       <Slider.Slide>
         <img
           src={tinkerhub}
           alt="tinkerhub"
-          className="w-32 grayscale brightness-200"
+          className="lg:w-32  w-20  grayscale brightness-200"
         />
       </Slider.Slide>
     </Slider>

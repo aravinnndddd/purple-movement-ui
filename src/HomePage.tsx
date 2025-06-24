@@ -26,28 +26,28 @@ const HomePage = () => {
         <div className="p-[250px] left-[-90px] bottom-[10px] absolute bg-purple-600 bg-opacity-40 rounded-full blur-[100px]"></div>
 
         <div className="relative z-10 h-[100vh]  flex flex-col items-center justify-center  ">
-          <h1 className="bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none text-[2.5rem] md:text-[6rem] text-center font-bold">
+          <h1 className="bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none md:text-[3rem] text-center font-bold text-[2rem]  lg:text-[6rem] ">
             We Are The <br />
-            <span className="flex flex-row">
+            <span className="flex flex-row ">
               <p>Purple Movement</p>
             </span>
           </h1>
-          <p className="text-white md:text-[1.5rem] text-[1rem] p-3 mt-8 text-center ">
+          <p className="text-white lg:text-[1.5rem] text-[1rem] p-3 mt-8 text-center ">
             Rebuilding how India learns-Beyond Borders, Beyond Syllabus, Beyond
             Gatekeepers, Beyond Paywalls
           </p>
-          <h1 className="text-white text-[2rem] text-center font-semibold md:mt-10">
+          <h1 className="text-white text-[2rem] text-center font-semibold lg:mt-10">
             Pledges:{" "}
             <span className="text-[2.5rem] font-bold text-purple-300">
               100+
             </span>
           </h1>
-          <div className="absolute bottom-0  bg-purple-800/30 backdrop-blur-sm  ">
+          <div className="absolute bottom-0   bg-purple-800/30 backdrop-blur-sm  ">
             <LogoSlider />
           </div>
         </div>
         <div className="relative">
-          <WhyNow/>
+          <WhyNow />
         </div>
         <div className="relative">
           <div className="p-[20px] w-[20%] h-[20%] rounded-full  top-1/2 left-1/2 transform -translate-x-1/2 absolute bg-purple-700 blur-[100px]"></div>
