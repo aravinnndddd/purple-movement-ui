@@ -1,4 +1,4 @@
-import { SVGComponent } from "../SVGComponent/FlowDiagram";
+import { SVGComponent } from "../SVGComponents/FlowDiagram";
 
 export function Muverse() {
   return (
