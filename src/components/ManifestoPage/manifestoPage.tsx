@@ -1,10 +1,14 @@
 import clsx from "clsx";
 import char1 from "../../assets/images/hmmm.png";
+import Cube3D from "./cube";
 
 const Manifesto = () => {
   return (
     <div className="flex flex-col min-h-screen w-full text-white px-4 relative sm:py-16 ]">
       <div className="md:pl-24">
+        <div className="hidden md:hidden lg:visible lg:absolute  lg:right-[150px] lg:flex ">
+          <Cube3D />
+        </div>
         <div className="hidden md:hidden lg:visible lg:absolute lg:right-50 lg:flex lg:justify-end"></div>
 
         <Title />
@@ -20,7 +24,7 @@ const Manifesto = () => {
         </Box>
       </div>
 
-      <div className="w-full flex justify-end sm:absolute max-w-[1360px]  bottom-0">
+      <div className="w-full flex justify-end sm:absolute max-w-[1360px] right-0  bottom-0">
         <img src={char1} className="w-[250px] md:w-[30%] h-full " />
       </div>
     </div>
