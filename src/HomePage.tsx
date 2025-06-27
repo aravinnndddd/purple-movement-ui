@@ -7,6 +7,7 @@ import { Muverse } from "./components/muVresePage/muVersePage";
 import { WhyNow } from "./components/Whynow/whyNow";
 import { VideoSection } from "./components/VideoSection/VideoSection";
 import { Navbar } from "./components/Navbar/navbar";
+import {VisionAndImpact} from "./components/VisionAndImpact/vissionAndImpact";
 
 const HomePage = () => {
   return (
@@ -59,7 +60,9 @@ const HomePage = () => {
           <div className="p-[20px] w-[20%] h-[20%] rounded-full  top-1/2 left-1/2 transform -translate-x-1/2 absolute bg-purple-700 blur-[100px]"></div>
           <Muverse />
         </div>
-
+        <div className="relative">
+          <VisionAndImpact />
+        </div>
         <div className="relative">
           <div className="p-[20px] w-full h-[100vh] absolute bg-gradient-to-br from-purple-700/40 to-transparent blur-[100px] "></div>
           <Manifesto />
