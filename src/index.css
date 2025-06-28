@@ -6,7 +6,9 @@
   font-family: Montesrrat;
   src: url("../src/assets/fonts/montserrat/Montserrat-Bold.ttf");
 }
-
+html {
+  scroll-behavior: smooth;
+}
 * {
   margin: 0;
   padding: 0;

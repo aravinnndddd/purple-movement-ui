@@ -7,7 +7,7 @@ import { Muverse } from "./components/muVresePage/muVersePage";
 import { WhyNow } from "./components/Whynow/whyNow";
 import { VideoSection } from "./components/VideoSection/VideoSection";
 import { Navbar } from "./components/Navbar/navbar";
-import {VisionAndImpact} from "./components/VisionAndImpact/vissionAndImpact";
+import { VisionAndImpact } from "./components/VisionAndImpact/vissionAndImpact";
 
 const HomePage = () => {
   return (
@@ -29,7 +29,10 @@ const HomePage = () => {
 
         <div className="p-[250px] left-[-90px] bottom-[10px] absolute bg-purple-600 bg-opacity-40 rounded-full blur-[100px]"></div>
 
-        <div className="relative z-10 h-[100vh]  flex flex-col items-center justify-center" id="home">
+        <div
+          className="relative z-10 h-[100vh]  flex flex-col items-center justify-center"
+          id="home"
+        >
           <h1 className="bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none md:text-[3rem] text-center font-bold text-[2rem]  lg:text-[6rem] ">
             We Are The <br />
             <span className="flex flex-row ">
