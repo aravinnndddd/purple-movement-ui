@@ -91,10 +91,7 @@ export const Navbar = () => {
           >
             Vision
           </a>
-          <button
-            className="md:hidden bg-purple-600 text-white px-10 py-2 rounded-[20px]"
-            onClick={() => setIsOpen(!isOpen)}
-          >
+          <button className="md:hidden bg-purple-600 text-white px-10 py-2 rounded-[20px]" onClick={() => setIsOpen(!isOpen)}>
             Join Us
           </button>
         </div>
