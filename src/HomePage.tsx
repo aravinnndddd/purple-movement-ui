@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <div className="fixed w-full -z-10 h-screen overflow-x-hidden ">
+      <div className="fixed w-full -z-10 h-screen overflow-x-hidden">
         <video
           autoPlay
           loop
@@ -63,7 +63,7 @@ const HomePage = () => {
         <div className="relative" id="vision">
           <VisionAndImpact />
         </div>
-        <div className="relative">
+        <div className="relative" id="manifesto">
           <div className="p-[20px] w-full h-[100vh] absolute bg-gradient-to-br from-purple-700/40 to-transparent blur-[100px] "></div>
           <Manifesto />
           <div className="text-white items-center flex text-center flex-col h-[50vh] justify-center bg-purple-950/10 md:rounded-[50px] backdrop-blur-md md:w-[90%] md:m-auto mb-10">
