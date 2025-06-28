@@ -29,7 +29,7 @@ const HomePage = () => {
 
         <div className="p-[250px] left-[-90px] bottom-[10px] absolute bg-purple-600 bg-opacity-40 rounded-full blur-[100px]"></div>
 
-        <div className="relative z-10 h-[100vh]  flex flex-col items-center justify-center  ">
+        <div className="relative z-10 h-[100vh]  flex flex-col items-center justify-center" id="home">
           <h1 className="bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none md:text-[3rem] text-center font-bold text-[2rem]  lg:text-[6rem] ">
             We Are The <br />
             <span className="flex flex-row ">
@@ -50,17 +50,17 @@ const HomePage = () => {
             <LogoSlider />
           </div>
         </div>
-        <div className="relative">
+        <div className="relative" id="about">
           <VideoSection />
         </div>
         <div className="relative">
           <WhyNow />
         </div>
-        <div className="relative">
+        <div className="relative" id="verse">
           <div className="p-[20px] w-[20%] h-[20%] rounded-full  top-1/2 left-1/2 transform -translate-x-1/2 absolute bg-purple-700 blur-[100px]"></div>
           <Muverse />
         </div>
-        <div className="relative">
+        <div className="relative" id="vision">
           <VisionAndImpact />
         </div>
         <div className="relative">
