@@ -13,7 +13,7 @@ const HomePage = () => {
   return (
     <div>
       <Navbar />
-      <div className="fixed w-full -z-10 h-screen overflow-x-hidden ">
+      <div className="fixed w-full -z-10 h-screen overflow-x-hidden">
         <video
           autoPlay
           loop
