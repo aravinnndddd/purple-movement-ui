@@ -2,7 +2,9 @@ import { SVGComponent } from "../SVGComponents/FlowDiagram";
 
 export function Muverse() {
   return (
-    <div className="relative  px-2 md:px-20 z-20  my-20">
+    <div className="relative w-full flex justify-center">
+     <div className="w-[90%]">
+       <div className="z-20  my-20">
       <h2 className="text-white flex text-3xl font-[Montesrrat] text-left font-bold mb-10">
         The <span className="text-[#8c3bc3]">μ</span>Verse
       </h2>
@@ -17,6 +19,8 @@ export function Muverse() {
       <div className="w-full max-w-[800px] mx-auto px-4 mt-10">
         <SVGComponent className="w-full h-auto" />
       </div>
+    </div>
+     </div>
     </div>
   );
 }
