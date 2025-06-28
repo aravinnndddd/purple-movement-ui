@@ -66,28 +66,32 @@ export const Navbar = () => {
           <a
             href="#home"
             className="border-4 rounded-[20px] px-4 border-purple-500 text-purple-600 font-bold"
+            onClick={() => setIsOpen(!isOpen)}
           >
             Home
           </a>
           <a
             href="#about"
             className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
+            onClick={() => setIsOpen(!isOpen)}
           >
             About
           </a>
           <a
             href="#verse"
             className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
+            onClick={() => setIsOpen(!isOpen)}
           >
             μVerse
           </a>
           <a
             href="#vision"
             className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
+            onClick={() => setIsOpen(!isOpen)}
           >
             Vision
           </a>
-          <button className="md:hidden bg-purple-600 text-white px-10 py-2 rounded-[20px]">
+          <button className="md:hidden bg-purple-600 text-white px-10 py-2 rounded-[20px]" onClick={() => setIsOpen(!isOpen)}>
             Join Us
           </button>
         </div>

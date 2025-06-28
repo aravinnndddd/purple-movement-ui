@@ -1,21 +1,12 @@
-import {
-  Facebook,
-  Twitter,
-  Instagram,
-  Linkedin,
-  Mail,
-  MapPin,
-  Copyright,
-  Phone,
-} from "lucide-react";
 import logo from "../../assets/logos/logo_pm.png";
+import { Instagram, MapPin, Copyright } from "lucide-react";
 export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="bg-black w-full relative bottom-0  overflow-hidden mt-20 md:mt-5 pt-12 pb-8 rounded-t-[50px] md:rounded-t-[80px]"
+      className="bg-black w-full relative mt-20 md:mt-5 overflow-hidden pt-12 pb-8 rounded-t-[50px] md:rounded-t-[80px]"
     >
-      <div className="container mx-auto px-10 md:px-8">
+      <div className="container mx-auto px-2 md:px-16">
         {/* Logo Row */}
 
         <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
@@ -38,44 +29,33 @@ export const Footer = () => {
 
             {/* Social Media Links */}
             <div className="flex items-center  gap-4 mt-auto">
-              <div className="p-0 flex items-center justify-center h-[30px] w-[30px] bg-white/10 rounded-full hover:bg-white/20">
-                <a href="">
-                  <Facebook className="h-4 w-4 text-white" />
-                </a>
-              </div>
-              <div className="p-0 h-[30px] flex items-center justify-center w-[30px] bg-white/10 rounded-full hover:bg-white/20">
-                <a href="">
-                  <Twitter className="h-4 w-4 text-white" />
-                </a>
-              </div>
-              <div className="p-0 h-[30px] flex items-center justify-center w-[30px] bg-white/10 rounded-full hover:bg-white/20">
-                <a href="">
-                  <Instagram className="h-4 w-4 text-white" />
-                </a>
-              </div>
-              <div className="p-0 h-[30px] flex items-center justify-center w-[30px] bg-white/10 rounded-full hover:bg-white/20">
-                <a href="">
-                  <Linkedin className="h-4 w-4 text-white" />
-                </a>
-              </div>
+              <a
+                href="https://www.instagram.com/tpm.live"
+                target="_blank"
+                className="p-5 h-[30px] flex items-center justify-center w-fit gap-2 bg-white/10 rounded-full hover:bg-white/20"
+              >
+                {" "}
+                <Instagram className="h-4 w-4 text-purple-500" />
+                <p className="text-purple-700">Instagram</p>
+              </a>
             </div>
           </div>
 
-          {/* Center Column - Quick Links */}
-          <div className="md:col-start-8 md:col-end-10 flex flex-col ">
-            <h3 className="text-[#F2F2F2] font-medium text-base mb-4">
+            {/* Center Column - Quick Links */}
+          <div className="md:col-start-8 md:col-end-10 justify-center flex flex-col ">
+            <h3 className="text-[#F2F2F2] font-bold text-base mb-4">
               Quick Links
             </h3>
             <ul className="text-[rgba(242,242,242,1)] font-normal space-y-3">
-              <li className="hover:text-purple-800 transition-colors">
+              {/* <li className="hover:text-purple-800 transition-colors">
                 <a href="" className="inline-block hover:underline">
                   Manifesto
                 </a>
-              </li>
+              </li> */}
               <li className="hover:text-purple-800 transition-colors">
                 <a
                   href="https://app.mulearn.org"
-                  className="inline-block hover:underline"
+                  className="inline-block underline "
                 >
                   Mulearn
                 </a>
@@ -86,44 +66,20 @@ export const Footer = () => {
           </div>
 
           {/* Right Column - Contact Info */}
-          <div className="md:col-span-3 flex flex-col">
+          <div className="md:col-span-3 flex flex-col  justify-center">
             <h3 className="text-[#F2F2F2] font-medium text-base mb-4">
               Contact Us
             </h3>
-
-            <div className="flex items-center gap-3 text-[rgba(242,242,242,1)] font-light mb-4">
-              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Mail className="w-5 h-5 text-white" />
-              </div>
-              <a
-                href="mailto:"
-                className="hover:text-purple-800 transition-colors"
-              >
-                xxxxxxxxxxxxxx
-              </a>
-            </div>
 
             <div className="flex items-start gap-3">
               <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                 <MapPin className="w-5 h-5 text-white" />
               </div>
               <address className="hover:text-purple-800  text-[rgba(242,242,242,1)] text-base font-light leading-6 not-italic">
-                xxxxxxxxxxxxxxxxxxxxx
+                Technopark
                 <br />
-                xxxxxx, Kerala, India.
+                Thiruvananthapuram, Kerala, India.
               </address>
-            </div>
-
-            <div className="flex items-center gap-3 text-[rgba(242,242,242,1)] font-light mt-4">
-              <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0">
-                <Phone className="w-5 h-5 text-white" />
-              </div>
-              <a
-                href="tel:+919999999999"
-                className="hover:text-purple-800 transition-colors"
-              >
-                +91 9999999999
-              </a>
             </div>
           </div>
         </div>
@@ -136,20 +92,7 @@ export const Footer = () => {
               <p>2025 PURPLE MOVEMENT. All rights reserved.</p>
             </div>
 
-            <div className="flex items-center gap-6">
-              <a
-                href=""
-                className="text-sm text-[rgba(242,242,242,1)] hover:text-purple-800 transition-colors"
-              >
-                Privacy Policy
-              </a>
-              <a
-                href=""
-                className="text-sm text-[rgba(242,242,242,1)] hover:text-purple-800 transition-colors"
-              >
-                Terms of Service
-              </a>
-            </div>
+
           </div>
         </div>
       </div>
