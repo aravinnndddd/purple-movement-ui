@@ -4,7 +4,7 @@ export function VideoSection() {
   return (
     <div className="px-2 md:px-20 my-20 flex flex-col md:flex-row md:justify-center gap-10 md:gap-40 items-center">
       <div
-        className="border-4 rounded-md border-white w-[20rem] md:w-[30rem] h-[20rem] bg-cover bg-center flex justify-center items-center"
+        className="border-[3px] border-purple-700 rounded-md  w-[20rem] md:w-[30rem] h-[20rem] bg-cover bg-center flex justify-center items-center"
         style={{
           backgroundImage: `url(${videoPlaceholder})`,
         }}
