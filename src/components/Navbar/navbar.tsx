@@ -97,7 +97,9 @@ export const Navbar = () => {
             className="md:hidden bg-purple-600 text-white px-10 py-2 rounded-[20px]"
             onClick={() => setIsOpen(!isOpen)}
           >
-            Join Us
+            <a href=" https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c">
+              Join Us
+            </a>
           </button>
         </div>
       )}
