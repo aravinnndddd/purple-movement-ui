@@ -1,5 +1,5 @@
-import React, { useState, useRef , } from 'react';
-import video from "../assets/main logo.mp4"
+import React, { useState, useRef } from "react";
+import video from "../assets/main logo.mp4";
 const LoadingScreen = () => {
   const [loading, setLoading] = useState(true);
   const videoRef = useRef(null);
@@ -12,7 +12,7 @@ const LoadingScreen = () => {
   };
 
   return loading ? (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black">
+    <div className="fixed inset-0 z-50 size-10 flex items-center justify-center bg-black">
       <video
         ref={videoRef}
         autoPlay

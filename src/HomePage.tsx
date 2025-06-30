@@ -81,7 +81,9 @@ const HomePage = () => {
               projects, and shape the future of education — together.
             </p>
             <button className="bg-purple-700 rounded-lg w-fit py-2 px-5">
-              JOIN US
+              <a href="https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c">
+                JOIN US
+              </a>
             </button>
           </div>
         </div>
