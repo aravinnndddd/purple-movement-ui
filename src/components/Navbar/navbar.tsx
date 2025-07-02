@@ -44,7 +44,7 @@ export const Navbar = () => {
         {/* Join Us button (visible on all sizes) */}
         <div className="hidden md:block">
           <button className="bg-purple-600 text-white px-5 font-bold border-2 border-purple-600 hover:border-2 hover:bg-transparent ease transition-all duration-400 py-2 rounded-[20px]">
-            <a href=" https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c">
+            <a href=" https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c" target="_blank">
               Join Us
             </a>
           </button>
@@ -97,7 +97,7 @@ export const Navbar = () => {
             className="md:hidden bg-purple-600 text-white px-10 py-2 rounded-[20px]"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <a href=" https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c">
+            <a href=" https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c" target="_blank">
               Join Us
             </a>
           </button>
