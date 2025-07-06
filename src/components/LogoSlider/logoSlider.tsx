@@ -1,58 +1,29 @@
-import Slider from "react-infinite-logo-slider";
-import keralaStartup from "../../assets/logos/keralaStartup.png";
+import Marquee from "react-fast-marquee";
 import mulearn from "../../assets/logos/mulearn.png";
+import keralaStartup from "../../assets/logos/keralaStartup.png";
 import tinkerhub from "../../assets/logos/tinkerhub.png";
+
 export const LogoSlider = () => {
   return (
-    <Slider
-      width="250px"
-      duration={20}
-      pauseOnHover={true}
-      blurBorders={false}
-      blurBorderColor={"#fff"}
-    >
-      <Slider.Slide>
+    <Marquee pauseOnHover speed={30}>
+      {[
+        mulearn,
+        keralaStartup,
+        tinkerhub,
+        mulearn,
+        keralaStartup,
+        tinkerhub,
+        mulearn,
+        keralaStartup,
+        tinkerhub,
+      ].map((logo, index) => (
         <img
-          src={mulearn}
-          alt="mulearn"
-          className="lg:w-32 w-20  grayscale brightness-200"
+          key={index}
+          src={logo}
+          alt="logo"
+          className="lg:mx-12 mx-6 w-20 lg:w-30"
         />
-      </Slider.Slide>
-      <Slider.Slide>
-        <img
-          src={keralaStartup}
-          alt="keralaStartup"
-          className="lg:w-32 w-20 grayscale brightness-200"
-        />
-      </Slider.Slide>
-      <Slider.Slide>
-        <img
-          src={tinkerhub}
-          alt="tinkerhub"
-          className="lg:w-32  w-20 grayscale brightness-200"
-        />
-      </Slider.Slide>
-      <Slider.Slide>
-        <img
-          src={mulearn}
-          alt="mulearn"
-          className="lg:w-32  w-20  grayscale brightness-200"
-        />
-      </Slider.Slide>
-      <Slider.Slide>
-        <img
-          src={keralaStartup}
-          alt="keralaStartup"
-          className="lg:w-32  w-20  grayscale brightness-200"
-        />
-      </Slider.Slide>
-      <Slider.Slide>
-        <img
-          src={tinkerhub}
-          alt="tinkerhub"
-          className="lg:w-32  w-20  grayscale brightness-200"
-        />
-      </Slider.Slide>
-    </Slider>
+      ))}
+    </Marquee>
   );
 };

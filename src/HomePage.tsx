@@ -49,7 +49,7 @@ const HomePage = () => {
               100+
             </span>
           </h1>
-          <div className="absolute bottom-0   bg-purple-800/30 backdrop-blur-sm  ">
+          <div className="absolute bottom-0  w-[95%] rounded-[20px] px-[20px] mb-[30px] bg-purple-800/30 backdrop-blur-sm  ">
             <LogoSlider />
           </div>
         </div>
@@ -81,7 +81,10 @@ const HomePage = () => {
               projects, and shape the future of education — together.
             </p>
             <button className="bg-purple-700 rounded-lg w-fit py-2 px-5">
-              <a href="https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c" target="_blank">
+              <a
+                href="https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c"
+                target="_blank"
+              >
                 JOIN US
               </a>
             </button>
