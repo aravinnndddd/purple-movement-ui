@@ -146,11 +146,7 @@ export const HomePage = ({
             come together to share real knowledge, build meaningful projects,
             and shape the future of education — together.
           </p>
-          <button className="bg-purple-700 rounded-lg w-fit py-2 px-5">
-            <a href="https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c">
-              JOIN US
-            </a>
-          </button>
+          <JoinUsButton onClick={onJoinUs} className=" items-center mt-5 " />
         </div>
       </div>
 
