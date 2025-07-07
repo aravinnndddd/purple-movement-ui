@@ -43,7 +43,6 @@ The Purple Movement is a bold, open-source initiative by **GTech μLearn** — c
 > We are the spark.
 >
 > **And it starts now.**
-
 ---
 
 ## 🔓 Open Source & Community-Driven
@@ -69,5 +68,4 @@ Maintained by [**GTech μLearn**](https://github.com/gtech-mulearn) and supporte
 ---
 
 > 💡 _This is not just a website. It's a signal. The Movement has begun._
-
 ---

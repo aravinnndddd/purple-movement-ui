@@ -16,13 +16,12 @@ export const LogoSlider = () => {
         mulearn,
         keralaStartup,
         tinkerhub,
+
+        mulearn,
+        keralaStartup,
+        tinkerhub,
       ].map((logo, index) => (
-        <img
-          key={index}
-          src={logo}
-          alt="logo"
-          className="lg:mx-12 mx-6 w-20 lg:w-30"
-        />
+        <img key={index} src={logo} alt="logo" className="mx-6 w-20 " />
       ))}
     </Marquee>
   );

@@ -1,18 +1,90 @@
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
 import bgVideo from "./assets/bg.mp4";
 import { Footer } from "./components/Footer/footer";
 import Manifesto from "./components/ManifestoPage/manifestoPage";
-
-import { LogoSlider } from "./components/LogoSlider/logoSlider";
+import { Navbar } from "./components/Navbar/navbar";
 import { Muverse } from "./components/muVresePage/muVersePage";
 import { WhyNow } from "./components/Whynow/whyNow";
-import { VideoSection } from "./components/VideoSection/VideoSection";
-import { Navbar } from "./components/Navbar/navbar";
 import { VisionAndImpact } from "./components/VisionAndImpact/vissionAndImpact";
+import Counter from "./components/Counter";
+import JoinUsButton from "./components/JoinUsButton";
+import { LogoSlider } from "./components/LogoSlider/logoSlider";
 
-const HomePage = () => {
+gsap.registerPlugin(ScrollTrigger);
+
+export const HomePage = ({
+  onJoinUs,
+  value,
+  update,
+}: {
+  onJoinUs: () => void;
+  value: number | undefined;
+  update: (value: number) => void;
+}) => {
+  const heroRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // Hero Title Animation
+      gsap.from(".hero-title", {
+        y: -50,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+      });
+
+      // Subtitle
+      gsap.from(".hero-subtitle", {
+        opacity: 0,
+        y: 20,
+        duration: 1,
+        delay: 0.5,
+        ease: "power2.out",
+      });
+
+      // Counter
+      gsap.from(".hero-counter", {
+        scale: 0.8,
+        opacity: 0,
+        duration: 0.8,
+        delay: 1,
+        ease: "back.out(1.7)",
+      });
+
+      // LogoSlider
+      gsap.from(".logo-slider", {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        delay: 1.5,
+        ease: "power2.out",
+      });
+
+      // Scroll-triggered sections
+      gsap.utils.toArray(".fade-section").forEach((section: any) => {
+        gsap.from(section, {
+          opacity: 0,
+          y: 50,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: section,
+            start: "top 80%",
+          },
+        });
+      });
+    }, heroRef);
+
+    return () => ctx.revert(); // Clean up
+  }, []);
+
   return (
-    <div>
-      <Navbar />
+    <div className="overflow-x-hidden" ref={heroRef}>
+      <Navbar onJoinUs={onJoinUs} />
+
       <div className="fixed w-full -z-10 h-screen overflow-x-hidden">
         <video
           autoPlay
@@ -22,78 +94,67 @@ const HomePage = () => {
         >
           <source src={bgVideo} type="video/mp4" />
         </video>
-        <div className="bg-black/50 backdrop-blur-sm h-full fixed w-full p-10 right-0 top-0"></div>
-
-        {/* Background Gradient */}
-        <div className="p-[250px] right-[-50px] top-[-150px] absolute bg-[#6F00CD] bg-opacity-20 rounded-full blur-[100px]"></div>
-
-        <div className="p-[250px] left-[-90px] bottom-[10px] absolute bg-purple-600 bg-opacity-40 rounded-full blur-[100px]"></div>
-
-        <div
-          className="relative z-10 h-[100vh]  flex flex-col items-center justify-center"
-          id="home"
-        >
-          <h1 className="bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none md:text-[3rem] text-center font-bold text-[2rem]  lg:text-[6rem] ">
-            We Are The <br />
-            <span className="flex flex-row ">
-              <p>Purple Movement</p>
-            </span>
-          </h1>
-          <p className="text-white lg:text-[1.5rem] text-[1rem] p-3 mt-8 text-center ">
-            Rebuilding how India learns-Beyond Borders, Beyond Syllabus, Beyond
-            Gatekeepers, Beyond Paywalls
-          </p>
-          <h1 className="text-white text-[2rem] text-center font-semibold lg:mt-10">
-            Pledges:{" "}
-            <span className="text-[2.5rem] font-bold text-purple-300">
-              100+
-            </span>
-          </h1>
-          <div className="absolute bottom-0  w-[95%] rounded-[20px] px-[20px] mb-[30px] bg-purple-800/30 backdrop-blur-sm  ">
-            <LogoSlider />
-          </div>
-        </div>
-        <div className="relative" id="about">
-          <VideoSection />
-        </div>
-        <div className="relative">
-          <WhyNow />
-        </div>
-        <div className="relative" id="verse">
-          <div className="p-[20px] w-[20%] h-[20%] rounded-full  top-1/2 left-1/2 transform -translate-x-1/2 absolute bg-purple-700 blur-[100px]"></div>
-          <Muverse />
-        </div>
-        <div className="relative" id="vision">
-          <VisionAndImpact />
-        </div>
-        <div className="relative" id="manifesto">
-          <div className="p-[20px] w-full h-[100vh] absolute bg-gradient-to-br from-purple-700/40 to-transparent blur-[100px] "></div>
-          <Manifesto />
-          <div className="text-white items-center flex text-center flex-col h-[50vh] justify-center bg-purple-950/10 md:rounded-[50px] backdrop-blur-md md:w-[90%] md:m-auto mb-10">
-            <h1 className="font-extrabold mb-5 lg:text-[2rem] md:text-[1.5rem] text-[1.2rem] text-center">
-              A New Way to Learn, Share, <br />
-              and Grow Together
-            </h1>
-            <p className="w-[95%] md:[60%] text-[.8rem] md:text-[1rem] mb-5">
-              Be part of a new learning ecosystem that goes beyond outdated
-              classrooms and rigid syllabus. Here, students, creators, and
-              mentors come together to share real knowledge, build meaningful
-              projects, and shape the future of education — together.
-            </p>
-            <button className="bg-purple-700 rounded-lg w-fit py-2 px-5">
-              <a
-                href="https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c"
-                target="_blank"
-              >
-                JOIN US
-              </a>
-            </button>
-          </div>
-        </div>
-
-        <Footer />
+        <div className="p-[250px] right-[-50px] top-[-150px] absolute bg-[#6F00CD]/40 rounded-full blur-[100px]"></div>
+        <div className="p-[250px] left-[-90px] bottom-[10px] absolute bg-purple-600/40  rounded-full blur-[100px]"></div>
+        <div className="bg-black/50 backdrop-blur-[3.5px] h-full fixed w-full p-10 right-0 top-0"></div>
       </div>
+
+      <div
+        className="relative z-10 h-[110vh] flex flex-col items-center justify-center"
+        id="home"
+      >
+        <div className="hero-title bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none md:text-[3rem] text-center font-bold text-[2.5rem]  lg:text-[6rem] ">
+          We Are The
+          <p className="flex flex-row justify-center">Purple Movement</p>
+        </div>
+        <p className="hero-subtitle text-white lg:text-[1.2rem] text-[.9rem]  p-3 mt-8 text-center leading-5 ">
+          Rebuilding how India learns-Beyond Borders, Beyond Syllabus, Beyond
+          Gatekeepers, Beyond Paywalls
+        </p>
+        <div className="hero-counter">
+          <Counter value={value} update={update} />
+        </div>
+        <JoinUsButton
+          onClick={onJoinUs}
+          className=" items-center mt-5 md:hidden"
+        />
+        <div className="logo-slider absolute bottom-0 px-[20px] mb-[30px] bg-white/5 backdrop-blur-sm">
+          <LogoSlider />
+        </div>
+      </div>
+
+      <div className="relative fade-section" id="about">
+        <WhyNow />
+      </div>
+      <div className="relative fade-section" id="verse">
+        <Muverse />
+      </div>
+      <div className="relative fade-section" id="vision">
+        <VisionAndImpact />
+      </div>
+      <div className="relative fade-section" id="manifesto">
+        <div className="p-[20px] w-full h-[100vh] absolute bg-gradient-to-br from-purple-700/40 to-transparent blur-[100px]" />
+        <Manifesto />
+        <div className="text-white items-center flex text-center flex-col h-[50vh] justify-center bg-purple-950/10 md:rounded-[50px] backdrop-blur-md md:w-[90%] md:m-auto mb-10">
+          <h1 className="font-extrabold mb-5 lg:text-[2rem] md:text-[1.5rem] text-[1.2rem] text-center">
+            A New Way to Learn, Share, <br />
+            and Grow Together
+          </h1>
+          <p className="w-[95%] md:[60%] text-[.8rem] md:text-[1rem] mb-5">
+            Be part of a new learning ecosystem that goes beyond outdated
+            classrooms and rigid syllabus. Here, students, creators, and mentors
+            come together to share real knowledge, build meaningful projects,
+            and shape the future of education — together.
+          </p>
+          <button className="bg-purple-700 rounded-lg w-fit py-2 px-5">
+            <a href="https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=r_c">
+              JOIN US
+            </a>
+          </button>
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 };
-export default HomePage;

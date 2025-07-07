@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 @font-face {
   font-family: Montesrrat;
@@ -10,22 +8,23 @@ html {
   scroll-behavior: smooth;
 }
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
 body::-webkit-scrollbar {
-  width: 4px;
+  width: 2px;
 }
 
 body::-webkit-scrollbar-track {
-  background: rgb(80, 79, 79);
+  background: rgb(33, 1, 46);
 }
 
 body::-webkit-scrollbar-thumb {
-  background: #323131;
+  background: rgb(92, 0, 128);
 
   border-radius: 20px;
+}
+#spotlight {
+  transition: background 0.1s ease;
+  mix-blend-mode: screen; /* Optional: creates glowing effect */
 }
