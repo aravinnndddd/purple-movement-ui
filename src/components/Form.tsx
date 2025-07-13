@@ -7,10 +7,10 @@ import {
   where,
 } from "firebase/firestore";
 import { X } from "lucide-react";
-import { useState } from "react";
-import { useFormStatus } from "react-dom";
+import { useRef, useState } from "react";
+// import { useFormStatus } from "react-dom";
 import { db } from "../lib/firebase";
-
+import ReCAPTCHA from "react-google-recaptcha";
 type RecordType = {
   name: string;
   phone: string;
@@ -44,13 +44,31 @@ const Form = ({
   const [emailError, setEmailError] = useState<string>();
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
-
-  const { pending } = useFormStatus();
-
+  const siteKey = import.meta.env.VITE_RECAPTCHA_SITE_KEY || "";
+  const formRef = useRef<HTMLFormElement>(null);
+  // const { pending } = useFormStatus();
+  const [pending, setPending] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const form = e.currentTarget;
-    const formData = new FormData(form);
+    setPending(true);
+
+    if (!recaptchaRef.current) return;
+
+    const token = await recaptchaRef.current.executeAsync();
+    recaptchaRef.current.reset();
+
+    if (!token) {
+      alert("CAPTCHA validation failed. Please try again.");
+      return;
+    }
+
+    // const form = e.currentTarget as HTMLFormElement;
+    if (!formRef.current) {
+      console.error("Form not found!");
+      return;
+    }
+    const formData = new FormData(formRef.current);
 
     const name = formData.get("name") as string;
     const email = formData.get("email") as string;
@@ -128,6 +146,7 @@ const Form = ({
         <form
           className="flex flex-col gap-2 sm:gap-6 w-full px-2 mx-auto md:px-[60px]"
           onSubmit={onSubmit}
+          ref={formRef}
         >
           <input
             required
@@ -178,6 +197,7 @@ const Form = ({
             name="contribution"
             className="p-3 text-[12px] rounded border-2 border-purple-700 bg-transparent text-white placeholder-white/70"
           />
+          <ReCAPTCHA sitekey={siteKey} size="invisible" ref={recaptchaRef} />
           <button
             type="submit"
             className="active:bg-transparent text-white bg-purple-600 
@@ -257,11 +277,20 @@ const checkIfEmailExists = async (
     };
   }
   const documentId = querySnapshot.docs[0].id;
-  const timestamp = querySnapshot.docs[0].data().timestamp;
+  const rawTimestamp = querySnapshot.docs[0].data().timestamp;
   const name = querySnapshot.docs[0].data().name;
   const phone = querySnapshot.docs[0].data().phone;
   const contribution = querySnapshot.docs[0].data().contribution;
   const count = undefined;
+  let timestamp = "";
+
+  if (rawTimestamp?.toDate) {
+    timestamp = rawTimestamp.toDate().toISOString(); // ✅ Firebase Timestamp
+  } else if (typeof rawTimestamp === "string") {
+    timestamp = new Date(rawTimestamp).toISOString(); // ✅ already a string
+  } else {
+    timestamp = new Date().toISOString(); // fallback
+  }
   const record = {
     id: documentId,
     timestamp: new Date(timestamp).toISOString(),
