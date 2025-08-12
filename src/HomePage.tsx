@@ -2,27 +2,27 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import bgVideo from "./assets/bg.mp4";
+// import bgVideo from "/bg.mp4";
 import { Footer } from "./components/Footer/footer";
 import Manifesto from "./components/ManifestoPage/manifestoPage";
 import { Navbar } from "./components/Navbar/navbar";
 import { Muverse } from "./components/muVresePage/muVersePage";
 import { WhyNow } from "./components/Whynow/whyNow";
 import { VisionAndImpact } from "./components/VisionAndImpact/vissionAndImpact";
-import Counter from "./components/Counter";
+// import Counter from "./components/Counter";
 import JoinUsButton from "./components/JoinUsButton";
-import { LogoSlider } from "./components/LogoSlider/logoSlider";
+// import { LogoSlider } from "./components/LogoSlider/logoSlider";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export const HomePage = ({
   onJoinUs,
-  value,
-  update,
-}: {
+}: // value,
+// update,
+{
   onJoinUs: () => void;
-  value: number | undefined;
-  update: (value: number) => void;
+  // value: number | undefined;
+  // update: (value: number) => void;
 }) => {
   const heroRef = useRef<HTMLDivElement | null>(null);
 
@@ -55,13 +55,13 @@ export const HomePage = ({
       });
 
       // LogoSlider
-      gsap.from(".logo-slider", {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        delay: 1.5,
-        ease: "power2.out",
-      });
+      // gsap.from(".logo-slider", {
+      //   y: 40,
+      //   opacity: 0,
+      //   duration: 1,
+      //   delay: 1.5,
+      //   ease: "power2.out",
+      // });
 
       // Scroll-triggered sections
       gsap.utils.toArray(".fade-section").forEach((section: any) => {
@@ -82,58 +82,64 @@ export const HomePage = ({
   }, []);
 
   return (
-    <div className="overflow-x-hidden" ref={heroRef}>
-      <Navbar onJoinUs={onJoinUs} />
+    <div className="w-full overflow-x-hidden bg-[#111111]" ref={heroRef}>
+      <Navbar />
 
-      <div className="fixed w-full -z-10 h-screen overflow-x-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          className="fixed inset-0 w-full h-full object-cover"
-        >
-          <source src={bgVideo} type="video/mp4" />
-        </video>
-        <div className="p-[250px] right-[-50px] top-[-150px] absolute bg-[#6F00CD]/40 rounded-full blur-[100px]"></div>
-        <div className="p-[250px] left-[-90px] bottom-[10px] absolute bg-purple-600/40  rounded-full blur-[100px]"></div>
-        <div className="bg-black/50 backdrop-blur-[3.5px] h-full fixed w-full p-10 right-0 top-0"></div>
-      </div>
+      {/* <video
+        autoPlay
+        loop
+        muted
+        className="absolute top-0 left-0 w-[30vw]  h-[30vh] object-contain z-0"
+      >
+        <source src={bgVideo} type="video/mp4" />
+      </video>
+
+     
+      <video
+        autoPlay
+        loop
+        muted
+        className="absolute bottom-0  right-0 w-[30vw] h-[30vh] object-contain z-0"
+      >
+        <source src={bgVideo} type="video/mp4" />
+      </video> */}
 
       <div
-        className="relative z-10 h-[110vh] flex flex-col items-center justify-center"
+        className="z-10 h-[100vh] flex flex-col bg-[#111111] items-center justify-center"
         id="home"
       >
-        <div className="hero-title bg-clip-text text-transparent bg-gradient-to-tr from-purple-600  to-fuchsia-600 font-[Montesrrat] leading-none md:text-[3rem] text-center font-bold text-[2.5rem]  lg:text-[6rem] ">
-          We Are The
-          <p className="flex flex-row justify-center">Purple Movement</p>
+        <div className="hero-title leading-none text-[35px] uppercase text-center font-bold  text-white  ">
+          <p className="mb-[10px]"> We Are The</p>
+          <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] [font-[Montesrrat] ">
+            Purple Movement
+          </p>
         </div>
-        <p className="hero-subtitle text-white lg:text-[1.2rem] text-[.9rem]  p-3 mt-8 text-center leading-5 ">
-          Rebuilding how India learns-Beyond Borders, Beyond Syllabus, Beyond
-          Gatekeepers, Beyond Paywalls
+        <p className="hero-subtitle text-white/75 text-[20px] mt-[15px] text-center  w-[676.01px]">
+          Rebuilding how India learns—Beyond Borders, Beyond Syllabus, beyond
+          gatekeepers, beyond paywalls.
         </p>
-        <div className="hero-counter">
+        {/* <div className="hero-counter">
           <Counter value={value} update={update} />
-        </div>
+        </div> */}
         <JoinUsButton
           onClick={onJoinUs}
-          className=" items-center mt-5 md:hidden"
+          className=" items-center text-[#FFF9F9] uppercase "
         />
-        <div className="logo-slider absolute bottom-0 px-[20px] mb-[30px] bg-white/5 backdrop-blur-sm">
+        {/* <div className="logo-slider absolute bottom-0 px-[20px] mb-[30px] bg-white/5 backdrop-blur-sm">
           <LogoSlider />
-        </div>
+        </div> */}
       </div>
 
-      <div className="relative fade-section" id="about">
+      <div className="fade-section " id="about">
         <WhyNow />
       </div>
-      <div className="relative fade-section" id="verse">
+      <div className=" fade-section" id="verse">
         <Muverse />
       </div>
-      <div className="relative fade-section" id="vision">
+      <div className=" fade-section" id="vision">
         <VisionAndImpact />
       </div>
-      <div className="relative fade-section" id="manifesto">
-        <div className="p-[20px] w-full h-[100vh] absolute bg-gradient-to-br from-purple-700/40 to-transparent blur-[100px]" />
+      <div className=" fade-section" id="manifesto">
         <Manifesto />
         <div className="text-white items-center flex text-center flex-col h-[50vh] justify-center bg-purple-950/10 md:rounded-[50px] backdrop-blur-md md:w-[90%] md:m-auto mb-10">
           <h1 className="font-extrabold mb-5 lg:text-[2rem] md:text-[1.5rem] text-[1.2rem] text-center">

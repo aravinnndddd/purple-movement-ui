@@ -24,6 +24,9 @@ body::-webkit-scrollbar-thumb {
 
   border-radius: 20px;
 }
+.blend {
+  mix-blend-mode: lighten;
+}
 #spotlight {
   transition: background 0.1s ease;
   mix-blend-mode: screen; /* Optional: creates glowing effect */
