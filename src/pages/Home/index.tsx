@@ -7,12 +7,12 @@ const Home = () => {
   const [viewJoinModal, setViewJoinModal] = useState(false);
 
   const [certificateData, setCertificateData] = useState<PopupContentType>();
-  const [totalCount, setTotalCount] = useState<number>();
+  // const [totalCount, setTotalCount] = useState<number>();
   const onJoinUs = () => setViewJoinModal(true);
   const onClose = () => setViewJoinModal(false);
   const onResult = (res: PopupContentType) => {
     setCertificateData(res);
-    if (res.count) setTotalCount(res.count);
+    // if (res.count) setTotalCount(res.count);
     onClose();
   };
 
@@ -28,7 +28,8 @@ const Home = () => {
           onClose={() => setCertificateData(undefined)}
         />
       )}
-      <HomePage onJoinUs={onJoinUs} value={totalCount} update={setTotalCount} />
+      {/* <HomePage onJoinUs={onJoinUs} value={totalCount} update={setTotalCount} /> */}
+      <HomePage onJoinUs={onJoinUs} />
     </div>
   );
 };
