@@ -82,7 +82,7 @@ export const HomePage = ({
   }, []);
 
   return (
-    <div className="w-full overflow-x-hidden bg-[#111111]" ref={heroRef}>
+    <div className="w-full overflow-x-hidden  bg-black" ref={heroRef}>
       <Navbar />
 
       {/* <video
@@ -105,12 +105,12 @@ export const HomePage = ({
       </video> */}
 
       <div
-        className="z-10 h-[100vh] flex flex-col bg-[#111111] items-center justify-center"
+        className="z-10 h-[100vh] flex flex-col  items-center justify-center"
         id="home"
       >
         <div className="hero-title leading-none text-[35px] uppercase text-center font-bold  text-white  ">
           <p className="mb-[10px]"> We Are The</p>
-          <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] [font-[Montesrrat] ">
+          <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] font-[Montesrrat] font-extrabold ">
             Purple Movement
           </p>
         </div>

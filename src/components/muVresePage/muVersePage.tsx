@@ -2,7 +2,7 @@
 
 export function Muverse() {
   return (
-    <div className="relative w-full flex justify-center">
+    <div className="relative w-full flex  justify-center">
       <div className="w-[90%]">
         <div className="z-20 md:mx-20 my-20">
           <h2 className="text-white gap-2 text-[40px] text-center font-[Montesrrat] font-bold mb-10">
