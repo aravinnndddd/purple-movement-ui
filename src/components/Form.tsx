@@ -271,7 +271,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
         {/* Decorative element */}
         <div className="absolute bottom-5 right-6">
           <img
-            src="src/assets/images/Group 93 3.svg"
+            src="./Group 93 3.svg"
             alt="Decorative Element"
             className="w-16 h-16"
           />

@@ -5,11 +5,12 @@
 
 // const Home = () => {
 //   const [viewJoinModal, setViewJoinModal] = useState(false);
-
+//   const onClose = () => setViewJoinModal(false);
 //   const onJoinUs = () => setViewJoinModal(true);
 
 //   return (
 //     <div>
+
 //       <HomePage onJoinUs={onJoinUs} />
 //     </div>
 //   );
