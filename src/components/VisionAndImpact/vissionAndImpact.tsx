@@ -51,7 +51,7 @@ export function VisionAndImpact() {
     return () => observer.disconnect();
   }, []);
 
-  const learners = useCountUp(10000, 1500, visible); // 1.5s duration
+  const learners = useCountUp(50000, 1500, visible); // 1.5s duration
   const communities = useCountUp(30, 1500, visible);
   const mentors = useCountUp(388, 1500, visible);
 

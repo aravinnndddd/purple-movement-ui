@@ -13,6 +13,8 @@
     "@tailwindcss/vite": "^4.1.10",
     "baffle": "^0.3.6",
     "clsx": "^2.1.1",
+    "embla-carousel-autoplay": "^8.6.0",
+    "embla-carousel-react": "^8.6.0",
     "firebase": "^11.9.1",
     "framer-motion": "^12.23.12",
     "gsap": "^3.13.0",

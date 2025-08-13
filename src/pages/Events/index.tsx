@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { ChevronLeft, ChevronRight, ArrowUpRight } from "lucide-react";
 import { Navbar } from "../../components/Navbar/navbar";
 
-// --- EventCard Component + Props ---
+// --- EventCard Component ---
 interface EventCardProps {
   id: string;
   eventNumber: string;
@@ -11,6 +12,7 @@ interface EventCardProps {
   isComingSoon?: boolean;
   registerLink?: string;
   active?: boolean;
+  onClick?: () => void;
 }
 
 const EventCard: React.FC<EventCardProps> = ({
@@ -19,56 +21,104 @@ const EventCard: React.FC<EventCardProps> = ({
   imageUrl,
   isComingSoon = false,
   active = false,
-}) => {
-  return (
+  onClick,
+}) => (
+  <div
+    onClick={onClick}
+    className={`group cursor-pointer transition-all duration-700 ease-out rounded-2xl flex flex-col p-6 items-start text-left w-[280px] h-[400px] relative ${
+      active
+        ? "scale-100 z-10 opacity-100"
+        : "opacity-40 hover:opacity-70 scale-95"
+    }`}
+  >
     <div
-      className={`transition-all duration-500 rounded-2xl  flex flex-col p-10 items-center text-center w-[374px] h-[406.16px]  bg-white/5 backdrop-blur-md border border-white/10 ${
-        active ? "scale-105 z-10 shadow-lg" : "opacity-30"
+      className={`absolute inset-0 rounded-2xl border transition-all duration-500 ${
+        active
+          ? "bg-white/10 backdrop-blur-md border-white/30 shadow-2xl"
+          : "bg-white/5 backdrop-blur-md border-white/10"
       }`}
-    >
+    />
+    <div className="relative z-10 flex flex-col h-full">
       {imageUrl && (
-        <img
-          src={imageUrl}
-          alt={title}
-          className="rounded-xl mb-4 w-[196px] h-[225.12px] object-cover"
-        />
+        <div className="relative overflow-hidden rounded-xl mb-4 w-full h-[200px]">
+          <img
+            src={imageUrl}
+            alt={title}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          />
+        </div>
       )}
-      <div className="flex gap-5">
-        <h3 className="text-white font-bold text-xl">{title}</h3>{" "}
-        <button className="text-purple-400 hover:text-purple-300 transition">
-          {" "}
-          <img src="./arrow.svg" alt="" />
-        </button>
+      <div className="flex items-center justify-between mb-3 w-full">
+        <h3
+          className={`font-bold text-xl transition-colors duration-300 ${
+            active ? "text-white" : "text-gray-300"
+          }`}
+        >
+          {title}
+        </h3>
+        {!isComingSoon && (
+          <button className="text-purple-400 hover:text-purple-300 transition-all duration-300 transform hover:scale-110 p-1 rounded-full border border-white/20 w-8 h-8 flex items-center justify-center">
+            <ArrowUpRight size={16} />
+          </button>
+        )}
       </div>
-      {!isComingSoon && (
-        <p className="text-sm text-gray-400 mt-2">{description}</p>
+
+      {!isComingSoon && description && (
+        <p
+          className={`text-sm leading-relaxed transition-colors duration-300 ${
+            active ? "text-gray-300" : "text-gray-500"
+          }`}
+        >
+          {description}
+        </p>
       )}
+
       {isComingSoon && (
-        <p className="text-purple-300 mt-2 font-medium">Stay Tuned...</p>
+        <div className="flex flex-col items-center justify-center flex-1">
+          <p className="text-purple-300 font-medium text-lg mb-4">
+            Stay Tuned...
+          </p>
+          <div className="flex gap-1">
+            {[...Array(3)].map((_, i) => (
+              <div
+                key={i}
+                className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"
+                style={{ animationDelay: `${i * 0.2}s` }}
+              />
+            ))}
+          </div>
+        </div>
       )}
     </div>
-  );
-};
+  </div>
+);
 
 // --- Events Page ---
 const Events: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(1);
+
+  const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [touchEnd, setTouchEnd] = useState<number | null>(null);
+
+  const carouselRef = useRef<HTMLDivElement>(null);
+
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const events: EventCardProps[] = [
     {
       id: "event-1",
       eventNumber: "EVENT 01",
-      title: "Saddle Up",
-      description:
-        "A skill-building event series to gear you up for opportunities.",
-      imageUrl: "./saddle up.png",
+      title: "Enter the Flow",
+      description: "A flash UI/UX hackathon where creativity meets speed",
+      imageUrl: "./enter the flow.png",
     },
     {
       id: "event-2",
       eventNumber: "EVENT 02",
-      description: "A flash UI/UX hackathon where creativity meets speedy",
-      title: "Enter the Flow",
-      imageUrl: "./enter the flow.png",
+      title: "Saddle Up",
+      description:
+        "A skill-building event series to gear you up for opportunities.",
+      imageUrl: "saddle up.png",
     },
     {
       id: "event-3",
@@ -78,78 +128,177 @@ const Events: React.FC = () => {
     },
   ];
 
-  const handlePrev = () => {
+  // Center active card
+  useEffect(() => {
+    const container = carouselRef.current;
+    const activeCard = cardRefs.current[activeIndex];
+    if (container && activeCard) {
+      const scrollLeft =
+        activeCard.offsetLeft -
+        container.offsetWidth / 2 +
+        activeCard.offsetWidth / 2;
+
+      container.scrollTo({
+        left: scrollLeft,
+        behavior: "smooth",
+      });
+    }
+  }, [activeIndex]);
+
+  // Auto-play logic
+
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") handlePrev();
+      else if (event.key === "ArrowRight") handleNext();
+      else if (event.key === " ") {
+        event.preventDefault();
+        toggleAutoPlay();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  // Handlers
+  const handlePrev = useCallback(() => {
     setActiveIndex((prev) => (prev === 0 ? events.length - 1 : prev - 1));
+  }, [events.length]);
+
+  const handleNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % events.length);
+  }, [events.length]);
+
+  const handleCardClick = useCallback((index: number) => {
+    setActiveIndex(index);
+  }, []);
+
+  const toggleAutoPlay = useCallback(() => {}, []);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setTouchEnd(null);
+    setTouchStart(e.targetTouches[0].clientX);
   };
 
-  const handleNext = () => {
-    setActiveIndex((prev) => (prev === events.length - 1 ? 0 : prev + 1));
+  const handleTouchMove = (e: React.TouchEvent) => {
+    setTouchEnd(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStart || !touchEnd) return;
+
+    const distance = touchStart - touchEnd;
+    if (distance > 50) handleNext();
+    else if (distance < -50) handlePrev();
   };
 
   return (
     <>
       <Navbar />
-      <section className="min-h-screen py-24 px-4 bg-[#0d0b1a] ">
-        <h2 className="text-white text-4xl font-bold text-center mb-6">
-          Events
-        </h2>
-        <p className="text-gray-400 text-center max-w-xl mx-auto mb-12">
-          From creative challenges to impactful experiences, our events are
-          designed to inspire, push boundaries, and open doors to
-          new opportunities.
-        </p>
-
-        <div className="relative flex items-center justify-center gap-6 ">
-          {/* Prev Button */}
-          <button
-            onClick={handlePrev}
-            className="hidden md:flex absolute left-4 z-20 p-2 hover:bg-white/10 rounded-full"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-          </button>
-
-          {/* Event Cards */}
-          <div className="flex gap-6 overflow-x-auto overflow-y-hidden px-6 snap-x snap-mandatory justify-center">
-            {events.map((event, index) => (
-              <EventCard
-                key={event.id}
-                {...event}
-                active={index === activeIndex}
-              />
-            ))}
+      <section className="min-h-screen py-24 px-4 bg-gradient-to-br from-[#0d0b1a] via-[#1a0f2e] to-[#0d0b1a] overflow-hidden">
+        <div className="max-w-7xl mx-auto">
+          {/* Header */}
+          <div className="text-center mb-16">
+            <h2 className="text-white text-5xl font-bold mb-6">Events</h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto leading-relaxed">
+              From creative challenges to impactful experiences, our events are
+              designed to inspire, push boundaries, and open doors to new
+              opportunities.
+            </p>
           </div>
 
-          {/* Next Button */}
-          <button
-            onClick={handleNext}
-            className="hidden md:flex absolute right-4 z-20 p-2 hover:bg-white/10 rounded-full"
-          >
-            <svg
-              className="w-6 h-6 text-white"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+          {/* Carousel */}
+          <div className="relative">
+            {/* Navigation Buttons */}
+            <button
+              onClick={handlePrev}
+              className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-110 hidden md:flex items-center justify-center group"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M9 5l7 7-7 7"
+              <ChevronLeft
+                size={24}
+                className="text-white group-hover:text-purple-200 transition-colors"
               />
-            </svg>
-          </button>
+            </button>
+
+            <button
+              onClick={handleNext}
+              className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-3 bg-white/10 backdrop-blur-md rounded-full border border-white/20 hover:bg-white/20 transition-all duration-300 transform hover:scale-110 hidden md:flex items-center justify-center group"
+            >
+              <ChevronRight
+                size={24}
+                className="text-white group-hover:text-purple-200 transition-colors"
+              />
+            </button>
+
+            {/* Cards */}
+            <div
+              ref={carouselRef}
+              className="flex gap-8 overflow-x-auto overflow-y-visible px-6 py-8 snap-x snap-mandatory justify-center scrollbar-hide"
+              onTouchStart={handleTouchStart}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+            >
+              {events.map((event, index) => (
+                <div
+                  key={event.id}
+                  ref={(el) => {
+                    cardRefs.current[index] = el;
+                  }}
+                  className="snap-center"
+                >
+                  <EventCard
+                    {...event}
+                    active={index === activeIndex}
+                    onClick={() => handleCardClick(index)}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Progress + Controls */}
+          <div className="flex justify-center items-center gap-4 mt-12">
+            <div className="flex gap-2">
+              {events.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => handleCardClick(index)}
+                  className={`transition-all duration-300 rounded-full ${
+                    index === activeIndex
+                      ? "w-8 h-3 bg-purple-400"
+                      : "w-3 h-3 bg-white/30 hover:bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Swipe and Keyboard Hints */}
+          <div className="md:hidden text-center mt-8">
+            <p className="text-gray-500 text-sm flex items-center justify-center gap-2">
+              Swipe to navigate
+              <div className="flex gap-1">
+                {[0, 150, 300].map((delay) => (
+                  <div
+                    key={delay}
+                    className="w-1 h-1 bg-purple-400 rounded-full animate-bounce"
+                    style={{ animationDelay: `${delay}ms` }}
+                  />
+                ))}
+              </div>
+            </p>
+          </div>
+
+          <div className="hidden md:block text-center mt-8">
+            <p className="text-gray-500 text-sm">
+              Use <kbd className="px-2 py-1 bg-white/10 rounded text-xs">←</kbd>{" "}
+              <kbd className="px-2 py-1 bg-white/10 rounded text-xs">→</kbd> to
+              navigate •{" "}
+              <kbd className="px-2 py-1 bg-white/10 rounded text-xs">Space</kbd>{" "}
+              to pause
+            </p>
+          </div>
         </div>
       </section>
     </>

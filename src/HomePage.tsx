@@ -136,11 +136,11 @@ export const HomePage = ({
       <div className=" fade-section" id="verse">
         <Muverse />
       </div>
-      <div className=" fade-section" id="vision">
-        <VisionAndImpact />
-      </div>
       <div className=" fade-section" id="manifesto">
         <Manifesto onJoinUs={onJoinUs} />
+      </div>
+      <div className=" fade-section" id="vision">
+        <VisionAndImpact />
       </div>
 
       <Footer />
