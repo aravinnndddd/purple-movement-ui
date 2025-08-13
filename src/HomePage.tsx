@@ -95,7 +95,7 @@ export const HomePage = ({}: // value,
         autoPlay
         loop
         muted
-        className="absolute top-0 left-0 w-[30vw]  h-[30vh] object-contain z-0"
+        className="absolute top-0 left-0 w-[30vw]  h-[40vh] object-contain z-0"
       >
         <source src="/bg-left.mp4" type="video/mp4" />
       </video>
