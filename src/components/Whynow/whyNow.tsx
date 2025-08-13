@@ -67,7 +67,7 @@ export const WhyNow = () => {
 
       <div className="w-full h-[90vh] relative">
         <img
-          src="./whynow-seperater.png"
+          src="./seperater.png"
           className="w-full blend absolute"
           alt="seperater"
         />

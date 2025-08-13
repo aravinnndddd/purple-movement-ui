@@ -1,13 +1,13 @@
 import clsx from "clsx";
+import JoinUsButton from "../JoinUsButton";
 // import char1 from "../../assets/images/hmmm.png";
 // import Cube3D from "./cube";
 
-const Manifesto = () => {
+const Manifesto = ({ onJoinUs }: { onJoinUs: () => void }) => {
   return (
-    <div className="flex flex-col min-h-screen w-full text-white px-4 relative sm:py-16 mt-[20vh]">
-      <div className="md:pl-24">
+    <div className="flex flex-col min-h-screen w-full bg-[#101010] text-white  relative sm:py-16 mt-[20vh]">
+      <div className="md:pl-24 px-4">
         <div className="hidden md:hidden lg:visible lg:absolute  lg:right-[150px] lg:flex ">
-          {/* <Cube3D /> */}
           <img src="/manifestoImg.png" alt="" />
         </div>
         <div className="hidden md:hidden lg:visible lg:absolute lg:right-50 lg:flex lg:justify-end"></div>
@@ -23,6 +23,27 @@ const Manifesto = () => {
           This is The Purple Movement. <br /> Learning with purpose. Powered by
           people.
         </Box>
+      </div>
+      <div className="w-full h-[80vh] relative">
+        <img
+          src="./seperater.png"
+          className="w-full blend absolute top-[-50vh] rotate-180"
+          alt="seperater"
+        />
+        <div className="text-white items-center relative top-[30vh] flex text-center flex-col justify-center   backdrop-blur-md  mb-[20vh]">
+          <h1 className="font-extrabold mb-5 mx-auto w-[721.45px]  md:text-[50px] text-[1.2rem] text-center">
+            A New Way to <span className="text-[#8c3bc3]">Learn, Share,</span>{" "}
+            <br />
+            and <span className="text-[#8c3bc3]">Grow </span>Together
+          </h1>
+          <p className="w-[973.12px] mx-auto text-center text-white/75 text-[.8rem] md:text-[20px] mb-5">
+            Be part of a new learning ecosystem that goes beyond outdated
+            classrooms and rigid syllabus. Here, students, creators, and mentors
+            come together to share real knowledge, build meaningful projects,
+            and shape the future of education — together.
+          </p>
+          <JoinUsButton onClick={onJoinUs} className=" items-center mt-5 " />
+        </div>
       </div>
     </div>
   );

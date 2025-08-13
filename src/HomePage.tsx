@@ -140,20 +140,7 @@ export const HomePage = ({
         <VisionAndImpact />
       </div>
       <div className=" fade-section" id="manifesto">
-        <Manifesto />
-        <div className="text-white items-center flex text-center flex-col h-[50vh] justify-center bg-purple-950/10 md:rounded-[50px] backdrop-blur-md md:w-[90%] md:m-auto mb-10">
-          <h1 className="font-extrabold mb-5 lg:text-[2rem] md:text-[1.5rem] text-[1.2rem] text-center">
-            A New Way to Learn, Share, <br />
-            and Grow Together
-          </h1>
-          <p className="w-[95%] md:[60%] text-[.8rem] md:text-[1rem] mb-5">
-            Be part of a new learning ecosystem that goes beyond outdated
-            classrooms and rigid syllabus. Here, students, creators, and mentors
-            come together to share real knowledge, build meaningful projects,
-            and shape the future of education — together.
-          </p>
-          <JoinUsButton onClick={onJoinUs} className=" items-center mt-5 " />
-        </div>
+        <Manifesto onJoinUs={onJoinUs} />
       </div>
 
       <Footer />
