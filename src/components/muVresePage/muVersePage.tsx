@@ -9,7 +9,7 @@ export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
         <h2 className="text-white gap-2 text-[40px] text-center font-[Montesrrat] font-bold mb-10">
           The <span className="text-[#8c3bc3]">μVerse</span>
         </h2>
-        <p className="text-white/75 md:text-[18px] mx-auto text-center mb-10 leading-snug w-[896px] text-pretty">
+        <p className="text-white/75 md:text-[18px] text-[12px] mx-auto text-center mb-10 leading-snug md:w-[896px] w-fit px-5 text-pretty">
           The μVerse is a 7-stage learning journey where students explore,
           build, and grow at their own pace. No grades. No gatekeepers. Just
           momentum, curiosity, and community. It’s designed to move learners
@@ -23,12 +23,12 @@ export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
         </div>
       </div>
       <div className="text-white items-center  flex text-center flex-col justify-center   backdrop-blur-md  mb-[20vh]">
-        <h1 className=" mb-5 mx-auto w-[721.45px] font-[Montesrrat] font-bold  md:text-[50px] text-[1.2rem] text-center">
+        <h1 className=" mb-5 mx-auto w-[358px] md:w-[721.45px] font-[Montesrrat] font-bold  md:text-[50px] text-[1.2rem] text-center">
           A New Way to <span className="text-[#8c3bc3]">Learn, Share,</span>{" "}
           <br />
           and <span className="text-[#8c3bc3]">Grow </span>Together
         </h1>
-        <p className="w-[973.12px] mx-auto text-center text-white/75 text-[.8rem] md:text-[20px] mb-5">
+        <p className="md:w-[973.12px] w-[358px] mx-auto text-center text-white/75 text-[.8rem] md:text-[20px] mb-5">
           Be part of a new learning ecosystem that goes beyond outdated
           classrooms and rigid syllabus. Here, students, creators, and mentors
           come together to share real knowledge, build meaningful projects, and

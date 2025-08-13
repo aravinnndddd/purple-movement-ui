@@ -114,13 +114,13 @@ export const HomePage = ({}: // value,
         id="home"
       >
         <Form isOpen={viewJoinModal} onClose={onClose} />
-        <div className="hero-title leading-none text-[35px] uppercase text-center font-bold  text-white  ">
-          <p className="mb-[10px]"> We Are The</p>
-          <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] font-[Montesrrat] font-extrabold ">
+        <div className="hero-title leading-none text-[35px] md:w-[866px] w-[358px] uppercase text-center font-bold  text-white  ">
+          <p className="mb-[10px] text-[14px] md:text-[35px]"> We Are The</p>
+          <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[35px] md:text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] font-[Montesrrat] font-extrabold ">
             Purple Movement
           </p>
         </div>
-        <p className="hero-subtitle text-white/75 text-[20px] mt-[15px] text-center  w-[676.01px]">
+        <p className="hero-subtitle text-white/75 text-[10px] md:text-[20px] mt-[15px] text-center w-[278.55px] md:w-[676.01px]">
           Rebuilding how India learns—Beyond Borders, Beyond Syllabus, beyond
           gatekeepers, beyond paywalls.
         </p>

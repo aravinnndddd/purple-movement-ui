@@ -65,13 +65,13 @@ export function VisionAndImpact() {
         />
         <div className="h-[30vh] w-full blur-[10px] absolute bg-gradient-to-b from-[#04020F]/50 to-black bottom-[2vh]"></div>
         <div className="w-full pt-10">
-          <h2 className="text-[58px] font-[Montesrrat] text-[#a100ff] w-[478px] h-[71px] text-pretty mb-5 mx-auto">
+          <h2 className="md:text-[58px] text-[20px] font-[Montesrrat] text-[#a100ff] text-center w-[206px] md:w-[478px] md:h-[71px] text-pretty md:mb-5 mx-auto">
             Vision & Impact
           </h2>
-          <p className="text-white text-lg text-center font-[Montesrrat] font-bold text-pretty mb-[10px]">
+          <p className="text-white  text-[12px] md:h-[20px] h-[14px] md:text-lg text-center w-fit md:w-[395px]  mx-auto font-[Montesrrat] font-bold text-pretty mb-[10px]">
             Rebuilding the way India learns together.
           </p>
-          <p className="text-white/75 w-[754px] text-center mx-auto text-pretty">
+          <p className="text-white/75 md:w-[754px] w-[316.63px] text-[10px] md:text-[18px] text-center mx-auto text-pretty">
             Purple envisions a world where knowledge is free, learning is
             purpose-driven, and students are empowered to lead—not just follow.
             We’re creating a public learning infrastructure that belongs to
@@ -79,7 +79,7 @@ export function VisionAndImpact() {
           </p>
         </div>
         <div className="w-full flex absolute bottom-[20vh] bg-transparent">
-          <div className="w-full flex flex-row justify-evenly space-x-5">
+          <div className="w-full flex md:flex-row flex-col justify-center gap-20 md:justify-evenly md:space-x-5">
             <div className="text-white md:text-4xl text-lg text-center">
               <p className="font-extrabold">{learners}+</p>
               <p>Learners</p>
