@@ -1,24 +1,26 @@
 import { useState } from "react";
-import Form, { type PopupContentType } from "../../components/Form";
+// import Form, { type PopupContentType } from "../../components/Form";
 import { HomePage } from "../../HomePage";
-import CertificatePopup from "../../components/CertificatePopup";
+import Form from "../../components/Form";
+// import CertificatePopup from "../../components/CertificatePopup";
 
 const Home = () => {
   const [viewJoinModal, setViewJoinModal] = useState(false);
 
-  const [certificateData, setCertificateData] = useState<PopupContentType>();
+  // const [certificateData, setCertificateData] = useState<PopupContentType>();
   // const [totalCount, setTotalCount] = useState<number>();
   const onJoinUs = () => setViewJoinModal(true);
   const onClose = () => setViewJoinModal(false);
-  const onResult = (res: PopupContentType) => {
-    setCertificateData(res);
-    // if (res.count) setTotalCount(res.count);
-    onClose();
-  };
+  // const onResult = (res: PopupContentType) => {
+  //   setCertificateData(res);
+  //   if (res.count) setTotalCount(res.count);
+  //   onClose();
+  // };
 
   return (
     <div>
-      <Form onResult={onResult} isOpen={viewJoinModal} onClose={onClose} />
+      <Form isOpen={viewJoinModal} onClose={onClose} />
+      {/* <Form onResult={onResult} isOpen={viewJoinModal} onClose={onClose} />
 
       {!!certificateData && (
         <CertificatePopup
@@ -27,7 +29,7 @@ const Home = () => {
           id={certificateData.id}
           onClose={() => setCertificateData(undefined)}
         />
-      )}
+      )} */}
       {/* <HomePage onJoinUs={onJoinUs} value={totalCount} update={setTotalCount} /> */}
       <HomePage onJoinUs={onJoinUs} />
     </div>
