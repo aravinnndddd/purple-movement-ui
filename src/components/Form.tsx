@@ -69,44 +69,43 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
     return true;
   };
 
-const handleNext = () => {
-  if (!validateStep()) return;
+  const handleNext = () => {
+    if (!validateStep()) return;
 
-  if (step < 7) {
-    setStep(step + 1);
-  } else {
-    // Log data (optional)
-    console.log({
-      studentName,
-      collegeName,
-      phone,
-      syllabusChallenges,
-      teachingMethod,
-      messageEducator,
-      desiredChanges,
-    });
+    if (step < 7) {
+      setStep(step + 1);
+    } else {
+      // Log data (optional)
+      console.log({
+        studentName,
+        collegeName,
+        phone,
+        syllabusChallenges,
+        teachingMethod,
+        messageEducator,
+        desiredChanges,
+      });
 
-    // Open WhatsApp group link
-    window.open("https://chat.whatsapp.com/YOUR_GROUP_LINK", "_blank");
+      // Open WhatsApp group link
+      window.open("https://chat.whatsapp.com/ErCREbUUzSKEqu7LTmSkeH", "_blank");
 
-    // Reset form fields
-    setStudentName("");
-    setCollegeName("");
-    setPhone("");
-    setSyllabusChallenges("");
-    setTeachingMethod("");
-    setMessageEducator("");
-    setDesiredChanges("");
-    setError("");
+      // Reset form fields
+      setStudentName("");
+      setCollegeName("");
+      setPhone("");
+      setSyllabusChallenges("");
+      setTeachingMethod("");
+      setMessageEducator("");
+      setDesiredChanges("");
+      setError("");
 
-    // Reset step to 1
-    setStep(1);
+      // Reset step to 1
+      setStep(1);
 
-    // Close popup
-    onClose();
-  }
-};
-
+      // Close popup
+      onClose();
+    }
+  };
 
   const handleBack = () => {
     if (step > 1) {
@@ -119,14 +118,16 @@ const handleNext = () => {
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
       <div className="bg-[#150b25] p-6 rounded-2xl w-full max-w-[800px] shadow-lg relative text-white">
-          <button
-    onClick={onClose}
-    className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl font-bold"
-  >
-    ×
-  </button>
+        <button
+          onClick={onClose}
+          className="absolute top-3 right-3 text-gray-400 hover:text-white text-2xl font-bold"
+        >
+          ×
+        </button>
         {/* Title */}
-        <h1 className="text-2xl font-bold text-center">What’s Your Untold Story?</h1>
+        <h1 className="text-2xl font-bold text-center">
+          What’s Your Untold Story?
+        </h1>
         <h1 className="text-xl font-bold text-purple-500 text-center mt-1">
           Unheard Voices
         </h1>
@@ -174,7 +175,9 @@ const handleNext = () => {
             <>
               <label className="block text-base mb-2">Phone Number:</label>
               <div className="flex rounded-md bg-transparent border border-white/40 overflow-hidden">
-                <span className="px-3 py-2 bg-black/40 text-gray-200 select-none">+91</span>
+                <span className="px-3 py-2 bg-black/40 text-gray-200 select-none">
+                  +91
+                </span>
                 <input
                   type="tel"
                   value={phone}

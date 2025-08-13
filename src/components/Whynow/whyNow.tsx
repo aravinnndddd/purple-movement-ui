@@ -47,7 +47,7 @@ export const WhyNow = () => {
 
   return (
     <div ref={sectionRef} className="  ">
-      <div className=" flex flex-col md:flex-row justify-center items-center why-text">
+      <div className=" flex flex-col  md:flex-row justify-center items-center why-text">
         <div className="text-white justify-center flex flex-col items-center  ">
           <h2 className="text-center w-[550px] h-[98px] font-bold text-[40px] leading-[45px]  mb-[10px]">
             Where{" "}
@@ -65,7 +65,7 @@ export const WhyNow = () => {
         </div>
       </div>
 
-      <div className="w-full h-[100vh] relative">
+      <div className="w-full h-[90vh] relative">
         <img
           src="./seperater.png"
           className="w-full blend absolute"

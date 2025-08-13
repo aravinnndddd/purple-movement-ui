@@ -56,15 +56,15 @@ export function VisionAndImpact() {
   const mentors = useCountUp(388, 1500, visible);
 
   return (
-    <div className="relative w-full" ref={sectionRef}>
-      <div className="relative h-[150vh]">
+    <div className="relative w-full " ref={sectionRef}>
+      <div className="relative h-[105vh]">
         <img
           src="/visionAndImpact.png"
-          className="absolute blend object-cover w-full"
+          className="absolute blend object-cover h-[95vh] w-full"
           alt="visionAndImpact"
         />
         <div className="h-[30vh] w-full blur-[10px] absolute bg-gradient-to-b from-[#04020F]/50 to-black bottom-[2vh]"></div>
-        <div className="w-full pt-50">
+        <div className="w-full pt-10">
           <h2 className="text-[58px] font-[Montesrrat] text-[#a100ff] w-[478px] h-[71px] text-pretty mb-5 mx-auto">
             Vision & Impact
           </h2>

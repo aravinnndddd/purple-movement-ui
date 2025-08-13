@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -11,13 +11,12 @@ import { WhyNow } from "./components/Whynow/whyNow";
 import { VisionAndImpact } from "./components/VisionAndImpact/vissionAndImpact";
 // import Counter from "./components/Counter";
 import JoinUsButton from "./components/JoinUsButton";
+import Form from "./components/Form";
 // import { LogoSlider } from "./components/LogoSlider/logoSlider";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export const HomePage = ({
-  onJoinUs,
-}: // value,
+export const HomePage = ({}: // value,
 // update,
 {
   onJoinUs: () => void;
@@ -25,6 +24,12 @@ export const HomePage = ({
   // update: (value: number) => void;
 }) => {
   const heroRef = useRef<HTMLDivElement | null>(null);
+  const [viewJoinModal, setViewJoinModal] = useState(false);
+  const onClose = () => setViewJoinModal(false);
+  const onJoinUs = () => {
+    setViewJoinModal(true);
+    onJoinUs();
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -46,13 +51,13 @@ export const HomePage = ({
       });
 
       // Counter
-      gsap.from(".hero-counter", {
-        scale: 0.8,
-        opacity: 0,
-        duration: 0.8,
-        delay: 1,
-        ease: "back.out(1.7)",
-      });
+      // gsap.from(".hero-counter", {
+      //   scale: 0.8,
+      //   opacity: 0,
+      //   duration: 0.8,
+      //   delay: 1,
+      //   ease: "back.out(1.7)",
+      // });
 
       // LogoSlider
       // gsap.from(".logo-slider", {
@@ -108,6 +113,7 @@ export const HomePage = ({
         className="z-10 h-[100vh] flex flex-col  items-center justify-center"
         id="home"
       >
+        <Form isOpen={viewJoinModal} onClose={onClose} />
         <div className="hero-title leading-none text-[35px] uppercase text-center font-bold  text-white  ">
           <p className="mb-[10px]"> We Are The</p>
           <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] font-[Montesrrat] font-extrabold ">
@@ -133,16 +139,16 @@ export const HomePage = ({
       <div className="fade-section " id="about">
         <WhyNow />
       </div>
-      <div className=" fade-section" id="verse">
-        <Muverse />
-      </div>
+
       <div className=" fade-section" id="manifesto">
-        <Manifesto onJoinUs={onJoinUs} />
+        <Manifesto />
       </div>
       <div className=" fade-section" id="vision">
         <VisionAndImpact />
       </div>
-
+      <div className=" fade-section" id="verse">
+        <Muverse onJoinUs={onJoinUs} />
+      </div>
       <Footer />
     </div>
   );
