@@ -23,12 +23,12 @@ export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
         </div>
       </div>
       <div className="text-white items-center  flex text-center flex-col justify-center   backdrop-blur-md  mb-[20vh]">
-        <h1 className=" mb-5 mx-auto w-[358px] md:w-[721.45px] font-[Montesrrat] font-bold  md:text-[50px] text-[1.2rem] text-center">
+        <h1 className=" mb-5 mx-auto w-fit md:w-[721.45px] font-[Montesrrat] font-bold  md:text-[50px] text-[20px] text-center">
           A New Way to <span className="text-[#8c3bc3]">Learn, Share,</span>{" "}
           <br />
           and <span className="text-[#8c3bc3]">Grow </span>Together
         </h1>
-        <p className="md:w-[973.12px] w-[358px] mx-auto text-center text-white/75 text-[.8rem] md:text-[20px] mb-5">
+        <p className="md:w-[973.12px] w-fit px-5 mx-auto text-center text-white/75 text-[12px] md:text-[20px] mb-5">
           Be part of a new learning ecosystem that goes beyond outdated
           classrooms and rigid syllabus. Here, students, creators, and mentors
           come together to share real knowledge, build meaningful projects, and
