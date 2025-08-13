@@ -10,8 +10,9 @@ import { Muverse } from "./components/muVresePage/muVersePage";
 import { WhyNow } from "./components/Whynow/whyNow";
 import { VisionAndImpact } from "./components/VisionAndImpact/vissionAndImpact";
 // import Counter from "./components/Counter";
-import JoinUsButton from "./components/JoinUsButton";
+
 import Form from "./components/Form";
+import { Hero } from "./components/Hero/heroPage";
 // import { LogoSlider } from "./components/LogoSlider/logoSlider";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -87,50 +88,34 @@ export const HomePage = ({}: // value,
   }, []);
 
   return (
-    <div className="w-full overflow-x-hidden  bg-black" ref={heroRef}>
+    <div className="w-full overflow-x-hidden  bg-black">
       <Navbar />
 
-      {/* <video
+      <video
         autoPlay
         loop
         muted
         className="absolute top-0 left-0 w-[30vw]  h-[30vh] object-contain z-0"
       >
-        <source src={bgVideo} type="video/mp4" />
+        <source src="/bg-left.mp4" type="video/mp4" />
       </video>
 
-     
       <video
         autoPlay
         loop
         muted
-        className="absolute bottom-0  right-0 w-[30vw] h-[30vh] object-contain z-0"
+        className="absolute bottom-0  right-0 w-[30vw] h-[40vh] object-contain z-0"
       >
-        <source src={bgVideo} type="video/mp4" />
-      </video> */}
+        <source src="/bg-right.mp4" type="video/mp4" />
+      </video>
 
       <div
-        className="z-10 h-[100vh] flex flex-col  items-center justify-center"
+        ref={heroRef}
+        className="z-10 h-[100vh] flex flex-col bg-[#101010]  items-center justify-center"
         id="home"
       >
         <Form isOpen={viewJoinModal} onClose={onClose} />
-        <div className="hero-title leading-none text-[35px] md:w-[866px] w-[358px] uppercase text-center font-bold  text-white  ">
-          <p className="mb-[10px] text-[14px] md:text-[35px]"> We Are The</p>
-          <p className="flex flex-row justify-center uppercase bg-clip-text text-transparent text-[35px] md:text-[80px] bg-gradient-to-tr from-[#8E00FF]   to-[#D8B0FA] font-[Montesrrat] font-extrabold ">
-            Purple Movement
-          </p>
-        </div>
-        <p className="hero-subtitle text-white/75 text-[10px] md:text-[20px] mt-[15px] text-center w-[278.55px] md:w-[676.01px]">
-          Rebuilding how India learns—Beyond Borders, Beyond Syllabus, beyond
-          gatekeepers, beyond paywalls.
-        </p>
-        {/* <div className="hero-counter">
-          <Counter value={value} update={update} />
-        </div> */}
-        <JoinUsButton
-          onClick={onJoinUs}
-          className=" items-center text-[#FFF9F9] uppercase "
-        />
+        <Hero onJoinUs={onJoinUs} />
         {/* <div className="logo-slider absolute bottom-0 px-[20px] mb-[30px] bg-white/5 backdrop-blur-sm">
           <LogoSlider />
         </div> */}

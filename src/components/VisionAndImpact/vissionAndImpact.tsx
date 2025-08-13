@@ -71,7 +71,7 @@ export function VisionAndImpact() {
           <p className="text-white  text-[12px] md:h-[20px] h-[14px] md:text-lg text-center w-fit md:w-[395px]  mx-auto font-[Montesrrat] font-bold text-pretty mb-[10px]">
             Rebuilding the way India learns together.
           </p>
-          <p className="text-white/75 md:w-[754px] w-[316.63px] text-[10px] md:text-[18px] text-center mx-auto text-pretty">
+          <p className="text-white/75 md:w-[754px] w-fit px-5 text-[10px] md:text-[18px] text-center mx-auto text-pretty">
             Purple envisions a world where knowledge is free, learning is
             purpose-driven, and students are empowered to lead—not just follow.
             We’re creating a public learning infrastructure that belongs to
