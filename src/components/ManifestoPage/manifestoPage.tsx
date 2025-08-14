@@ -7,10 +7,19 @@ const Manifesto = () => {
   return (
     <div className="flex flex-col min-h-screen w-full  mt-[12vh] text-white  sm:py-16 ">
       <div className="md:pl-24 px-4">
-        <div className="hidden md:hidden lg:visible lg:absolute  lg:right-[150px] lg:flex ">
-          <img src="/manifestoImg.png" alt="" />
+        <div className="hidden md:hidden lg:visible lg:absolute lg:right-[180px] lg:flex">
+          <iframe
+            src="https://my.spline.design/reactiveorb-QVrNCwTkTxumLqkGiCCvkt2V/"
+            width="800"
+            height="500"
+            style={{
+              border: "none",
+              outline: "none",
+              background: "transparent",
+            }}
+          ></iframe>
+          <div className="bg-black h-[5vh] w-[200px] absolute bottom-5 right-[10px]"></div>
         </div>
-        <div className="hidden md:hidden lg:visible lg:absolute lg:right-50 lg:flex lg:justify-end"></div>
 
         <Title />
         <Box className="md:my-16 my-8">
