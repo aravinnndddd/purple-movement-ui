@@ -61,7 +61,7 @@ export const WhyNow = () => {
             Purple is a movement that bridges the energy of youth with the
             wisdom of experts to reimagine how knowledge flows. It breaks away
             from outdated systems, enabling students to learn beyond textbooks,
-            borders, and gatekeepers. By uniting purpose-driven people, Purple
+            borders, and gatekeepers. By uniting purpose driven people, Purple
             creates a space for open, fast, and practical learning that’s built
             for today’s world.
           </p>
@@ -81,7 +81,7 @@ export const WhyNow = () => {
               ref={(el) => {
                 if (el) cardsRef.current[index] = el;
               }}
-              className=" rounded-[10px] text-white text-center flex items-center justify-center w-[347px] h-[246px]  shadow-lg font-poppins text-[18px] leading-[1.4] bg-[#000000]/30"
+              className=" rounded-[10px] text-white/75 border-1 border-white/20 text-center flex items-center justify-center w-[347px] h-[246px]  shadow-lg font-poppins text-[18px] leading-[1.4] bg-[#000000]/30"
             >
               <p className="w-[238.81px]">{text}</p>
             </div>

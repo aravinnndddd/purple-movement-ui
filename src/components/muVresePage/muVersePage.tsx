@@ -13,8 +13,8 @@ export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
           The μVerse is a 7-stage learning journey where students explore,
           build, and grow at their own pace. No grades. No gatekeepers. Just
           momentum, curiosity, and community. It’s designed to move learners
-          from passive consumers to Purposeful People—creators, mentors, and
-          change agents—ready to take on the world.
+          from passive consumers to Purposeful People creators, mentors, and
+          change agents ready to take on the world.
         </p>
 
         <div className="w-full max-w-[800px] mx-auto px-4 mt-10">
@@ -32,7 +32,7 @@ export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
           Be part of a new learning ecosystem that goes beyond outdated
           classrooms and rigid syllabus. Here, students, creators, and mentors
           come together to share real knowledge, build meaningful projects, and
-          shape the future of education — together.
+          shape the future of education together.
         </p>
         <JoinUsButton onClick={onJoinUs} className=" items-center mt-5 " />
       </div>

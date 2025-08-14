@@ -14,8 +14,7 @@ export const Hero = ({ onJoinUs }: HeroProps) => {
         </p>
       </div>
       <p className="hero-subtitle text-white/75 text-[10px] md:text-[20px] mt-[15px] text-center w-[278.55px] md:w-[676.01px] mx-auto">
-        Rebuilding how India learns—Beyond Borders, Beyond Syllabus, beyond
-        gatekeepers, beyond paywalls.
+        Beyond Borders, Beyond Syllabus, Beyond gatekeepers, Beyond paywalls.
       </p>
 
       <JoinUsButton
