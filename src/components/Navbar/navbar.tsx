@@ -27,7 +27,7 @@ export const Navbar = () => {
     >
       <div className="mx-auto flex items-center justify-between px-4 py-8 h-[10vh]">
         {/* Logo */}
-        <div className="px-10">
+        <div className="md:px-10">
           <img src={logo} width={100} alt="Logo" />
         </div>
 
@@ -79,42 +79,54 @@ export const Navbar = () => {
 
       {/* Mobile menu */}
       {isOpen && (
-        <div className="md:hidden flex flex-col items-center gap-3 pb-4">
-          <a
-            href="#home"
-            className="border-4 rounded-[20px] px-4 border-purple-500 text-purple-600 font-bold"
-            onClick={() => setIsOpen(false)}
-          >
-            Home
-          </a>
-          <a
-            href="#about"
-            className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </a>
-          <Link
-            to="/events"
-            className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            Events
-          </Link>
-          <a
-            href="#verse"
-            className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            μVerse
-          </a>
-          <a
-            href="#vision"
-            className="text-purple-600 font-bold border-4 rounded-[20px] px-4 border-purple-500"
-            onClick={() => setIsOpen(false)}
-          >
-            Vision
-          </a>
+        <div className="md:hidden bg-black/10 backdrop-blur-md shadow-md">
+          <ul className="flex flex-col divide-y divide-gray-200">
+            <li>
+              <a
+                href="#home"
+                className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="#about"
+                className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
+                onClick={() => setIsOpen(false)}
+              >
+                About
+              </a>
+            </li>
+            <li>
+              <Link
+                to="/events"
+                className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Events
+              </Link>
+            </li>
+            <li>
+              <a
+                href="#verse"
+                className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
+                onClick={() => setIsOpen(false)}
+              >
+                μVerse
+              </a>
+            </li>
+            <li>
+              <a
+                href="#vision"
+                className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Vision
+              </a>
+            </li>
+          </ul>
         </div>
       )}
     </nav>

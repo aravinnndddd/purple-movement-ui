@@ -4,7 +4,7 @@ import JoinUsButton from "../JoinUsButton";
 
 export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
   return (
-    <div className="relative w-full flex flex-col justify-center">
+    <div className="relative w-full flex flex-col  justify-center">
       <div className="z-20 md:mx-20 my-20">
         <h2 className="text-white gap-2 text-[40px] text-center font-[Montesrrat] font-bold mb-10">
           The <span className="text-[#8c3bc3]">μVerse</span>
@@ -22,7 +22,14 @@ export function Muverse({ onJoinUs }: { onJoinUs: () => void }) {
           <img src="/muverse.svg" alt="muverse" />
         </div>
       </div>
-      <div className="text-white items-center  flex text-center flex-col justify-center   backdrop-blur-md  mb-[20vh]">
+
+      <img
+        src="./seperater.png"
+        className="w-full blend absolute md:bottom-[60vh] bottom-[30vh] md:h-[50vh] rotate-180"
+        alt="seperater"
+      />
+
+      <div className="text-white items-center  flex text-center flex-col justify-center   backdrop-blur-md  md:mb-[20vh]">
         <h1 className=" mb-5 mx-auto w-fit md:w-[721.45px] font-[Montesrrat] font-bold  md:text-[50px] text-[20px] text-center">
           A New Way to <span className="text-[#8c3bc3]">Learn, Share,</span>{" "}
           <br />

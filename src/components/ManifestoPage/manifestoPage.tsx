@@ -7,18 +7,22 @@ const Manifesto = () => {
   return (
     <div className="flex flex-col min-h-screen w-full  mt-[12vh] text-white  sm:py-16 ">
       <div className="md:pl-24 px-4">
-        <div className="hidden md:hidden lg:visible lg:absolute lg:right-[180px] lg:flex">
+        <div className="hidden md:hidden lg:visible lg:absolute lg:right-[90px] lg:flex">
           <iframe
             src="https://my.spline.design/reactiveorb-QVrNCwTkTxumLqkGiCCvkt2V/"
-            width="800"
+            width="700"
             height="500"
             style={{
               border: "none",
               outline: "none",
+
+              borderTopLeftRadius: "40%",
+              borderTopRightRadius: "200%",
+              borderBottomLeftRadius: "360%",
               background: "transparent",
             }}
           ></iframe>
-          <div className="bg-black h-[5vh] w-[200px] absolute bottom-5 right-[10px]"></div>
+          <div className="bg-black h-[6vh] w-[200px] absolute bottom-5 right-[10px]"></div>
         </div>
 
         <Title />
