@@ -15,6 +15,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
   const [messageEducator, setMessageEducator] = useState("");
   const [desiredChanges, setDesiredChanges] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   if (!isOpen) return null;
 
@@ -69,41 +70,54 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
     return true;
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!validateStep()) return;
 
     if (step < 7) {
       setStep(step + 1);
     } else {
-      // Log data (optional)
-      console.log({
-        studentName,
-        collegeName,
-        phone,
-        syllabusChallenges,
-        teachingMethod,
-        messageEducator,
-        desiredChanges,
-      });
+      setLoading(true); // start loading
+      try {
+        await fetch(import.meta.env.VITE_GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            studentName,
+            collegeName,
+            phone,
+            syllabusChallenges,
+            teachingMethod,
+            messageEducator,
+            desiredChanges,
+          }),
+        });
 
-      // Open WhatsApp group link
-      window.open("https://chat.whatsapp.com/ErCREbUUzSKEqu7LTmSkeH", "_blank");
+        console.log("Data sent to Google Sheets!");
 
-      // Reset form fields
-      setStudentName("");
-      setCollegeName("");
-      setPhone("");
-      setSyllabusChallenges("");
-      setTeachingMethod("");
-      setMessageEducator("");
-      setDesiredChanges("");
-      setError("");
+        window.open(
+          "https://chat.whatsapp.com/ErCREbUUzSKEqu7LTmSkeH",
+          "_blank"
+        );
 
-      // Reset step to 1
-      setStep(1);
-
-      // Close popup
-      onClose();
+        // Reset form fields
+        setStudentName("");
+        setCollegeName("");
+        setPhone("");
+        setSyllabusChallenges("");
+        setTeachingMethod("");
+        setMessageEducator("");
+        setDesiredChanges("");
+        setError("");
+        setStep(1);
+        onClose();
+      } catch (error) {
+        console.error("Error sending data:", error);
+      } finally {
+        setLoading(false); // stop loading
+      }
     }
   };
 
@@ -261,9 +275,32 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
             </button>
             <button
               onClick={handleNext}
-              className="flex-1 max-w-[100px] bg-purple-600 hover:bg-purple-700 text-white rounded-md py-2 font-medium"
+              className="flex-1 max-w-[120px] bg-purple-600 hover:bg-purple-700 text-white rounded-md py-2 font-medium flex items-center justify-center gap-2 disabled:opacity-60"
+              disabled={loading}
             >
-              {step === 7 ? "Submit →" : "Next →"}
+              {loading && (
+                <svg
+                  className="animate-spin h-4 w-4 text-white"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+                  ></path>
+                </svg>
+              )}
+              {loading ? "Submitting..." : step === 7 ? "Submit →" : "Next →"}
             </button>
           </div>
         </div>
