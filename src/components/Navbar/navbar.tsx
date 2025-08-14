@@ -28,7 +28,9 @@ export const Navbar = () => {
       <div className="mx-auto flex items-center justify-between px-4 py-8 h-[10vh]">
         {/* Logo */}
         <div className="md:px-10">
-          <img src={logo} width={100} alt="Logo" />
+          <a href="/" className="curson-pointer">
+            <img src={logo} width={100} alt="Logo" />
+          </a>
         </div>
 
         {/* Desktop Nav */}
