@@ -1,13 +1,30 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logos/logo_pm.png";
 import { Menu, X } from "lucide-react"; // icons
 
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <nav className="w-full fixed top-0 z-50 backdrop-blur-md shadow-md scroll-smooth">
+    <nav
+      className={`w-full fixed top-0 z-50 shadow-md scroll-smooth transition-all duration-300 
+      ${isScrolled ? "backdrop-blur-md bg-black/40" : "bg-transparent"}`}
+    >
       <div className="mx-auto flex items-center justify-between px-4 py-8 h-[10vh]">
         {/* Logo */}
         <div className="px-10">

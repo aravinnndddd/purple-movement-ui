@@ -5,7 +5,7 @@ import clsx from "clsx";
 
 const Manifesto = () => {
   return (
-    <div className="flex flex-col min-h-screen w-full  text-white  sm:py-16 ">
+    <div className="flex flex-col min-h-screen w-full  mt-[12vh] text-white  sm:py-16 ">
       <div className="md:pl-24 px-4">
         <div className="hidden md:hidden lg:visible lg:absolute  lg:right-[150px] lg:flex ">
           <img src="/manifestoImg.png" alt="" />

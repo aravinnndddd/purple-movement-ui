@@ -60,26 +60,26 @@ export function VisionAndImpact() {
       <div className="relative h-[105vh]">
         <img
           src="/visionAndImpact.png"
-          className="absolute blend object-cover h-[95vh] w-full"
+          className="absolute blend object-cover md:h-[95vh] h-[45vh] w-full"
           alt="visionAndImpact"
         />
-        <div className="h-[30vh] w-full blur-[10px] absolute bg-gradient-to-b from-[#04020F]/50 to-black bottom-[2vh]"></div>
+        <div className="md:h-[30vh] h-[20vh] w-full blur-[10px] absolute bg-gradient-to-b  from-[#04020F]/50 to-black md:bottom-[2vh] bottom-[350px]"></div>
         <div className="w-full pt-10">
           <h2 className="md:text-[58px] text-[20px] font-[Montesrrat] text-[#a100ff] text-center w-[206px] md:w-[478px] md:h-[71px] text-pretty md:mb-5 mx-auto">
             Vision & Impact
           </h2>
-          <p className="text-white  text-[12px] md:h-[20px] h-[14px] md:text-lg text-center w-fit md:w-[395px]  mx-auto font-[Montesrrat] font-bold text-pretty mb-[10px]">
-            Rebuilding the way India learns together.
+          <p className="text-white  text-[10px] md:h-[20px] h-[14px] md:text-lg text-center w-full  mx-auto font-[Montesrrat] font-bold text-pretty mb-[10px]">
+            Shaping a new era of learning, creating, and growing together
           </p>
           <p className="text-white/75 md:w-[754px] w-fit px-5 text-[10px] md:text-[18px] text-center mx-auto text-pretty">
-            Purple envisions a world where knowledge is free, learning is
-            purpose-driven, and students are empowered to lead—not just follow.
-            We’re creating a public learning infrastructure that belongs to
-            everyone, not just institutions
+            Purple Movement envisions a world where knowledge is free, learning
+            has purpose, and everyone can drive change. We’re creating a
+            community-owned network that breaks barriers and puts growth in
+            everyone’s hands.
           </p>
         </div>
-        <div className="w-full flex absolute bottom-[20vh] bg-transparent">
-          <div className="w-full flex md:flex-row flex-col justify-center gap-20 md:justify-evenly md:space-x-5">
+        <div className="w-full flex absolute md:bottom-[20vh] bottom-[160px] bg-transparent">
+          <div className="w-full flex md:flex-row flex-col justify-center md:gap-20  gap-5 md:justify-evenly md:space-x-5">
             <div className="text-white md:text-4xl text-lg text-center">
               <p className="font-extrabold">{learners}+</p>
               <p>Learners</p>
