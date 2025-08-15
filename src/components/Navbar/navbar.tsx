@@ -60,6 +60,14 @@ export const Navbar = () => {
             μVerse
           </a>
           <a
+            href="https://beyondsyllabus.in/"
+            target="_blank"
+             rel="noopener noreferrer"
+            className="font-bold hover:text-[#6F00CD] transition-all ease duration-300"
+          >
+            Beyond Syllabus
+          </a>
+          <a
             href="/#vision"
             className="font-bold hover:text-[#6F00CD] transition-all ease duration-300"
           >
@@ -120,6 +128,17 @@ export const Navbar = () => {
               </a>
             </li>
             <li>
+               <a
+                 href="https://beyondsyllabus.in/"
+            target="_blank"
+             rel="noopener noreferrer"
+                className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
+                onClick={() => setIsOpen(false)}
+              >
+                Beyond Syllabus
+              </a> 
+            </li>
+             <li> 
               <a
                 href="#vision"
                 className="block px-6 py-3 text-white hover:bg-purple-500 hover:text-white transition"
