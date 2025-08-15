@@ -9,11 +9,10 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
   const [step, setStep] = useState(1);
   const [studentName, setStudentName] = useState("");
   const [collegeName, setCollegeName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [growthSupport, setGrowthSupport] = useState("");
   const [syllabusChallenges, setSyllabusChallenges] = useState("");
   const [teachingMethod, setTeachingMethod] = useState("");
-  const [messageEducator, setMessageEducator] = useState("");
-  const [desiredChanges, setDesiredChanges] = useState("");
+
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -35,8 +34,8 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
         }
         break;
       case 3:
-        if (!/^\d{10}$/.test(phone)) {
-          setError("Please enter a valid 10-digit phone number.");
+        if (growthSupport.trim().length < 60) {
+          setError("Please enter at least 60 characters.");
           return false;
         }
         break;
@@ -52,18 +51,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
           return false;
         }
         break;
-      case 6:
-        if (messageEducator.trim().length < 60) {
-          setError("Please enter at least 60 characters.");
-          return false;
-        }
-        break;
-      case 7:
-        if (desiredChanges.trim().length < 60) {
-          setError("Please enter at least 60 characters.");
-          return false;
-        }
-        break;
+
       default:
         break;
     }
@@ -73,7 +61,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
   const handleNext = async () => {
     if (!validateStep()) return;
 
-    if (step < 7) {
+    if (step < 5) {
       setStep(step + 1);
     } else {
       setLoading(true); // start loading
@@ -87,11 +75,9 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
           body: JSON.stringify({
             studentName,
             collegeName,
-            phone,
+            growthSupport,
             syllabusChallenges,
             teachingMethod,
-            messageEducator,
-            desiredChanges,
           }),
         });
 
@@ -105,11 +91,10 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
         // Reset form fields
         setStudentName("");
         setCollegeName("");
-        setPhone("");
+        setGrowthSupport("");
         setSyllabusChallenges("");
         setTeachingMethod("");
-        setMessageEducator("");
-        setDesiredChanges("");
+
         setError("");
         setStep(1);
         onClose();
@@ -154,19 +139,21 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
         {/* Card */}
         <div className="bg-black/20 rounded-lg p-6 text-left">
-          <div className="text-purple-200 text-sm mb-3">Step {step} of 7</div>
+          <div className="text-purple-200 text-sm mb-3">Step {step} of 5</div>
 
           {/* Error Message */}
           {error && <div className="text-red-400 mb-3 text-sm">{error}</div>}
 
           {step === 1 && (
             <>
-              <label className="block text-base mb-2">Student Name:</label>
+              <label className="block text-base mb-2">
+                Student or Faculity
+              </label>
               <input
                 type="text"
                 value={studentName}
                 onChange={(e) => setStudentName(e.target.value)}
-                placeholder="Enter your name"
+                placeholder="Enter you answer"
                 className="w-full px-3 py-2 rounded-md bg-transparent border border-white/40 text-white outline-none focus:border-purple-600"
               />
             </>
@@ -174,12 +161,15 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
           {step === 2 && (
             <>
-              <label className="block text-base mb-2">College Name:</label>
+              <label className="block text-base mb-2">
+                If you could change anything in your field or system, what would
+                it be?
+              </label>
               <input
                 type="text"
                 value={collegeName}
                 onChange={(e) => setCollegeName(e.target.value)}
-                placeholder="Enter your college name"
+                placeholder="Enter you answer"
                 className="w-full px-3 py-2 rounded-md bg-transparent border border-white/40 text-white outline-none focus:border-purple-600"
               />
             </>
@@ -187,16 +177,15 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
           {step === 3 && (
             <>
-              <label className="block text-base mb-2">Phone Number:</label>
+              <label className="block text-base mb-2">
+                What’s the one form of support you need most right now to grow?
+              </label>
               <div className="flex rounded-md bg-transparent border border-white/40 overflow-hidden">
-                <span className="px-3 py-2 bg-black/40 text-gray-200 select-none">
-                  +91
-                </span>
                 <input
-                  type="tel"
-                  value={phone}
-                  onChange={(e) => setPhone(e.target.value)}
-                  placeholder="Enter your phone number"
+                  type="text"
+                  value={growthSupport}
+                  onChange={(e) => setGrowthSupport(e.target.value)}
+                  placeholder="Enter you answer"
                   className="flex-1 px-3 py-2 bg-transparent text-white outline-none focus:border-purple-600"
                 />
               </div>
@@ -206,13 +195,14 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
           {step === 4 && (
             <>
               <label className="block text-base mb-2">
-                What are the challenges you face with the current syllabus?
+                What are the challenges you face with the current
+                learning system?
               </label>
               <textarea
                 value={syllabusChallenges}
                 onChange={(e) => setSyllabusChallenges(e.target.value)}
                 rows={4}
-                placeholder="Share your challenges..."
+                placeholder="Enter you answer"
                 className="w-full px-3 py-2 rounded-md bg-transparent border border-white/40 text-white outline-none focus:border-purple-600"
               />
             </>
@@ -221,45 +211,13 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
           {step === 5 && (
             <>
               <label className="block text-base mb-2">
-                If you were the teacher now, how would you teach so students
-                actually understand and enjoy learning?
+                The changes that you wish to see implemented
               </label>
               <textarea
                 value={teachingMethod}
                 onChange={(e) => setTeachingMethod(e.target.value)}
                 rows={4}
-                placeholder="Describe your teaching method..."
-                className="w-full px-3 py-2 rounded-md bg-transparent border border-white/40 text-white outline-none focus:border-purple-600"
-              />
-            </>
-          )}
-
-          {step === 6 && (
-            <>
-              <label className="block text-base mb-2">
-                You have one chance to speak directly to every educator in the
-                country. What’s your powerful message?
-              </label>
-              <textarea
-                value={messageEducator}
-                onChange={(e) => setMessageEducator(e.target.value)}
-                rows={4}
-                placeholder="Write your message..."
-                className="w-full px-3 py-2 rounded-md bg-transparent border border-white/40 text-white outline-none focus:border-purple-600"
-              />
-            </>
-          )}
-
-          {step === 7 && (
-            <>
-              <label className="block text-base mb-2">
-                The changes that you wish to see implemented:
-              </label>
-              <textarea
-                value={desiredChanges}
-                onChange={(e) => setDesiredChanges(e.target.value)}
-                rows={4}
-                placeholder="List the changes..."
+                placeholder="Enter you answer"
                 className="w-full px-3 py-2 rounded-md bg-transparent border border-white/40 text-white outline-none focus:border-purple-600"
               />
             </>
@@ -300,7 +258,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
                   ></path>
                 </svg>
               )}
-              {loading ? "Submitting..." : step === 7 ? "Submit →" : "Next →"}
+              {loading ? "Submitting..." : step === 5 ? "Submit →" : "Next →"}
             </button>
           </div>
         </div>

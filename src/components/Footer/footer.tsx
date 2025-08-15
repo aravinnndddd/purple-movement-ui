@@ -1,7 +1,6 @@
 import logo from "../../assets/logos/logo_pm.png";
 import { Instagram, MapPin, Copyright } from "lucide-react";
 import { Linkedin } from "lucide-react";
-import { FaXTwitter } from "react-icons/fa6";
 
 export const Footer = () => {
   return (
@@ -14,23 +13,34 @@ export const Footer = () => {
           {/* Left Column - Logo & About */}
           <div className="md:col-span-3 flex flex-col">
             <div className="flex justify-start mb-5">
-              <img src={logo} alt="Purple Movement Logo" className="h-16 object-contain" />
+              <img
+                src={logo}
+                alt="Purple Movement Logo"
+                className="h-16 object-contain"
+              />
             </div>
             <p className="text-[rgba(242,242,242,1)] text-base font-normal leading-6 mb-6">
-              <span className="font-bold text-[1.5rem]">The Purple Movement</span>
+              <span className="font-bold text-[1.5rem]">
+                The Purple Movement
+              </span>
               <br />
               Rebuilding how India learns
             </p>
 
             {/* Social Media Icons */}
             <div className="flex items-center gap-4 mt-auto">
-              <a href="#" target="_blank" rel="noopener noreferrer">
-                <FaXTwitter className="h-5 w-5 text-white hover:text-purple-400" />
-              </a>
-              <a href="https://www.instagram.com/tpm.live" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.instagram.com/tpm.live"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Instagram className="h-5 w-5 text-white hover:text-purple-400" />
               </a>
-              <a href="#" target="_blank" rel="noopener noreferrer">
+              <a
+                href="https://www.linkedin.com/company/the-purple-movement/posts/?feedView=all"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 <Linkedin className="h-5 w-5 text-white hover:text-purple-400" />
               </a>
             </div>
@@ -40,23 +50,33 @@ export const Footer = () => {
           <div className="md:col-span-9 flex flex-col md:flex-row justify-between pt-6">
             {/* Quick Links */}
             <div className="flex flex-col ">
-              <h3 className="text-[#F2F2F2] font-bold text-base mb-4">Quick Links</h3>
+              <h3 className="text-[#F2F2F2] font-bold text-base mb-4">
+                Quick Links
+              </h3>
               <ul className="text-[rgba(242,242,242,1)] font-normal space-y-3">
                 <li className="hover:text-purple-400 transition-colors">
-                  <a href="#" className="inline-block">About</a>
+                  <a href="#about" className="inline-block">
+                    About
+                  </a>
                 </li>
                 <li className="hover:text-purple-400 transition-colors">
-                  <a href="#" className="inline-block">μVerse</a>
+                  <a href="#muverse" className="inline-block">
+                    μVerse
+                  </a>
                 </li>
                 <li className="hover:text-purple-400 transition-colors">
-                  <a href="#" className="inline-block">Vision</a>
+                  <a href="#vision" className="inline-block">
+                    Vision
+                  </a>
                 </li>
               </ul>
             </div>
 
             {/* Contact Us */}
             <div className="flex flex-col mt-8 md:mt-0">
-              <h3 className="text-[#F2F2F2] font-medium text-base mb-4">Contact Us</h3>
+              <h3 className="text-[#F2F2F2] font-medium text-base mb-4">
+                Contact Us
+              </h3>
               <div className="flex items-start gap-3">
                 <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
                   <MapPin className="w-5 h-5 text-white" />
