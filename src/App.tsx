@@ -1,7 +1,15 @@
-import Home from "./pages/Home";
+import { Routes, Route } from "react-router-dom";
+
+import Events from "./pages/Events";
+import { HomePage } from "./HomePage";
 
 const App = () => {
-  return <Home />;
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage onJoinUs={() => {}} />} />
+      <Route path="/events" element={<Events />} />
+    </Routes>
+  );
 };
 
 export default App;

@@ -10,9 +10,9 @@ const JoinUsButton = ({ onClick, className, children, ...props }: Button) => {
     <button
       onClick={onClick}
       className={clsx(
-        `w-fit p-2 px-4 sm:px-6 sm:py-2 bg-[#6F00CD] hover:bg-purple-500 
+        ` w-[68.54px] h-[17.55px] md:w-[164px] md:h-[42px] mt-[10px] bg-[#6F00CD] hover:bg-transparent border-[#6F00CD] border-2
                     text-center rounded-[20px] text-white text-sm sm:text-base
-                    font-semibold ease transition-all duration-300
+                    font-semibold ease transition-all duration-300 text-[8px] md:text-[20px]
                     `,
         className
       )}
