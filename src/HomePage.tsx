@@ -26,12 +26,14 @@ export const HomePage = ({}: // value,
 }) => {
   const heroRef = useRef<HTMLDivElement | null>(null);
   const [viewJoinModal, setViewJoinModal] = useState(false);
-  const onClose = () => setViewJoinModal(false);
   const onJoinUs = () => {
     setViewJoinModal(true);
     onJoinUs();
   };
-
+  const onClose = () => {
+    setViewJoinModal(false);
+    onClose();
+  };
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Hero Title Animation
