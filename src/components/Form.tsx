@@ -49,7 +49,7 @@ export default function Form({ isOpen, onClose }: FormProps) {
       <div
         ref={dialogRef}
         tabIndex={-1}
-        className="flex md:gap-20 mx-10 bg-[#150b25] p-6 rounded-2xl w-full md:h-[300px] max-w-[600px] shadow-lg relative text-white items-center animate-scaleUp"
+        className="flex md:gap-10 mx-10 bg-[#150b25] p-6 rounded-2xl w-full md:h-[300px] max-w-[600px] shadow-lg relative text-white items-center animate-scaleUp"
       >
         {/* Close button */}
         <button
