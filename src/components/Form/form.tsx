@@ -148,16 +148,19 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
     }
   }, [isOpen]);
 
-  const toggleRole = (role: Role) => {
-    setData((prev) => {
-      const exists = prev.roles.includes(role);
-      const roles = exists
-        ? prev.roles.filter((r) => r !== role)
-        : [...prev.roles, role];
-      const otherRole = roles.includes("Other") ? prev.otherRole : "";
-      return { ...prev, roles, otherRole };
-    });
-  };
+ const toggleRole = (role: Role) => {
+  setData(prev => {
+    let roles = [...prev.roles];
+    if (roles.includes(role)) {
+      roles = roles.filter(r => r !== role);
+    } else {
+      roles.push(role);
+      if (role === "Student") roles = roles.filter(r => r !== "Teacher");
+      if (role === "Teacher") roles = roles.filter(r => r !== "Student");
+    }
+    return { ...prev, roles, otherRole: roles.includes("Other") ? prev.otherRole : "" };
+  });
+};
 
   const toggleExcite = (label: string) => {
     setData((prev) => {
