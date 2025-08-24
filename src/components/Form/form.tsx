@@ -21,7 +21,6 @@ interface FormProps {
 
 const WEB_APP_URL = import.meta.env.VITE_GSHEETS_WEBAPP_URL;
 
-
 const ROLES: Role[] = [
   "Student",
   "Teacher",
@@ -150,12 +149,19 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
   const toggleRole = (role: Role) => {
     setData((prev) => {
-      const exists = prev.roles.includes(role);
-      const roles = exists
-        ? prev.roles.filter((r) => r !== role)
-        : [...prev.roles, role];
-      const otherRole = roles.includes("Other") ? prev.otherRole : "";
-      return { ...prev, roles, otherRole };
+      let roles = [...prev.roles];
+      if (roles.includes(role)) {
+        roles = roles.filter((r) => r !== role);
+      } else {
+        roles.push(role);
+        if (role === "Student") roles = roles.filter((r) => r !== "Teacher");
+        if (role === "Teacher") roles = roles.filter((r) => r !== "Student");
+      }
+      return {
+        ...prev,
+        roles,
+        otherRole: roles.includes("Other") ? prev.otherRole : "",
+      };
     });
   };
 
@@ -171,20 +177,22 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
   const canNext = useMemo(() => {
     if (step === 0) {
-      return data.roles.length > 0 && (!data.roles.includes("Other") || data.otherRole.trim() !== "");
+      return (
+        data.roles.length > 0 &&
+        (!data.roles.includes("Other") || data.otherRole.trim() !== "")
+      );
     }
     if (step === 1) return data.name.trim().length > 0;
     if (step === 2) return data.purpose.trim().length > 0;
     if (step === 3) return data.exciteReasons.length > 0;
     if (step === 4) {
       if (!data.whatsappOptIn) return false;
-      if (data.whatsappOptIn === "Yes")
-        return data.whatsappNumber.trim().length > 0;
+      return data.whatsappNumber.trim().length > 0;
     }
     return true;
   }, [step, data]);
 
- const submit = async () => {
+  const submit = async () => {
   setSubmitting(true);
   setError(null);
 
@@ -197,8 +205,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
     mediaLinks: data.mediaLinks.trim(),
     exciteReasons: data.exciteReasons,
     whatsappOptIn: data.whatsappOptIn,
-    whatsappNumber:
-      data.whatsappOptIn === "Yes" ? data.whatsappNumber.trim() : "",
+    whatsappNumber: data.whatsappNumber.trim(),
   };
 
   try {
@@ -211,15 +218,12 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
       mode: "no-cors",
     });
 
-    setStep(5);
-    setData(initialData);
-
-    
     if (data.whatsappOptIn === "Yes") {
-      setTimeout(() => {
-        window.location.href =
-          "https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=ac_t";
-      }, 2000);
+      window.location.href =
+        "https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=ac_t";
+    } else {
+      setStep(5);
+      setData(initialData);
     }
   } catch (err: any) {
     setError(err.message || "Something went wrong. Please try again.");
@@ -227,7 +231,6 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
     setSubmitting(false);
   }
 };
-
   const next = () => setStep((s) => Math.min(s + 1, stepsCount - 1));
   const back = () => setStep((s) => Math.max(s - 1, 0));
 
@@ -239,10 +242,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
         className="absolute inset-0 bg-black/70 backdrop-blur-sm"
         onClick={() => !submitting && onClose()}
       />
-      <div
-        className="relative z-[1000] w-[92%] md:w-[800px] rounded-3xl border border-white/20 p-6 md:p-8 text-white shadow-2xl bg-[#160C2A]
-        bg-[radial-gradient(1200px_600px_at_80%_-20%,rgba(168,85,247,0.25),rgba(0,0,0,0)),radial-gradient(800px_400px_at_-20%_120%,rgba(124,58,237,0.18),rgba(0,0,0,0))]"
-      >
+      <div className="relative z-[1000] w-[92%] md:w-[800px] rounded-3xl border border-white/20 p-6 md:p-8 text-white shadow-2xl bg-[#160C2A] bg-[radial-gradient(1200px_600px_at_80%_-20%,rgba(168,85,247,0.25),rgba(0,0,0,0)),radial-gradient(800px_400px_at_-20%_120%,rgba(124,58,237,0.18),rgba(0,0,0,0))]">
         <button
           className="absolute top-4 right-4 text-white/70 hover:text-white text-2xl leading-none"
           onClick={() => !submitting && onClose()}
@@ -254,7 +254,9 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
           <>
             <div className="flex items-start gap-4 mb-4">
               <div className="flex-1">
-                <h2 className="text-3xl md:text-4xl font-extrabold">Join Purple</h2>
+                <h2 className="text-3xl md:text-4xl font-extrabold">
+                  Join Purple
+                </h2>
                 <p className="text-white/70 mt-2">
                   One tribe. One vision. One unstoppable movement.
                 </p>
@@ -315,7 +317,10 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
           {step === 2 && (
             <>
-              <StepHeader title="Why do you want to join the Purple Movement?" subtitle="What is your purpose? Share your motivation. You can also include any relevant media links." />
+              <StepHeader
+                title="Why do you want to join the Purple Movement?"
+                subtitle="What is your purpose? Share your motivation. You can also include any relevant media links."
+              />
               <Textarea
                 rows={5}
                 placeholder="Your story, goals, or what calls you to Purple…"
@@ -352,56 +357,54 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
           )}
 
           {step === 4 && (
-  <>
-    <StepHeader title="Would you like to join our WhatsApp group to connect directly with the Purple community?" />
-    <div className="flex gap-3 mb-3">
-      {["Yes", "Not right now"].map((c) => (
-        <CheckPill
-          key={c}
-          checked={data.whatsappOptIn === (c as WhatsAppChoice)}
-          label={c}
-          onClick={() =>
-            setData((prev) => ({
-              ...prev,
-              whatsappOptIn: c as WhatsAppChoice,
-            
-              whatsappNumber: c === "Yes" ? prev.whatsappNumber : "",
-            }))
-          }
-        />
-      ))}
-    </div>
+            <>
+              <StepHeader title="Would you like to join our WhatsApp group to connect directly with the Purple community?" />
+              <div className="flex gap-3 mb-3">
+                {["Yes", "Not right now"].map((c) => (
+                  <CheckPill
+                    key={c}
+                    checked={data.whatsappOptIn === (c as WhatsAppChoice)}
+                    label={c}
+                    onClick={() =>
+                      setData((prev) => ({
+                        ...prev,
+                        whatsappOptIn: c as WhatsAppChoice,
+                      }))
+                    }
+                  />
+                ))}
+              </div>
 
-    {data.whatsappOptIn === "Yes" && (
-      <div className="mt-2">
-        <Input
-          type="tel"
-          inputMode="tel"
-          pattern="[\+]?[0-9]{7,15}"
-          placeholder="+1234567890"
-          maxLength={15}
-          value={data.whatsappNumber}
-          onChange={(e) =>
-            setData((prev) => ({
-              ...prev,
-              whatsappNumber: e.target.value,
-            }))
-          }
-        />
-        <p className="text-xs text-white/50 mt-1">
-          Include country code (e.g., +91 for India, +1 for USA).
-        </p>
-      </div>
-    )}
-  </>
-)}
+              <div className="mt-2">
+                <Input
+                  type="tel"
+                  inputMode="tel"
+                  pattern="[\+]?[0-9]{7,15}"
+                  placeholder="+1234567890"
+                  maxLength={15}
+                  value={data.whatsappNumber}
+                  onChange={(e) =>
+                    setData((prev) => ({
+                      ...prev,
+                      whatsappNumber: e.target.value,
+                    }))
+                  }
+                />
+                <p className="text-xs text-white/50 mt-1">
+                  Include country code (e.g., +91 for India, +1 for USA).
+                </p>
+              </div>
+            </>
+          )}
 
           {step === 5 && (
             <div className="text-center py-8">
               <h3 className="text-3xl md:text-4xl font-extrabold mb-3">
                 You’re now part of something unstoppable.
               </h3>
-              <p className="text-white/80">Welcome to the Purple Movement. ⚡</p>
+              <p className="text-white/80">
+                Welcome to the Purple Movement. ⚡
+              </p>
             </div>
           )}
         </div>
@@ -414,7 +417,11 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
 
         <div className="mt-8 flex justify-between items-center">
           {step > 0 && step < 5 && (
-            <PurpleButton variant="ghost" onClick={back} disabled={submitting}>
+            <PurpleButton
+              variant="ghost"
+              onClick={back}
+              disabled={submitting}
+            >
               Back
             </PurpleButton>
           )}
@@ -427,9 +434,6 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
             <PurpleButton onClick={submit} disabled={!canNext || submitting}>
               {submitting ? "Submitting..." : "Submit"}
             </PurpleButton>
-          )}
-          {step === 5 && (
-            <PurpleButton onClick={onClose}>Close</PurpleButton>
           )}
         </div>
       </div>
