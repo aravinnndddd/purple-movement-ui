@@ -1,5 +1,9 @@
 
 import { useEffect, useRef, useState } from "react";
+
+interface HomePageProps {
+  onJoinUs: () => void;
+}
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -14,11 +18,7 @@ import { Hero } from "./components/Hero/heroPage";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface HomePageProps {
-  onJoinUs: () => void;
-}
-
-export const HomePage: React.FC<HomePageProps> = ({ onJoinUs }) => {
+export const HomePage: React.FC<HomePageProps> = () => {
   const heroRef = useRef<HTMLDivElement | null>(null);
   const [viewJoinModal, setViewJoinModal] = useState(false);
 
@@ -87,7 +87,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onJoinUs }) => {
         id="home"
       >
   <Form isOpen={viewJoinModal} onClose={handleCloseJoinModal} />
-  <Hero onJoinUs={onJoinUs || handleOpenJoinModal} />
+  <Hero onJoinUs={handleOpenJoinModal} />
       </div>
 
       <div className="fade-section" id="about">
@@ -101,7 +101,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onJoinUs }) => {
         <VisionAndImpact />
       </div>
       <div className="fade-section" id="verse">
-        <Muverse onJoinUs={onJoinUs || handleOpenJoinModal} />
+        <Muverse onJoinUs={handleOpenJoinModal} />
       </div>
       <Footer />
     </div>
