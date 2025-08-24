@@ -187,7 +187,7 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
     return true;
   }, [step, data]);
 
- const submit = async () => {
+const submit = async () => {
   setSubmitting(true);
   setError(null);
 
@@ -214,16 +214,8 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
       mode: "no-cors",
     });
 
-    setStep(5);
-    setData(initialData);
-
-    
-    if (data.whatsappOptIn === "Yes") {
-      setTimeout(() => {
-        window.location.href =
-          "https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=ac_t";
-      }, 2000);
-    }
+    window.location.href =
+      "https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB?mode=ac_t";
   } catch (err: any) {
     setError(err.message || "Something went wrong. Please try again.");
   } finally {
@@ -416,25 +408,22 @@ const Form: React.FC<FormProps> = ({ isOpen, onClose }) => {
         )}
 
         <div className="mt-8 flex justify-between items-center">
-          {step > 0 && step < 5 && (
-            <PurpleButton variant="ghost" onClick={back} disabled={submitting}>
-              Back
-            </PurpleButton>
-          )}
-          {step < 4 && (
-            <PurpleButton onClick={next} disabled={!canNext || submitting}>
-              Next
-            </PurpleButton>
-          )}
-          {step === 4 && (
-            <PurpleButton onClick={submit} disabled={!canNext || submitting}>
-              {submitting ? "Submitting..." : "Submit"}
-            </PurpleButton>
-          )}
-          {step === 5 && (
-            <PurpleButton onClick={onClose}>Close</PurpleButton>
-          )}
-        </div>
+  {step > 0 && step < 5 && (
+    <PurpleButton variant="ghost" onClick={back} disabled={submitting}>
+      Back
+    </PurpleButton>
+  )}
+  {step < 4 && (
+    <PurpleButton onClick={next} disabled={!canNext || submitting}>
+      Next
+    </PurpleButton>
+  )}
+  {step === 4 && (
+    <PurpleButton onClick={submit} disabled={!canNext || submitting}>
+      {submitting ? "Submitting..." : "Submit"}
+    </PurpleButton>
+  )}
+</div>
       </div>
     </div>
   );
