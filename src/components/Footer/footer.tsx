@@ -1,103 +1,83 @@
 import logo from "../../assets/logos/logo_pm.png";
-import { Instagram, MapPin, Copyright } from "lucide-react";
-import { Linkedin } from "lucide-react";
+import { Instagram, Copyright, Linkedin } from "lucide-react";
 
 export const Footer = () => {
   return (
     <footer
       id="contact"
-      className="bg-[#201629] w-full relative mt-20 md:mt-5 overflow-hidden pt-12 pb-8 "
+      className="bg-[#201629] w-full mt-20 md:mt-5 pt-12 pb-8"
     >
-      <div className="container mx-auto px-4 md:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
+      <div className="container mx-auto px-4 sm:px-6 md:px-10">
+        <div className="flex flex-col gap-12 md:flex-row md:justify-between md:items-start">
           {/* Left Column - Logo & About */}
-          <div className="md:col-span-3 flex flex-col">
-            <div className="flex justify-start mb-5">
+          <div className="flex flex-col">
+            <div className="mb-5">
               <img
                 src={logo}
                 alt="Purple Movement Logo"
-                className="h-16 object-contain"
+                className="h-16 object-contain w-auto"
               />
             </div>
-            <p className="text-[rgba(242,242,242,1)] text-base font-normal leading-6 mb-6">
-              <span className="font-bold text-[1.5rem]">
-                The Purple Movement
-              </span>
-              <br />
-              Rebuilding how India learns
-            </p>
+
+            {/* Text Block */}
+            <div className="mb-6">
+              <h2 className="text-2xl font-bold text-white">The Purple Movement</h2>
+              <p className="text-base text-white/80 mt-1">Rebuilding how India learns</p>
+            </div>
 
             {/* Social Media Icons */}
-            <div className="flex items-center gap-4 mt-auto">
+            <div className="flex items-center gap-4">
               <a
                 href="https://www.instagram.com/tpm.live"
+                aria-label="Instagram"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-white hover:text-purple-400 transition-colors"
               >
-                <Instagram className="h-5 w-5 text-white hover:text-purple-400" />
+                <Instagram className="h-5 w-5" />
               </a>
               <a
                 href="https://www.linkedin.com/company/the-purple-movement/posts/?feedView=all"
+                aria-label="LinkedIn"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="text-white hover:text-purple-400 transition-colors"
               >
-                <Linkedin className="h-5 w-5 text-white hover:text-purple-400" />
+                <Linkedin className="h-5 w-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links & Contact Us */}
-          <div className="md:col-span-9 flex flex-col md:flex-row justify-between pt-6">
-            {/* Quick Links */}
-            <div className="flex flex-col ">
-              <h3 className="text-[#F2F2F2] font-bold text-base mb-4">
-                Quick Links
-              </h3>
-              <ul className="text-[rgba(242,242,242,1)] font-normal space-y-3">
-                <li className="hover:text-purple-400 transition-colors">
-                  <a href="#about" className="inline-block">
-                    About
-                  </a>
-                </li>
-                <li className="hover:text-purple-400 transition-colors">
-                  <a href="#muverse" className="inline-block">
-                    μVerse
-                  </a>
-                </li>
-                <li className="hover:text-purple-400 transition-colors">
-                  <a href="#vision" className="inline-block">
-                    Vision
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact Us */}
-            <div className="flex flex-col mt-8 md:mt-0">
-              <h3 className="text-[#F2F2F2] font-medium text-base mb-4">
-                Contact Us
-              </h3>
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <MapPin className="w-5 h-5 text-white" />
-                </div>
-                <address className="text-[rgba(242,242,242,1)] text-base font-light leading-6 not-italic">
-                  Technopark
-                  <br />
-                  Thiruvananthapuram, Kerala, India.
-                </address>
-              </div>
-            </div>
+          {/* Quick Links */}
+          <div className="flex flex-col md:items-center">
+            <h3 className="text-white font-bold text-base mb-4">
+              Quick Links
+            </h3>
+            <ul className="text-white/80 font-normal space-y-3">
+              <li>
+                <a href="#about" className="hover:text-purple-400 transition-colors">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#muverse" className="hover:text-purple-400 transition-colors">
+                  μVerse
+                </a>
+              </li>
+              <li>
+                <a href="#vision" className="hover:text-purple-400 transition-colors">
+                  Vision
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
         {/* Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-            <div className="flex items-center gap-1 text-sm text-[rgba(242,242,242,1)] font-normal">
-              <Copyright className="w-4 h-4 text-white shrink-0" />
-              <p>2025 The Purple Movement. All rights reserved.</p>
-            </div>
+        <div className="mt-12 pt-6 border-t border-white/10 text-center">
+          <div className="flex flex-col md:flex-row justify-center items-center gap-2 text-sm text-white/80">
+            <Copyright className="w-4 h-4" />
+            <p>2025 The Purple Movement. All rights reserved.</p>
           </div>
         </div>
       </div>
