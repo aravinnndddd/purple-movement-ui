@@ -1,104 +1,99 @@
 import logo from "../../assets/logos/logo_pm.png";
-import { Instagram, MapPin, Copyright } from "lucide-react";
-import { Linkedin } from "lucide-react";
+import { Copyright } from "lucide-react";
+
+
+const ACCESS_KEY = import.meta.env.VITE_FORM_ACCESS_KEY;
 
 export const Footer = () => {
   return (
-    <footer
-      id="contact"
-      className="bg-[#201629] w-full relative mt-20 md:mt-5 overflow-hidden pt-12 pb-8 "
-    >
-      <div className="container mx-auto px-4 md:px-16">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
-          {/* Left Column - Logo & About */}
-          <div className="md:col-span-3 flex flex-col">
-            <div className="flex justify-start mb-5">
-              <img
-                src={logo}
-                alt="Purple Movement Logo"
-                className="h-16 object-contain"
-              />
-            </div>
-            <p className="text-[rgba(242,242,242,1)] text-base font-normal leading-6 mb-6">
-              <span className="font-bold text-[1.5rem]">
-                The Purple Movement
-              </span>
-              <br />
-              Rebuilding how India learns
-            </p>
+    <footer id="contact" className="bg-[#201629] w-full py-12 mt-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+        <div className="flex flex-col gap-5 md:flex-row justify-between">
+          {/* Logo and Title */}
+          <div className="flex flex-col items-start gap-3">
+            <img
+              src={logo}
+              alt="Purple Movement Logo"
+              className="h-10 w-auto object-contain"
+            />
+           <div className="flex flex-col gap-5 md:flex-row md:justify-between md:gap-40">
+             <h2 className="text-xl font-bold text-white">
+              The Purple Movement
+            </h2>
+            {/* Navigation Links */}
+          <nav className="flex flex-col items-start md:items-center">
+            <ul className="flex flex-wrap gap-8 text-white/90 font-medium">
+              <li>
+                <a
+                  href="#about"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#muverse"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  μVerse
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#vision"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  Vision
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#faq"
+                  className="hover:text-purple-400 transition-colors"
+                >
+                  FAQʼs
+                </a>
+              </li>
+            </ul>
+          </nav>
+           </div>
 
-            {/* Social Media Icons */}
-            <div className="flex items-center gap-4 mt-auto">
-              <a
-                href="https://www.instagram.com/tpm.live"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Instagram className="h-5 w-5 text-white hover:text-purple-400" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/the-purple-movement/posts/?feedView=all"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Linkedin className="h-5 w-5 text-white hover:text-purple-400" />
-              </a>
-            </div>
           </div>
 
-          {/* Quick Links & Contact Us */}
-          <div className="md:col-span-9 flex flex-col md:flex-row justify-between pt-6">
-            {/* Quick Links */}
-            <div className="flex flex-col ">
-              <h3 className="text-[#F2F2F2] font-bold text-base mb-4">
-                Quick Links
-              </h3>
-              <ul className="text-[rgba(242,242,242,1)] font-normal space-y-3">
-                <li className="hover:text-purple-400 transition-colors">
-                  <a href="#about" className="inline-block">
-                    About
-                  </a>
-                </li>
-                <li className="hover:text-purple-400 transition-colors">
-                  <a href="#muverse" className="inline-block">
-                    μVerse
-                  </a>
-                </li>
-                <li className="hover:text-purple-400 transition-colors">
-                  <a href="#vision" className="inline-block">
-                    Vision
-                  </a>
-                </li>
-              </ul>
-            </div>
-
-            {/* Contact Us */}
-            <div className="flex flex-col mt-8 md:mt-0">
-              <h3 className="text-[#F2F2F2] font-medium text-base mb-4">
-                Contact Us
-              </h3>
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <MapPin className="w-5 h-5 text-white" />
-                </div>
-                <address className="text-[rgba(242,242,242,1)] text-base font-light leading-6 not-italic">
-                  Technopark
-                  <br />
-                  Thiruvananthapuram, Kerala, India.
-                </address>
-              </div>
-            </div>
+      
+          {/* Feedback Form */}
+          <div>
+            <h3 className="text-[#F2F2F2] font-medium text-base mb-4">
+              Send Us Feedback
+            </h3>
+            <form
+              action="https://api.web3forms.com/submit" 
+              method="POST"
+              className="w-full md:w-96 flex flex-col gap-3 text-sm"
+            >
+              <input type="hidden" name="access_key" value={ACCESS_KEY}></input>
+              <textarea
+                name="feedback"
+                placeholder="Your Feedback"
+                rows={4}
+                required
+                className="w-full px-4 py-2 rounded-md bg-white/10 placeholder-white/60 text-white resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 transition duration-200"
+              />
+              <button
+                type="submit"
+                className="self-start bg-purple-600 text-white px-5 py-2 rounded-md hover:bg-purple-700 transition-colors duration-200"
+              >
+                Send
+              </button>
+            </form>
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-6 border-t border-white/10">
-          <div className="flex flex-col md:flex-row justify-center items-center gap-4">
-            <div className="flex items-center gap-1 text-sm text-[rgba(242,242,242,1)] font-normal">
-              <Copyright className="w-4 h-4 text-white shrink-0" />
-              <p>2025 The Purple Movement. All rights reserved.</p>
-            </div>
-          </div>
+        {/* Footer Bottom */}
+        <div className="mt-6 pt-6 border-t border-white/10 flex justify-center items-center gap-1 text-xs text-white/60">
+          <Copyright className="w-3 h-3" />
+          <span>2025 The Purple Movement. All rights reserved.</span>
         </div>
       </div>
     </footer>
