@@ -6,12 +6,11 @@ export const CallToAction = () => {
       {/* Text Section */}
       <div className="max-w-full md:max-w-[700px] text-center md:text-left flex flex-col justify-start items-start gap-4">
         <div className="w-full bg-gradient-to-t from-[#D6A4FF] to-[#6F00CD] bg-clip-text text-transparent text-xl sm:text-2xl md:text-4xl font-bold font-montserrat">
-          This isn&apos;t the end.
+          Your Journey Begins
         </div>
 
-        <div className="w-full text-white text-sm sm:text-base md:text-lg font-montserrat font-semibold leading-relaxed">
-          It&apos;s only the beginning. <br />
-          The spark has just been ignited — and with every learner, teacher, and changemaker who joins us, it grows into a fire.
+        <div className="w-full text-white text-sm sm:text-base md:text-lg font-montserrat font-normal leading-relaxed">
+          You’ve sparked the start of a borderless, collaborative journey. Ideas will grow, connections will flourish, and together, we’ll turn ambition into real impact. Get ready the movement ignites with you.
           <br /><br />
           <span className="bg-gradient-to-l from-[#D6A4FF] to-[#6F00CD] bg-clip-text text-transparent text-base sm:text-lg md:text-2xl font-bold font-montserrat">
             Together, we are the Purple Movement.
