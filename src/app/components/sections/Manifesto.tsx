@@ -72,9 +72,8 @@ export const Manifesto = () => {
       </div>
 
       {/* Intro */}
-      <div className="max-w-xl text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
-        We are not waiting for the future. We are building it. With courage,
-        code, creativity, and community.
+      <div className="max-w-lg text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
+        This is our collective vision, a declaration of what we stand for and why we come together.
       </div>
 
       <div className="h-10 flex justify-center items-center text-white text-4xl md:text-5xl font-bold font-montserrat">
@@ -120,9 +119,8 @@ export const Manifesto = () => {
         “
       </div>
 
-      <div className="max-w-md text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
-        This is The Purple Movement. <br />
-        Learning with purpose. Powered by people.
+      <div className="max-w-lg text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
+        Together, we turn these words into action and shape the future.
       </div>
     </div>
   );
