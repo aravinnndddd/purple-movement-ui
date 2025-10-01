@@ -103,10 +103,13 @@ export const Manifesto = () => {
 
   // Touch scrolling
   const touchStartY = useRef<number | null>(null);
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    touchStartY.current = e.touches[0].clientY;
-    enableHijacking();
-  }, [enableHijacking]);
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+      enableHijacking();
+    },
+    [enableHijacking]
+  );
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent) => {
@@ -143,15 +146,7 @@ export const Manifesto = () => {
   }, []);
 
   return (
-    <div
-      className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4"
-      onWheel={handleWheel}
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      onMouseEnter={enableHijacking}
-      onMouseLeave={disableHijacking}
-    >
+    <div className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4">
       <div className="max-w-full text-center">
         <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold font-montserrat">
           Our{" "}
@@ -162,46 +157,57 @@ export const Manifesto = () => {
       </div>
 
       <div className="max-w-lg text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
-        This is our collective vision, a declaration of what we stand for and why we come together.
+        This is our collective vision, a declaration of what we stand for and
+        why we come together.
       </div>
 
       <div className="h-10 flex justify-center items-center text-white text-4xl md:text-5xl font-bold font-montserrat">
         “
       </div>
-
-      <div className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none">
-        <div
-          className="transition-transform duration-300 ease-out"
-          style={{
-            transform: `translateY(calc(50% - ${lineOffsets[currentIndex] + lineHeight / 2}px))`,
-          }}
-        >
-          {flatText.map((item, index) => (
-            <div
-              key={index}
-              className={`flex items-center justify-center transition-all duration-300 text-center will-change-transform
+      <div
+        className="w-full flex justify-center items-center"
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseEnter={enableHijacking}
+        onMouseLeave={disableHijacking}
+      >
+        <div className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none">
+          <div
+            className="transition-transform duration-300 ease-out"
+            style={{
+              transform: `translateY(calc(50% - ${
+                lineOffsets[currentIndex] + lineHeight / 2
+              }px))`,
+            }}
+          >
+            {flatText.map((item, index) => (
+              <div
+                key={index}
+                className={`flex items-center justify-center transition-all duration-300 text-center will-change-transform
                 ${
                   index === currentIndex
                     ? "text-violet-400 font-bold font-poppins scale-105 opacity-100"
                     : "text-white opacity-40 font-normal font-poppins scale-95"
                 }`}
-              style={{
-                fontSize: "16px",
-                minHeight: `${lineHeight}px`,
-                lineHeight: "1.4",
-                marginBottom:
-                  index < flatText.length - 1 &&
-                  flatText[index + 1].section !== item.section
-                    ? `${sectionGap}px`
-                    : "0px",
-              }}
-            >
-              {item.line}
-            </div>
-          ))}
+                style={{
+                  fontSize: "16px",
+                  minHeight: `${lineHeight}px`,
+                  lineHeight: "1.4",
+                  marginBottom:
+                    index < flatText.length - 1 &&
+                    flatText[index + 1].section !== item.section
+                      ? `${sectionGap}px`
+                      : "0px",
+                }}
+              >
+                {item.line}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
       <div className="h-10 flex justify-center items-center rotate-180 text-white text-4xl md:text-5xl font-bold font-montserrat">
         “
       </div>
