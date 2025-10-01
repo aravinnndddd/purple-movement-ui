@@ -19,16 +19,16 @@ export default function StepOne({
       svgPath: '/svgs/ind.svg',
     },
     {
-      id: 'government',
-      label: 'Government',
-      text: "Government departments, policymakers, and public institutions shaping programs, fostering the ecosystem, and enabling impactful collaboration.",
-      svgPath: '/svgs/gov.svg',
-    },
-    {
       id: 'organization',
       label: 'Organization',
       text: "Nonprofit organizations, startups, universities, and research labs enabling learning, fostering innovation, and creating scalable solutions.",
       svgPath: '/svgs/org.svg',
+    },
+    {
+      id: 'government',
+      label: 'Government',
+      text: "Government departments, policymakers, and public institutions shaping programs, fostering the ecosystem, and enabling impactful collaboration.",
+      svgPath: '/svgs/gov.svg',
     },
   ]
 

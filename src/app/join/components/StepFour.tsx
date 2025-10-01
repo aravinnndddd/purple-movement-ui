@@ -9,7 +9,7 @@ interface StepFourProps {
 
 export default function StepFour({ userName = "Friend", isAnonymous = false }: StepFourProps) {
   const handleWhatsAppJoin = () => {
-    window.open('https://chat.whatsapp.com/your-group-link', '_blank')
+    window.open('https://chat.whatsapp.com/JfnuaMproG51BoNJZ21LNB', '_blank')
   }
 
   // If user chose to stay anonymous, show simplified message
