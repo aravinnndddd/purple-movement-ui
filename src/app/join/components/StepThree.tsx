@@ -75,10 +75,10 @@ export default function StepThree({
       <div className="space-y-6">
         <div className="max-w-[864px] w-full mx-auto space-y-3">
           <h1 className="text-2xl sm:text-4xl font-bold font-montserrat text-white capitalize text-left pl-3 sm:pl-4">
-            Your Details
+            Tell Us About You
           </h1>
           <div className="justify-start text-white text-base font-normal font-montserrat capitalize pl-3 sm:pl-4">
-            Lorem ipsum dolor sit amet consectetur. Eu nulla risus platea tincidunt pellentesque praesent
+            We’d love to hear from you, or you can stay anonymous.
           </div>
         </div>
 
@@ -91,11 +91,11 @@ export default function StepThree({
                 type="checkbox"
                 checked={notInterested}
                 onChange={(e) => onChange({ notInterested: e.target.checked })}
-                className="w-5 h-5 border border-purple-700 bg-transparent appearance-none rounded-sm focus:ring-purple-500 focus:outline-none cursor-pointer"
+                className="w-5 h-5 border border-red-400 bg-transparent appearance-none rounded-sm focus:ring-purple-500 focus:outline-none cursor-pointer"
               />
               {notInterested && (
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                  <svg className="w-3 h-3 text-purple-700" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-3 h-3 text-red-400" fill="currentColor" viewBox="0 0 20 20">
                     <path
                       fillRule="evenodd"
                       d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
@@ -105,8 +105,8 @@ export default function StepThree({
                 </div>
               )}
             </div>
-            <span className="text-purple-700 text-xl font-medium font-poppins capitalize">
-              Not interested to share the details
+            <span className="text-red-400 text-xl font-medium font-poppins capitalize">
+              Stay Anonymous
             </span>
           </label>
         </div>

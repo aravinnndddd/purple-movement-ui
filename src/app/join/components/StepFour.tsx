@@ -4,11 +4,28 @@ import { FaWhatsapp } from "react-icons/fa6"
 
 interface StepFourProps {
   userName?: string
+  isAnonymous?: boolean
 }
 
-export default function StepFour({ userName = "Friend" }: StepFourProps) {
+export default function StepFour({ userName = "Friend", isAnonymous = false }: StepFourProps) {
   const handleWhatsAppJoin = () => {
     window.open('https://chat.whatsapp.com/your-group-link', '_blank')
+  }
+
+  // If user chose to stay anonymous, show simplified message
+  if (isAnonymous) {
+    return (
+      <div className="w-full px-4 sm:px-6">
+        <div className="max-w-6xl mx-auto flex justify-center">
+          <div className="w-[904px] h-96 bg-slate-900 rounded-[10px] flex items-center justify-center">
+            <div className="w-80 h-24 relative">
+              <div className="left-[19px] top-0 absolute text-center justify-start text-white text-5xl font-bold font-['Montserrat'] capitalize">Thank You!</div>
+              <div className="left-0 top-[74px] absolute text-center justify-start text-white text-xl font-normal font-['Poppins'] capitalize">We've received your response.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
   }
 
   return (
