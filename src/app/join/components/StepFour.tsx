@@ -20,7 +20,7 @@ export default function StepFour({ userName = "Friend", isAnonymous = false }: S
           <div className="w-[904px] h-96 bg-slate-900 rounded-[10px] flex items-center justify-center">
             <div className="w-80 h-24 relative">
               <div className="left-[19px] top-0 absolute text-center justify-start text-white text-5xl font-bold font-montserrat capitalize">Thank You!</div>
-              <div className="left-0 top-[74px] absolute text-center justify-start text-white text-xl font-normal font-poppins capitalize">We've received your response.</div>
+              <div className="left-0 top-[74px] absolute text-center justify-start text-white text-xl font-normal font-poppins capitalize">We&apos;ve received your response.</div>
             </div>
           </div>
         </div>
