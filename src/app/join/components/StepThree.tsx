@@ -196,7 +196,7 @@ export default function StepThree({
             Tell Us About You
           </h1>
           <div className="justify-start text-white text-base font-normal font-montserrat capitalize pl-3 sm:pl-4">
-            We'd love to hear from you, or you can stay anonymous.
+            We&apos;d love to hear from you, or you can stay anonymous.
           </div>
         </div>
 
