@@ -110,7 +110,7 @@ export const Manifesto = () => {
       </div>
 
       <div className="h-10 flex justify-center items-center text-white text-4xl md:text-5xl font-bold font-montserrat">
-        "
+        “
       </div>
 
       {/* Manual scrolling text with purple highlighting */}
@@ -155,7 +155,7 @@ export const Manifesto = () => {
       </div>
 
       <div className="h-10 flex justify-center items-center rotate-180 text-white text-4xl md:text-5xl font-bold font-montserrat">
-        "
+        “
       </div>
 
       <div className="max-w-lg text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
