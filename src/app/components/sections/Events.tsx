@@ -11,9 +11,27 @@ const events = [
     size: "small",
   },
   {
-    title: "Saddle",
+    title: "Saddle #1",
     imgPath: "/images/saddle.jpg",
     desc: "A skill-building event series to gear you up for opportunities.",
+    size: "small",
+  },
+  {
+    title: "PRN:80",
+    imgPath: "/images/p80-1.jpg",
+    desc: "PRN:80 is a tech talk series linking students with industry experts on emerging trends and applications.",
+    size: "large",
+  },
+  {
+    title: "STI:80",
+    imgPath: "/images/p80-2.jpg",
+    desc: "STI:80 is a talk series that connects students with industry professionals, helping bridge knowledge beyond classrooms.",
+    size: "small",
+  },
+  {
+    title: "AEC&B:80",
+    imgPath: "/images/p80-3.jpg",
+    desc: "AEC&B:80 is a conference focused on Digital Construction: The New Language of Construction Management.",
     size: "small",
   },
   {
@@ -23,11 +41,35 @@ const events = [
     size: "large",
   },
   {
-    title: "Stay Tuned...",
-    desc: null,
-    imgPath: null,
+    title: "Hacktober Fest",
+    imgPath: "/images/hkbr.jpg",
+    desc: "The playlist will guide students in getting started with contributions and participating effectively in Hacktober Fest 2025.",
     size: "small",
   },
+  {
+    title: "AEC&B:80",
+    imgPath: "/images/p80-4.jpg",
+    desc: "Ever wondered how do we bridge the gap between ambitious blueprints and the on-ground realities of infrastructure projects?",
+    size: "small",
+  },
+  {
+    title: "PRN:80",
+    imgPath: "/images/p80-5.jpg",
+    desc: "PRN:80 is a tech talk series linking students with industry experts on emerging trends and applications.",
+    size: "large",
+  },
+  {
+    title: "Ai+Compassion",
+    imgPath: "/images/aic.jpg",
+    desc: "We're proud to have The Purple Movement as a partner for the AI+Compassion Global Forum 2025.",
+    size: "large",
+  },
+  // {
+  //   title: "Stay Tuned...",
+  //   desc: null,
+  //   imgPath: null,
+  //   size: "small",
+  // },
 ];
 
 export const Events = () => {
