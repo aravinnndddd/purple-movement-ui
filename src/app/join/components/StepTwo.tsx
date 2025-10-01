@@ -1,7 +1,7 @@
 ﻿'use client'
 
 interface StepTwoFormData {
-  defining: string
+  selectedRole: string
   whyHere: string
   portfolioLink: string
 }
@@ -21,43 +21,60 @@ export default function StepTwo({
   onNext,
   onBack,
 }: StepTwoProps) {
-  const { defining, whyHere, portfolioLink } = formData
-  const canProceed = defining.trim() !== '' && whyHere.trim() !== ''
+  const { selectedRole, whyHere, portfolioLink } = formData
+  const canProceed = (selectedRole?.trim() || '') !== '' && (whyHere?.trim() || '') !== ''
 
-  const definingOptions = [
-    'Innovation & Technology',
-    'Social Impact & Change',
-    'Creative Expression',
-    'Business & Entrepreneurship',
-    'Education & Learning',
-    'Community Building',
-    'Environmental Sustainability',
-    'Cultural Preservation'
-  ]
+  // Define role options based on the category selected in StepOne
+  const getRoleOptions = (category: string | null) => {
+    switch (category) {
+      case 'individual':
+        return [
+          'Student',
+          'Creator / Entrepreneur building and scaling impactful solutions',
+          'Enthusiast / Professional mentoring, volunteering, or supporting initiatives'
+        ]
+      case 'government':
+        return [
+          'Government Body – Local, state, or national departments supporting initiatives',
+          'Policy Maker / Official – Elected representatives or bureaucrats shaping programs',
+          'Government Affiliated Institution – Research labs, training centers, or public universities collaborating on projects',
+          'Public Sector – State-run companies and enterprises contributing to programs'
+        ]
+      case 'organization':
+        return [
+          'Nonprofit / NGO: Supporting social and community initiatives',
+          'Startup / Company: Building and scaling impactful solutions',
+          'Educational / Training Institution: Enabling learning and skill development',
+          'Research / Innovation Lab: Driving research and practical solutions'
+        ]
+      default:
+        return []
+    }
+  }
+
+  const roleOptions = getRoleOptions(selectedFromPrevious || null)
 
   return (
     <div className="w-full px-4 sm:px-6 space-y-10">
-      {/* First Question */}
+      {/* Role Selection */}
       <div className="space-y-4">
         <div className="max-w-[864px] w-full mx-auto space-y-3">
           <label
-            htmlFor="defining"
+            htmlFor="role-select"
             className="block text-base sm:text-xl md:text-2xl font-semibold font-montserrat capitalize text-white tracking-wide"
           >
             What defines you?
-          </label>
-
-          <div className="relative">
+          </label>          <div className="relative">
             <select
-              id="defining"
-              value={defining}
-              onChange={(e) => onChange({ defining: e.target.value })}
+              id="role-select"
+              value={selectedRole || ''}
+              onChange={(e) => onChange({ selectedRole: e.target.value })}
               className="w-full h-11 px-4 text-sm sm:text-base bg-transparent border border-white rounded text-white appearance-none cursor-pointer focus:outline-none focus:ring-2 focus:ring-violet-700"
             >
               <option value="" className="bg-slate-900 text-white/75">
                 Select...
               </option>
-              {definingOptions.map((option) => (
+              {roleOptions.map((option) => (
                 <option
                   key={option}
                   value={option}
@@ -83,7 +100,7 @@ export default function StepTwo({
         </div>
       </div>
 
-      {/* Second Question */}
+      {/* Why are you here Question */}
       <div className="space-y-4">
         <div className="max-w-[864px] w-full mx-auto space-y-3">
           <label
@@ -110,7 +127,7 @@ export default function StepTwo({
               type="url"
               value={portfolioLink}
               onChange={(e) => onChange({ portfolioLink: e.target.value })}
-              placeholder="Share your works..."
+              placeholder="Share your works...(Optional)"
               className="w-full h-16 pl-14 pr-6 py-3 text-sm sm:text-base bg-slate-900 rounded-[10px] text-white placeholder-white/75 focus:outline-none focus:ring-2 focus:ring-violet-700"
             />
             <div className="absolute left-4 top-1/2 transform -translate-y-1/2">

@@ -1,37 +1,51 @@
 "use client";
 
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 
-const FAQs = [
+interface FAQItem {
+  question: string;
+  answer: string | React.ReactNode;
+}
+
+const FAQs: FAQItem[] = [
   {
     question: "What is The Purple Movement?",
     answer:
-      "We believe talent should never be locked behind privilege. We build platforms and networks where opportunities come from skills and proof of work, not background.",
+      "It is a people-powered network that helps everyone’s talent reach their potential. It creates platforms and connections where opportunities are earned through skills and real work.",
   },
   {
     question: "Who can join?",
     answer:
-      "Everyone. If you're a student, teacher, professional, startup, or policymaker — we welcome you to learn, share, and grow with us.",
+      "Everyone. If you're a student, teacher, professional, startup, or policy maker, we welcome you to learn, share, and grow with us.",
   },
   {
     question: "What does 'Beyond Syllabus' mean?",
     answer:
-      "It means going beyond textbooks — diving into curiosity, skills, collaboration, and proof of work that truly prepare you for the real world.",
+      "It means giving curious minds the chance to learn skills beyond syllabus, turning ideas into real-world abilities and building confidence to grow and create without limits.",
   },
   {
     question: "What does 'Beyond Gatekeepers' mean?",
     answer:
-      "We believe talent should never be locked behind privilege. We build platforms and networks where opportunities come from skills and proof of work, not background.",
+      "It means removing barriers like privilege, money, and status, and giving everyone a chance to learn and grow to their potential.",
   },
   {
     question: "What does 'Beyond Borders' mean?",
     answer:
-      "Knowledge has no geography. We connect individuals, startups, and organizations across the world to learn, share, and solve problems without limits.",
+      "It means removing limits on growth, connecting people globally to talent, markets, and opportunities through collaboration and innovation, so ambition isn’t held back by location or boundaries.",
   },
   {
     question: "How can I contribute?",
-    answer: "Just hit the Join Us button — that's where it begins.",
+    answer: (
+      <>
+        Click{" "}
+        <Link href="/join" className="text-purple-400 hover:text-purple-300 transition-colors">
+          Join Us
+        </Link>
+        {" "}that&apos;s all it takes to get started.
+      </>
+    ),
   },
 ];
 
@@ -48,9 +62,6 @@ export const FAQ = () => {
       <div className="text-center text-white text-2xl sm:text-4xl md:text-5xl font-semibold font-montserrat">
         FAQ
       </div>
-
-      {/* Underline */}
-      <div className="w-20 sm:w-32 md:w-44 h-0 outline outline-2 -mt-2 outline-offset-[-1px] outline-purple-600" />
 
       {/* Subtitle */}
       <div className="w-full max-w-3xl text-center text-white/75 text-sm sm:text-base md:text-lg font-normal font-poppins px-2 sm:px-0">

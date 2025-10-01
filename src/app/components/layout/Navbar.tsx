@@ -106,7 +106,7 @@ export const Navbar = () => {
         <div className="md:px-4">
           <Link
             href="/"
-            className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-600 rounded"
+            className="cursor-pointer focus:outline-none rounded"
           >
             <Image
               src="/logos/logo_pm.png"
@@ -131,7 +131,7 @@ export const Navbar = () => {
                   e.preventDefault();
                   handleLinkClick(link.href);
                 }}
-                className={`font-bold text-base sm:text-lg px-2 py-1 relative transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded group ${
+                className={`font-bold text-base sm:text-lg px-2 py-1 relative transition-all duration-300 focus:outline-none rounded group ${
                   activeSection === link.href
                     ? 'text-purple-500'
                     : 'text-white hover:text-purple-400'
@@ -154,7 +154,7 @@ export const Navbar = () => {
         <div className="md:hidden">
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="p-2 focus:outline-none focus:ring-2 focus:ring-purple-500 rounded"
+            className="p-2 focus:outline-non rounded"
             aria-label={isOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"

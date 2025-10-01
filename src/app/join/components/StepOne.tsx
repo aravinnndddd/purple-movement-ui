@@ -13,22 +13,22 @@ export default function StepOne({
 }: StepOneProps) {
   const options = [
     {
+      id: 'individual',
+      label: 'Individual',
+      text: "Students, creators, and entrepreneurs collaborating, contributing, and networking to drive meaningful impact together.",
+      svgPath: '/svgs/ind.svg',
+    },
+    {
       id: 'organization',
       label: 'Organization',
-      text: "We're building more than a movement — we're uniting dreamers, doers, and changemakers to shape a borderless future. A future where what you create speaks louder than what you claim. Be part of the change.",
+      text: "Nonprofit organizations, startups, universities, and research labs enabling learning, fostering innovation, and creating scalable solutions.",
       svgPath: '/svgs/org.svg',
     },
     {
       id: 'government',
       label: 'Government',
-      text: "We're building more than a movement — we're uniting dreamers, doers, and changemakers to shape a borderless future. A future where what you create speaks louder than what you claim. Be part of the change.",
+      text: "Government departments, policymakers, and public institutions shaping programs, fostering the ecosystem, and enabling impactful collaboration.",
       svgPath: '/svgs/gov.svg',
-    },
-    {
-      id: 'individual',
-      label: 'Individual',
-      text: "We're building more than a movement — we're uniting dreamers, doers, and changemakers to shape a borderless future. A future where what you create speaks louder than what you claim. Be part of the change.",
-      svgPath: '/svgs/ind.svg',
     },
   ]
 

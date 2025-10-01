@@ -11,7 +11,7 @@ export const VisionMission = () => {
           Our Goal
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-left">
-          A world where privilege, place and access never decide opportunity, and learning is inclusive and recognized through real contributions, helping everyone learn, connect and create impact.
+          A world where opportunity isn&apos;t limited by barriers or privilege, allowing the curious to gain confidence, the bold to build networks, and the determined to find direction, empowering everyone to connect, grow, and create impact.
         </p>
       </div>
 

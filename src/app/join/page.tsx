@@ -9,7 +9,7 @@ import StepThree from './components/StepThree'
 import StepFour from './components/StepFour'
 
 type StepTwoFormData = {
-  defining: string
+  selectedRole: string
   whyHere: string
   portfolioLink: string
 }
@@ -30,7 +30,7 @@ export default function JoinUsPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitError, setSubmitError] = useState<string | null>(null)
   const [stepTwoData, setStepTwoData] = useState<StepTwoFormData>({
-    defining: '',
+    selectedRole: '',
     whyHere: '',
     portfolioLink: '',
   })
@@ -81,7 +81,7 @@ export default function JoinUsPage() {
     try {
       const formData = {
         selectedRole: selectedFromPrevious,
-        defining: stepTwoData.defining,
+        defining: stepTwoData.selectedRole,
         whyHere: stepTwoData.whyHere,
         portfolioLink: stepTwoData.portfolioLink,
         name: stepThreeData.name,
@@ -161,7 +161,7 @@ export default function JoinUsPage() {
           />
         )
       case 4:
-        return <StepFour userName={stepThreeData.name.trim() || 'Friend'} />
+        return <StepFour userName={stepThreeData.name.trim() || 'Friend'} isAnonymous={stepThreeData.notInterested} />
       default:
         return <StepOne selectedOption={selectedOption} onCardClick={handleCardClick} />
     }
