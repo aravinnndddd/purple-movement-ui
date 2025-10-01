@@ -53,44 +53,59 @@ export const Manifesto = () => {
     return linesBefore * lineHeight + gapsBefore * sectionGap;
   });
 
-  // Simple wheel handler with proper throttling
+  // Wheel scrolling (desktop)
   const handleWheel = useCallback((event: React.WheelEvent) => {
     event.preventDefault();
-    event.stopPropagation();
-    
-    // Throttle rapid scrolling
     if (isScrollingRef.current) return;
-    
     isScrollingRef.current = true;
-    setTimeout(() => {
-      isScrollingRef.current = false;
-    }, 200); // Reduced to 200ms for more responsive feel
-    
-    // Get scroll direction (normalized)
+    setTimeout(() => (isScrollingRef.current = false), 200);
+
     const direction = event.deltaY > 0 ? 1 : -1;
-    
     setCurrentIndex((prev) => {
       const nextIndex = prev + direction;
-      
-      // Handle looping
-      if (nextIndex >= flatText.length) {
-        return 0;
-      } else if (nextIndex < 0) {
-        return flatText.length - 1;
-      }
-      
+      if (nextIndex >= flatText.length) return 0;
+      if (nextIndex < 0) return flatText.length - 1;
       return nextIndex;
     });
   }, []);
 
-  // Disable page scroll when mouse enters container
-  const handleMouseEnter = useCallback(() => {
-    document.body.style.overflow = 'hidden';
+  // Touch scrolling (mobile)
+  const touchStartY = useRef<number | null>(null);
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
   }, []);
 
-  // Re-enable page scroll when mouse leaves container
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    if (touchStartY.current === null) return;
+    const touchEndY = e.touches[0].clientY;
+    const deltaY = touchStartY.current - touchEndY;
+
+    if (Math.abs(deltaY) > 20) {
+      if (isScrollingRef.current) return;
+      isScrollingRef.current = true;
+      setTimeout(() => (isScrollingRef.current = false), 200);
+
+      setCurrentIndex((prev) => {
+        const nextIndex = prev + (deltaY > 0 ? 1 : -1);
+        if (nextIndex >= flatText.length) return 0;
+        if (nextIndex < 0) return flatText.length - 1;
+        return nextIndex;
+      });
+
+      touchStartY.current = touchEndY; // Reset start for next swipe
+    }
+  }, []);
+
+  const handleTouchEnd = useCallback(() => {
+    touchStartY.current = null;
+  }, []);
+
+  // Disable page scroll on hover/touch
+  const handleMouseEnter = useCallback(() => {
+    document.body.style.overflow = "hidden";
+  }, []);
   const handleMouseLeave = useCallback(() => {
-    document.body.style.overflow = 'auto';
+    document.body.style.overflow = "auto";
   }, []);
 
   return (
@@ -104,7 +119,6 @@ export const Manifesto = () => {
         </span>
       </div>
 
-      {/* Intro */}
       <div className="max-w-lg text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
         This is our collective vision, a declaration of what we stand for and why we come together.
       </div>
@@ -113,19 +127,19 @@ export const Manifesto = () => {
         “
       </div>
 
-      {/* Manual scrolling text with purple highlighting */}
-      <div 
+      <div
         className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none"
         onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
       >
         <div
           className="transition-transform duration-300 ease-out"
           style={{
-            transform: `translateY(calc(50% - ${
-              lineOffsets[currentIndex] + lineHeight / 2
-            }px))`,
+            transform: `translateY(calc(50% - ${lineOffsets[currentIndex] + lineHeight / 2}px))`,
           }}
         >
           {flatText.map((item, index) => (

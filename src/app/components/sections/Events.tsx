@@ -60,6 +60,35 @@ export const Events = () => {
       ? Math.round(viewportWidth / 2 - (currentIndex * (CARD_W + GAP) + CARD_W / 2))
       : 0;
 
+  // Touch/swipe support for mobile
+  const touchStartX = useRef<number | null>(null);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+
+    const touchEndX = e.touches[0].clientX;
+    const deltaX = touchStartX.current - touchEndX;
+
+    if (Math.abs(deltaX) > 20) { // threshold for swipe
+      if (deltaX > 0) {
+        // swipe left → next slide
+        nextSlide();
+      } else {
+        // swipe right → previous slide
+        prevSlide();
+      }
+      touchStartX.current = touchEndX; // reset for next swipe
+    }
+  };
+
+  const handleTouchEnd = () => {
+    touchStartX.current = null;
+  };
+
   return (
     <div
       className="w-full py-16 bg-black flex flex-col justify-center items-center gap-8 px-4"
@@ -78,7 +107,12 @@ export const Events = () => {
       </div>
 
       {/* Mobile Carousel */}
-      <div className="md:hidden relative w-full max-w-sm mt-8">
+      <div
+        className="md:hidden relative w-full max-w-sm mt-8"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
         <div className="overflow-hidden">
           <div
             className="flex transition-transform duration-500 ease-in-out"
