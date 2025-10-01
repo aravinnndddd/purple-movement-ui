@@ -19,8 +19,8 @@ export default function StepFour({ userName = "Friend", isAnonymous = false }: S
         <div className="max-w-6xl mx-auto flex justify-center">
           <div className="w-[904px] h-96 bg-slate-900 rounded-[10px] flex items-center justify-center">
             <div className="w-80 h-24 relative">
-              <div className="left-[19px] top-0 absolute text-center justify-start text-white text-5xl font-bold font-['Montserrat'] capitalize">Thank You!</div>
-              <div className="left-0 top-[74px] absolute text-center justify-start text-white text-xl font-normal font-['Poppins'] capitalize">We've received your response.</div>
+              <div className="left-[19px] top-0 absolute text-center justify-start text-white text-5xl font-bold font-montserrat capitalize">Thank You!</div>
+              <div className="left-0 top-[74px] absolute text-center justify-start text-white text-xl font-normal font-poppins capitalize">We've received your response.</div>
             </div>
           </div>
         </div>
@@ -39,15 +39,16 @@ export default function StepFour({ userName = "Friend", isAnonymous = false }: S
 
           {/* Subtext */}
           <p className="text-sm sm:text-base md:text-lg font-poppins text-white/80 max-w-xl mx-auto leading-relaxed">
-            We&apos;ve received your message. <br className="hidden sm:inline" />
+            We&apos;ve received your response.<br />
             Our team will get back to you shortly.
           </p>
 
+          <div className="text-center justify-start sm:text-base md:text-lg text-white text-xl font-semibold font-poppins capitalize">Join our WhatsApp for updates.</div>
           {/* WhatsApp Button */}
           <div className="w-full flex justify-center">
             <button
             onClick={handleWhatsAppJoin}
-            className=" sm:w-auto px-6 py-3 bg-violet-700 hover:bg-violet-600 text-white text-sm sm:text-base font-bold font-montserrat rounded-3xl flex items-center justify-center gap-2 transition-all duration-300"
+            className="-mt-5 sm:w-auto px-6 py-3 bg-violet-700 hover:bg-violet-600 text-white text-sm sm:text-base font-bold font-montserrat rounded-lg flex items-center justify-center gap-2 transition-all duration-300"
           >
             <span>Join WhatsApp</span>
             <FaWhatsapp className="w-5 h-5 text-white" />

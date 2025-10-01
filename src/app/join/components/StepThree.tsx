@@ -116,7 +116,9 @@ export default function StepThree({
       <div className="max-w-[864px] w-full mx-auto space-y-8">
         {/* Name */}
         <div className="space-y-3">
-          <label className="block text-sm sm:text-lg text-white font-bold font-montserrat capitalize">
+          <label className={`block text-sm sm:text-lg text-white font-bold font-montserrat capitalize
+            ${notInterested ? 'opacity-50' : ''}
+          `}>
             Name:
           </label>
           <input
@@ -139,7 +141,9 @@ export default function StepThree({
 
         {/* Email */}
         <div className="space-y-3">
-          <label className="block text-sm sm:text-lg text-white font-bold font-montserrat capitalize">
+          <label className={`block text-sm sm:text-lg text-white font-bold font-montserrat capitalize
+            ${notInterested ? 'opacity-50' : ''}
+          `}>
             Email:
           </label>
           <input
@@ -162,7 +166,9 @@ export default function StepThree({
 
         {/* Phone */}
         <div className="space-y-3">
-          <label className="block text-sm sm:text-lg text-white font-bold font-montserrat capitalize">
+          <label className={`block text-sm sm:text-lg text-white font-bold font-montserrat capitalize
+            ${notInterested ? 'opacity-50' : ''}
+          `}>
             Phone:
           </label>
           <input
