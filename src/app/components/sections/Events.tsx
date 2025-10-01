@@ -14,6 +14,12 @@ const events = [
     title: "Saddle",
     imgPath: "/images/saddle.jpg",
     desc: "A skill-building event series to gear you up for opportunities.",
+    size: "small",
+  },
+  {
+    title: "Saddle #2",
+    imgPath: "/images/saddle2.jpg",
+    desc: "A skill-building event series to gear you up for opportunities.",
     size: "large",
   },
   {
@@ -60,33 +66,34 @@ export const Events = () => {
       ? Math.round(viewportWidth / 2 - (currentIndex * (CARD_W + GAP) + CARD_W / 2))
       : 0;
 
-  // Touch/swipe support for mobile
+  // Mobile swipe tracking
   const touchStartX = useRef<number | null>(null);
+  const touchDeltaX = useRef<number>(0);
+  const [dragOffset, setDragOffset] = useState(0);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
+    touchDeltaX.current = 0;
   };
 
   const handleTouchMove = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
 
-    const touchEndX = e.touches[0].clientX;
-    const deltaX = touchStartX.current - touchEndX;
-
-    if (Math.abs(deltaX) > 20) { // threshold for swipe
-      if (deltaX > 0) {
-        // swipe left → next slide
-        nextSlide();
-      } else {
-        // swipe right → previous slide
-        prevSlide();
-      }
-      touchStartX.current = touchEndX; // reset for next swipe
-    }
+    const currentX = e.touches[0].clientX;
+    touchDeltaX.current = touchStartX.current - currentX;
+    setDragOffset(-touchDeltaX.current); // for smooth drag feedback
   };
 
   const handleTouchEnd = () => {
+    const THRESHOLD = 50; // Minimum px to trigger a slide
+    if (touchDeltaX.current > THRESHOLD) {
+      nextSlide();
+    } else if (touchDeltaX.current < -THRESHOLD) {
+      prevSlide();
+    }
     touchStartX.current = null;
+    touchDeltaX.current = 0;
+    setDragOffset(0);
   };
 
   return (
@@ -115,8 +122,8 @@ export const Events = () => {
       >
         <div className="overflow-hidden">
           <div
-            className="flex transition-transform duration-500 ease-in-out"
-            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+            className="flex transition-transform duration-300 ease-out"
+            style={{ transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))` }}
           >
             {events.map((event, idx) => (
               <div key={idx} className="w-full flex-shrink-0 px-4">
@@ -231,7 +238,6 @@ export const Events = () => {
           </svg>
         </button>
 
-        {/* Centered viewport with extra space to prevent clipping */}
         <div
           ref={viewportRef}
           className="mx-auto overflow-hidden flex items-center"

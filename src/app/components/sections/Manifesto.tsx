@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef, useCallback, useEffect } from "react";
 
 const sections = [
   [
@@ -41,6 +41,7 @@ const flatText: { line: string; section: number }[] = sections.flatMap(
 
 export const Manifesto = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHijacking, setIsHijacking] = useState(false);
   const isScrollingRef = useRef(false);
 
   const lineHeight = 35;
@@ -53,63 +54,104 @@ export const Manifesto = () => {
     return linesBefore * lineHeight + gapsBefore * sectionGap;
   });
 
-  // Wheel scrolling (desktop)
-  const handleWheel = useCallback((event: React.WheelEvent) => {
-    event.preventDefault();
-    if (isScrollingRef.current) return;
-    isScrollingRef.current = true;
-    setTimeout(() => (isScrollingRef.current = false), 200);
+  // Enable hijacking when the user hovers or touches the container
+  const enableHijacking = useCallback(() => {
+    if (!isHijacking) {
+      setIsHijacking(true);
+      document.body.style.overflow = "hidden";
+    }
+  }, [isHijacking]);
 
-    const direction = event.deltaY > 0 ? 1 : -1;
-    setCurrentIndex((prev) => {
-      const nextIndex = prev + direction;
-      if (nextIndex >= flatText.length) return 0;
-      if (nextIndex < 0) return flatText.length - 1;
-      return nextIndex;
-    });
-  }, []);
+  const disableHijacking = useCallback(() => {
+    if (isHijacking) {
+      setIsHijacking(false);
+      document.body.style.overflow = "auto";
+    }
+  }, [isHijacking]);
 
-  // Touch scrolling (mobile)
+  // Wheel scrolling
+  const handleWheel = useCallback(
+    (event: React.WheelEvent) => {
+      if (!isHijacking) return;
+
+      event.preventDefault();
+      if (isScrollingRef.current) return;
+      isScrollingRef.current = true;
+
+      setTimeout(() => (isScrollingRef.current = false), 200);
+
+      const direction = event.deltaY > 0 ? 1 : -1;
+
+      setCurrentIndex((prev) => {
+        const nextIndex = prev + direction;
+
+        if (nextIndex >= flatText.length) {
+          disableHijacking(); // Release scroll at the end
+          return prev;
+        }
+
+        if (nextIndex < 0) {
+          disableHijacking(); // Release scroll at the start
+          return prev;
+        }
+
+        return nextIndex;
+      });
+    },
+    [isHijacking, disableHijacking]
+  );
+
+  // Touch scrolling
   const touchStartY = useRef<number | null>(null);
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
-  }, []);
+    enableHijacking();
+  }, [enableHijacking]);
 
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (touchStartY.current === null) return;
-    const touchEndY = e.touches[0].clientY;
-    const deltaY = touchStartY.current - touchEndY;
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isHijacking || touchStartY.current === null) return;
 
-    if (Math.abs(deltaY) > 20) {
-      if (isScrollingRef.current) return;
-      isScrollingRef.current = true;
-      setTimeout(() => (isScrollingRef.current = false), 200);
+      e.preventDefault();
+      const touchEndY = e.touches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
 
-      setCurrentIndex((prev) => {
-        const nextIndex = prev + (deltaY > 0 ? 1 : -1);
-        if (nextIndex >= flatText.length) return 0;
-        if (nextIndex < 0) return flatText.length - 1;
-        return nextIndex;
-      });
+      if (Math.abs(deltaY) > 20) {
+        if (isScrollingRef.current) return;
+        isScrollingRef.current = true;
+        setTimeout(() => (isScrollingRef.current = false), 200);
 
-      touchStartY.current = touchEndY; // Reset start for next swipe
-    }
-  }, []);
+        setCurrentIndex((prev) => {
+          const nextIndex = prev + (deltaY > 0 ? 1 : -1);
+
+          if (nextIndex >= flatText.length || nextIndex < 0) {
+            disableHijacking(); // Release scroll
+            return prev;
+          }
+
+          return nextIndex;
+        });
+
+        touchStartY.current = touchEndY;
+      }
+    },
+    [isHijacking, disableHijacking]
+  );
 
   const handleTouchEnd = useCallback(() => {
     touchStartY.current = null;
   }, []);
 
-  // Disable page scroll on hover/touch
-  const handleMouseEnter = useCallback(() => {
-    document.body.style.overflow = "hidden";
-  }, []);
-  const handleMouseLeave = useCallback(() => {
-    document.body.style.overflow = "auto";
-  }, []);
-
   return (
-    <div className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4">
+    <div
+      className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4"
+      onWheel={handleWheel}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      onMouseEnter={enableHijacking}
+      onMouseLeave={disableHijacking}
+    >
       <div className="max-w-full text-center">
         <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold font-montserrat">
           Our{" "}
@@ -127,15 +169,7 @@ export const Manifesto = () => {
         “
       </div>
 
-      <div
-        className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none"
-        onWheel={handleWheel}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-      >
+      <div className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none">
         <div
           className="transition-transform duration-300 ease-out"
           style={{
