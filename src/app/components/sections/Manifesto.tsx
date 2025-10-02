@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react"
+import { useState, useRef, useCallback, useEffect } from "react";
 
 const sections = [
   [
@@ -41,6 +41,8 @@ const flatText: { line: string; section: number }[] = sections.flatMap(
 
 export const Manifesto = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isHijacking, setIsHijacking] = useState(false);
+  const isScrollingRef = useRef(false);
 
   const lineHeight = 35;
   const sectionGap = 40;
@@ -52,16 +54,99 @@ export const Manifesto = () => {
     return linesBefore * lineHeight + gapsBefore * sectionGap;
   });
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % flatText.length);
-    }, 2000);
-    return () => clearInterval(interval);
+  // Enable hijacking when the user hovers or touches the container
+  const enableHijacking = useCallback(() => {
+    if (!isHijacking) {
+      setIsHijacking(true);
+      document.body.style.overflow = "hidden";
+    }
+  }, [isHijacking]);
+
+  const disableHijacking = useCallback(() => {
+    if (isHijacking) {
+      setIsHijacking(false);
+      document.body.style.overflow = "auto";
+    }
+  }, [isHijacking]);
+
+  // Wheel scrolling
+  const handleWheel = useCallback(
+    (event: React.WheelEvent) => {
+      if (!isHijacking) return;
+
+      event.preventDefault();
+      if (isScrollingRef.current) return;
+      isScrollingRef.current = true;
+
+      setTimeout(() => (isScrollingRef.current = false), 200);
+
+      const direction = event.deltaY > 0 ? 1 : -1;
+
+      setCurrentIndex((prev) => {
+        const nextIndex = prev + direction;
+
+        if (nextIndex >= flatText.length) {
+          disableHijacking(); // Release scroll at the end
+          return prev;
+        }
+
+        if (nextIndex < 0) {
+          disableHijacking(); // Release scroll at the start
+          return prev;
+        }
+
+        return nextIndex;
+      });
+    },
+    [isHijacking, disableHijacking]
+  );
+
+  // Touch scrolling
+  const touchStartY = useRef<number | null>(null);
+  const handleTouchStart = useCallback(
+    (e: React.TouchEvent) => {
+      touchStartY.current = e.touches[0].clientY;
+      enableHijacking();
+    },
+    [enableHijacking]
+  );
+
+  const handleTouchMove = useCallback(
+    (e: React.TouchEvent) => {
+      if (!isHijacking || touchStartY.current === null) return;
+
+      e.preventDefault();
+      const touchEndY = e.touches[0].clientY;
+      const deltaY = touchStartY.current - touchEndY;
+
+      if (Math.abs(deltaY) > 20) {
+        if (isScrollingRef.current) return;
+        isScrollingRef.current = true;
+        setTimeout(() => (isScrollingRef.current = false), 200);
+
+        setCurrentIndex((prev) => {
+          const nextIndex = prev + (deltaY > 0 ? 1 : -1);
+
+          if (nextIndex >= flatText.length || nextIndex < 0) {
+            disableHijacking(); // Release scroll
+            return prev;
+          }
+
+          return nextIndex;
+        });
+
+        touchStartY.current = touchEndY;
+      }
+    },
+    [isHijacking, disableHijacking]
+  );
+
+  const handleTouchEnd = useCallback(() => {
+    touchStartY.current = null;
   }, []);
 
   return (
     <div className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4">
-      {/* Title */}
       <div className="max-w-full text-center">
         <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold font-montserrat">
           Our{" "}
@@ -71,50 +156,58 @@ export const Manifesto = () => {
         </span>
       </div>
 
-      {/* Intro */}
       <div className="max-w-lg text-center text-white text-base sm:text-lg md:text-xl font-normal font-poppins">
-        This is our collective vision, a declaration of what we stand for and why we come together.
+        This is our collective vision, a declaration of what we stand for and
+        why we come together.
       </div>
 
       <div className="h-10 flex justify-center items-center text-white text-4xl md:text-5xl font-bold font-montserrat">
         “
       </div>
-
-      {/* Scrolling text */}
-      <div className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6">
-        <div
-          className="transition-transform duration-1000 ease-in-out"
-          style={{
-            transform: `translateY(calc(50% - ${
-              lineOffsets[currentIndex] + lineHeight / 2
-            }px))`,
-          }}
-        >
-          {flatText.map((item, index) => (
-            <div
-              key={index}
-              className={`flex items-center justify-center transition-all duration-1000 text-center will-change-transform
+      <div
+        className="w-full flex justify-center items-center"
+        onWheel={handleWheel}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onMouseEnter={enableHijacking}
+        onMouseLeave={disableHijacking}
+      >
+        <div className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none">
+          <div
+            className="transition-transform duration-300 ease-out"
+            style={{
+              transform: `translateY(calc(50% - ${
+                lineOffsets[currentIndex] + lineHeight / 2
+              }px))`,
+            }}
+          >
+            {flatText.map((item, index) => (
+              <div
+                key={index}
+                className={`flex items-center justify-center transition-all duration-300 text-center will-change-transform
                 ${
                   index === currentIndex
-                    ? "text-violet-400 font-bold font-poppins scale-105"
-                    : "text-white opacity-60 italic scale-95"
+                    ? "text-violet-400 font-bold font-poppins scale-105 opacity-100"
+                    : "text-white opacity-40 font-normal font-poppins scale-95"
                 }`}
-             style={{
-                fontSize: "16px",
-                minHeight: `${lineHeight}px`,
-                marginBottom:
-                 index < flatText.length - 1 &&
-                flatText[index + 1].section !== item.section
-                ? `${sectionGap}px`
-                : "0px",
-              }}
-            >
-              {item.line}
-            </div>
-          ))}
+                style={{
+                  fontSize: "16px",
+                  minHeight: `${lineHeight}px`,
+                  lineHeight: "1.4",
+                  marginBottom:
+                    index < flatText.length - 1 &&
+                    flatText[index + 1].section !== item.section
+                      ? `${sectionGap}px`
+                      : "0px",
+                }}
+              >
+                {item.line}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-
       <div className="h-10 flex justify-center items-center rotate-180 text-white text-4xl md:text-5xl font-bold font-montserrat">
         “
       </div>

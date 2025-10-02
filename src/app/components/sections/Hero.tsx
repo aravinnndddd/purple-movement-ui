@@ -14,7 +14,7 @@ export function Hero() {
       />
 
       {/* Content overlay */}
-      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:-mt-40">
+      <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:-mt-40 -mt-20">
         <main className="flex flex-col items-center">
           <div className="w-full flex flex-col justify-start items-center gap-4">
             {/* Heading 1 */}
