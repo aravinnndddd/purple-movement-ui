@@ -166,14 +166,10 @@ export const Manifesto = () => {
       </div>
       <div
         className="w-full flex justify-center items-center"
-        onWheel={handleWheel}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
-        onMouseEnter={enableHijacking}
-        onMouseLeave={disableHijacking}
       >
-        <div className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none">
+        <div 
+          className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none"
+        >
           <div
             className="transition-transform duration-300 ease-out"
             style={{
@@ -181,6 +177,12 @@ export const Manifesto = () => {
                 lineOffsets[currentIndex] + lineHeight / 2
               }px))`,
             }}
+            onWheel={handleWheel}
+            onTouchStart={handleTouchStart}
+            onTouchMove={handleTouchMove}
+            onTouchEnd={handleTouchEnd}
+            onMouseEnter={enableHijacking}
+            onMouseLeave={disableHijacking}
           >
             {flatText.map((item, index) => (
               <div

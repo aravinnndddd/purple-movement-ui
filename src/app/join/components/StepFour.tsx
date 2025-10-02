@@ -39,8 +39,7 @@ export default function StepFour({ userName = "Friend", isAnonymous = false }: S
 
           {/* Subtext */}
           <p className="text-sm sm:text-base md:text-lg font-poppins text-white/80 max-w-xl mx-auto leading-relaxed">
-            We&apos;ve received your response.<br />
-            Our team will get back to you shortly.
+            We&apos;ve received your response.
           </p>
 
           <div className="text-center justify-start sm:text-base md:text-lg text-white text-xl font-semibold font-poppins capitalize">Join our WhatsApp for updates.</div>

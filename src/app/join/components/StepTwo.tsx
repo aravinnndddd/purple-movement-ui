@@ -107,14 +107,15 @@ export default function StepTwo({
             htmlFor="why-here"
             className="block text-base sm:text-xl md:text-2xl font-semibold font-montserrat capitalize text-white tracking-wide"
           >
-            Why are you here?
+            What Do You Want to Share?
           </label>
+          <p>Contribute ideas, report issues, and drive impact.</p>
 
           <textarea
             id="why-here"
             value={whyHere}
             onChange={(e) => onChange({ whyHere: e.target.value })}
-            placeholder="I'm here for Purple Movement to learn, share, and turn ideas into real-world solutions without barriers...."
+            placeholder="I’m here for Purple Movement to share, and turn ideas into real-world solutions without barriers...."
             className="w-full h-32 px-4 py-3 text-sm sm:text-base bg-slate-900 rounded-lg text-white placeholder-white/75 resize-none focus:outline-none focus:ring-2 focus:ring-violet-700"
             rows={6}
           />
