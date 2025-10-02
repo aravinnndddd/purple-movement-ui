@@ -3,12 +3,14 @@ frontend:
   phases:
     preBuild:
       commands:
+        - echo "Installing pnpm..."
+        - npm install -g pnpm
         - echo "Installing dependencies..."
-        - npm ci
+        - pnpm install --frozen-lockfile
     build:
       commands:
         - echo "Building Next.js application..."
-        - npm run build
+        - pnpm run build
   artifacts:
     baseDirectory: .next
     files:
