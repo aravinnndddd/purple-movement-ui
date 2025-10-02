@@ -34,6 +34,7 @@ export const Footer = () => {
                 className="w-40 h-14"
                 src="/logos/logo_pm.png"
                 alt="Logo"
+                style={{ width: 'auto' }}
               />
               <h3 className="text-white text-lg font-bold font-poppins">
                 The Purple Movement
@@ -114,6 +115,7 @@ export const Footer = () => {
                 className="w-40 h-14"
                 src="/logos/logo_pm.png"
                 alt="Logo"
+                style={{ width: 'auto' }}
               />
               <h3 className="text-white text-lg sm:text-xl font-bold font-poppins">
                 The Purple Movement

@@ -25,6 +25,7 @@ export const CallToAction = () => {
           src="/images/spiral.png"
           alt="Purple Movement spiral illustration"
           className="object-contain"
+          sizes="(max-width: 640px) 160px, (max-width: 768px) 224px, (max-width: 1024px) 288px, 288px"
         />
       </div>
     </div>

@@ -63,6 +63,7 @@ export const Contact = () => {
           alt="Question Mark"
           fill
           className="object-contain"
+          sizes="(max-width: 640px) 80px, (max-width: 768px) 128px, (max-width: 1024px) 160px, 256px"
         />
       </div>
 

@@ -28,6 +28,7 @@ const Pyramid = () => {
           alt="Pyramid"
           width={750}
           height={750}
+          style={{ height: 'auto' }}
           className="object-contain transition-all duration-300 ease-in-out"
         />
         

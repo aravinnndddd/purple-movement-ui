@@ -115,6 +115,7 @@ export const Navbar = () => {
               alt="Purple Movement Logo"
               priority
               className="w-auto h-auto"
+              style={{ width: 'auto' }}
               sizes="(max-width: 768px) 80px, 100px"
             />
           </Link>

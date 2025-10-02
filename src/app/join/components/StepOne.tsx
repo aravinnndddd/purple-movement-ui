@@ -63,6 +63,7 @@ export default function StepOne({
                 alt={option.label}
                 width={24}
                 height={24}
+                style={{ height: 'auto' }}
               />
             </div>
 
