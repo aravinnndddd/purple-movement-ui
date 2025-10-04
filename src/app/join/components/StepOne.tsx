@@ -50,7 +50,7 @@ export default function StepOne({
           <button
             key={option.id}
             onClick={() => onCardClick(option.id)}
-            className={`w-[90%] xs:w-64 sm:w-60 md:w-64 h-32 xs:h-40 sm:h-64 md:h-72 relative bg-slate-900/75 rounded-xl shadow-lg border transition-all duration-300 group overflow-hidden ${
+            className={`w-[90%] xs:w-64 sm:w-60 md:w-64 h-32 xs:h-40 sm:h-64 md:h-72 relative bg-slate-900/75 rounded-xl shadow-lg border transition-all duration-300 group overflow-hidden cursor-pointer ${
               selectedOption === option.id
                 ? 'border-violet-700 bg-slate-800/90'
                 : 'border-black/40 hover:border-violet-700/50'
@@ -64,16 +64,6 @@ export default function StepOne({
                 width={24}
                 height={24}
                 style={{ height: 'auto' }}
-              />
-            </div>
-
-            {/* Hover Arrow */}
-            <div className="absolute bottom-4 right-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <Image
-                src="/svgs/arrow1.svg"
-                alt="Arrow"
-                width={20}
-                height={20}
               />
             </div>
 
