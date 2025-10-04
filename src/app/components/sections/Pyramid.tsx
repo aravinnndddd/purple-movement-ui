@@ -22,45 +22,44 @@ const Pyramid = () => {
 
   return (
     <div className="w-full flex items-center justify-center px-4 py-4">
-      <div className="relative">
+      <div className="relative w-full max-w-[750px] aspect-square">
         <Image
           src={getImageSrc()}
           alt="Pyramid"
-          width={750}
-          height={750}
-          style={{ height: 'auto' }}
-          className="object-contain transition-all duration-300 ease-in-out"
+          fill
+          className="object-contain transition-opacity duration-300 ease-in-out"
+          priority
         />
         
         {/* Interactive hover zones */}
         <div className="absolute inset-0 pointer-events-auto">
-          {/* Top section */}
+          {/* Top section - upper triangle */}
           <div
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/2 cursor-pointer"
+            className="absolute inset-0 cursor-pointer"
             onMouseEnter={() => setHoveredSection('top')}
             onMouseLeave={() => setHoveredSection(null)}
             style={{
-              clipPath: 'polygon(50% 0%, 20% 100%, 80% 100%)'
+              clipPath: 'polygon(50% 0%, 70% 39%, 50% 50%, 30% 39%)'
             }}
           />
-          
+
           {/* Bottom Left section */}
           <div
-            className="absolute bottom-0 left-0 w-1/2 h-1/2 cursor-pointer"
+            className="absolute inset-0 cursor-pointer"
             onMouseEnter={() => setHoveredSection('bottom-left')}
             onMouseLeave={() => setHoveredSection(null)}
             style={{
-              clipPath: 'polygon(40% 0%, 0% 100%, 100% 100%)'
+              clipPath: 'polygon(29% 41%, 48% 55%, 48% 81%, 10% 81%)'
             }}
           />
-          
+
           {/* Bottom Right section */}
           <div
-            className="absolute bottom-0 right-0 w-1/2 h-1/2 cursor-pointer"
+            className="absolute inset-0 cursor-pointer"
             onMouseEnter={() => setHoveredSection('bottom-right')}
             onMouseLeave={() => setHoveredSection(null)}
             style={{
-              clipPath: 'polygon(0% 100%, 60% 0%, 100% 100%)'
+              clipPath: 'polygon(71% 41%, 52% 55%, 52% 81%, 90% 81%)'
             }}
           />
         </div>
@@ -70,5 +69,3 @@ const Pyramid = () => {
 };
 
 export default Pyramid;
-
-   
