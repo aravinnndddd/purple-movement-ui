@@ -42,10 +42,10 @@ const flatText = sections.flatMap(
 export const Manifesto = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHijacking, setIsHijacking] = useState(false);
-  const scrollContainerRef = useRef(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   
   const accumulatedDelta = useRef(0);
-  const animationFrameId = useRef(null);
+  const animationFrameId = useRef<number | null>(null);
   const velocity = useRef(0);
   const lastTime = useRef(Date.now());
 
@@ -132,14 +132,12 @@ export const Manifesto = () => {
 
   // Wheel scrolling with velocity
   const handleWheel = useCallback(
-    (event) => {
+    (event: React.WheelEvent<HTMLDivElement>) => {
       if (!isHijacking) return;
 
       event.preventDefault();
       
-      const now = Date.now();
-      const deltaTime = now - lastTime.current;
-      lastTime.current = now;
+      lastTime.current = Date.now();
 
       // Reduced sensitivity for slower, more controlled scrolling
       const scrollSpeed = event.deltaY * 0.15;
@@ -153,13 +151,13 @@ export const Manifesto = () => {
   );
 
   // Touch scrolling with velocity
-  const touchStartY = useRef(null);
+  const touchStartY = useRef<number | null>(null);
   const isTouchingContainer = useRef(false);
-  const lastTouchY = useRef(null);
-  const touchVelocities = useRef([]);
+  const lastTouchY = useRef<number | null>(null);
+  const touchVelocities = useRef<number[]>([]);
 
   const handleTouchStart = useCallback(
-    (e) => {
+    (e: React.TouchEvent<HTMLDivElement>) => {
       // Check if touch is within the scroll container
       if (scrollContainerRef.current) {
         const rect = scrollContainerRef.current.getBoundingClientRect();
@@ -187,7 +185,7 @@ export const Manifesto = () => {
   );
 
   const handleTouchMove = useCallback(
-    (e) => {
+    (e: React.TouchEvent<HTMLDivElement>) => {
       if (!isTouchingContainer.current || !isHijacking || touchStartY.current === null) return;
 
       e.preventDefault();
