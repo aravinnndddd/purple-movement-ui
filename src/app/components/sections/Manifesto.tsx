@@ -40,7 +40,6 @@ const flatText = sections.flatMap(
 );
 
 export const Manifesto = () => {
-  const [scrollOffset, setScrollOffset] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHijacking, setIsHijacking] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -49,7 +48,6 @@ export const Manifesto = () => {
   const animationFrameId = useRef<number | null>(null);
   const velocity = useRef(0);
   const lastTime = useRef(Date.now());
-  const isAnimating = useRef(false);
 
   const lineHeight = 35;
   const sectionGap = 40;
@@ -86,13 +84,11 @@ export const Manifesto = () => {
     const friction = 0.90;
     const threshold = 0.5;
 
-    if (Math.abs(velocity.current) > threshold && isAnimating.current) {
-      const velocityDelta = velocity.current;
-      accumulatedDelta.current += velocityDelta;
-      setScrollOffset(accumulatedDelta.current);
+    if (Math.abs(velocity.current) > threshold) {
+      accumulatedDelta.current += velocity.current;
       velocity.current *= friction;
 
-      const scrollThreshold = lineHeight * 0.7;
+      const scrollThreshold = lineHeight * 0.8;
       
       if (Math.abs(accumulatedDelta.current) >= scrollThreshold) {
         const direction = accumulatedDelta.current > 0 ? 1 : -1;
@@ -103,8 +99,6 @@ export const Manifesto = () => {
           if (nextIndex >= flatText.length) {
             velocity.current = 0;
             accumulatedDelta.current = 0;
-            setScrollOffset(0);
-            isAnimating.current = false;
             if (animationFrameId.current) {
               cancelAnimationFrame(animationFrameId.current);
               animationFrameId.current = null;
@@ -116,8 +110,6 @@ export const Manifesto = () => {
           if (nextIndex < 0) {
             velocity.current = 0;
             accumulatedDelta.current = 0;
-            setScrollOffset(0);
-            isAnimating.current = false;
             if (animationFrameId.current) {
               cancelAnimationFrame(animationFrameId.current);
               animationFrameId.current = null;
@@ -127,7 +119,6 @@ export const Manifesto = () => {
           }
           
           accumulatedDelta.current -= direction * scrollThreshold;
-          setScrollOffset(accumulatedDelta.current);
           return nextIndex;
         });
       }
@@ -136,8 +127,6 @@ export const Manifesto = () => {
     } else {
       velocity.current = 0;
       accumulatedDelta.current = 0;
-      setScrollOffset(0);
-      isAnimating.current = false;
       animationFrameId.current = null;
       disableHijacking();
     }
@@ -222,7 +211,6 @@ export const Manifesto = () => {
           touchVelocities.current = [];
           velocity.current = 0;
           accumulatedDelta.current = 0;
-          setScrollOffset(0);
           disableHijacking();
           return;
         }
@@ -251,12 +239,10 @@ export const Manifesto = () => {
           }
         }
         
-        // Update scroll offset for smooth dragging
-        const dragDelta = deltaY * 0.6;
-        accumulatedDelta.current += dragDelta;
-        setScrollOffset(accumulatedDelta.current);
+        // Increased sensitivity for smoother feel
+        accumulatedDelta.current += deltaY * 0.5;
         
-        const scrollThreshold = lineHeight * 0.7;
+        const scrollThreshold = lineHeight * 0.8; // Lower threshold for smoother transitions
         
         if (Math.abs(accumulatedDelta.current) >= scrollThreshold) {
           const direction = accumulatedDelta.current > 0 ? 1 : -1;
@@ -265,13 +251,12 @@ export const Manifesto = () => {
             const nextIndex = prev + direction;
             
             if (nextIndex >= flatText.length || nextIndex < 0) {
+              velocity.current = 0;
               accumulatedDelta.current = 0;
-              setScrollOffset(0);
               return prev;
             }
             
             accumulatedDelta.current -= direction * scrollThreshold;
-            setScrollOffset(accumulatedDelta.current);
             return nextIndex;
           });
         }
@@ -287,20 +272,11 @@ export const Manifesto = () => {
     // Apply momentum based on velocity
     if (touchVelocities.current.length > 0 && isTouchingContainer.current) {
       const avgVelocity = touchVelocities.current.reduce((a, b) => a + b, 0) / touchVelocities.current.length;
-      velocity.current = avgVelocity * 1.2;
+      velocity.current = avgVelocity * 1.2; // Boost for better momentum feel
       
       if (!animationFrameId.current && Math.abs(velocity.current) > 0.5) {
-        isAnimating.current = true;
         animationFrameId.current = requestAnimationFrame(applyMomentum);
-      } else {
-        // Snap back to center if no momentum
-        accumulatedDelta.current = 0;
-        setScrollOffset(0);
       }
-    } else {
-      // Snap back to center
-      accumulatedDelta.current = 0;
-      setScrollOffset(0);
     }
     
     // Clean up touch state
@@ -308,6 +284,8 @@ export const Manifesto = () => {
     lastTouchY.current = null;
     isTouchingContainer.current = false;
     touchVelocities.current = [];
+    
+    // Don't disable hijacking immediately - let momentum finish
   }, [applyMomentum]);
 
   return (
@@ -344,7 +322,7 @@ export const Manifesto = () => {
             className="transition-transform duration-200 ease-out"
             style={{
               transform: `translateY(calc(50% - ${
-                lineOffsets[currentIndex] + lineHeight / 2 - scrollOffset
+                lineOffsets[currentIndex] + lineHeight / 2
               }px))`,
             }}
             onWheel={handleWheel}
