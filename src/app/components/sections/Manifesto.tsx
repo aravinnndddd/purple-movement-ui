@@ -176,6 +176,7 @@ export const Manifesto = () => {
           velocity.current = 0;
           lastTime.current = Date.now();
           enableHijacking();
+          e.stopPropagation();
         } else {
           isTouchingContainer.current = false;
         }
@@ -189,6 +190,7 @@ export const Manifesto = () => {
       if (!isTouchingContainer.current || !isHijacking || touchStartY.current === null) return;
 
       e.preventDefault();
+      e.stopPropagation();
       
       const now = Date.now();
       const touch = e.touches[0];
@@ -223,7 +225,9 @@ export const Manifesto = () => {
               velocity.current = 0;
               accumulatedDelta.current = 0;
               isTouchingContainer.current = false;
-              // Don't disable hijacking
+              touchStartY.current = null;
+              lastTouchY.current = null;
+              disableHijacking();
               return prev;
             }
             
@@ -236,25 +240,19 @@ export const Manifesto = () => {
       lastTouchY.current = currentY;
       lastTime.current = now;
     },
-    [isHijacking, lineHeight]
+    [isHijacking, lineHeight, disableHijacking]
   );
 
   const handleTouchEnd = useCallback(() => {
-    if (touchVelocities.current.length > 0) {
-      // Calculate average velocity for momentum with reduced boost
-      const avgVelocity = touchVelocities.current.reduce((a, b) => a + b, 0) / touchVelocities.current.length;
-      velocity.current = avgVelocity * 0.8; // Reduced boost for slower momentum
-      
-      if (!animationFrameId.current) {
-        animationFrameId.current = requestAnimationFrame(applyMomentum);
-      }
-    }
-    
+    // Always release hijacking on touch end
     touchStartY.current = null;
     lastTouchY.current = null;
     isTouchingContainer.current = false;
     touchVelocities.current = [];
-  }, [applyMomentum]);
+    velocity.current = 0;
+    accumulatedDelta.current = 0;
+    disableHijacking();
+  }, [disableHijacking]);
 
   return (
     <div className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4">
@@ -280,6 +278,7 @@ export const Manifesto = () => {
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <div 
           ref={scrollContainerRef}
