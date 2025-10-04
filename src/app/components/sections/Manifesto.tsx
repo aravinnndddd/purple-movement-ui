@@ -81,14 +81,14 @@ export const Manifesto = () => {
 
   // Apply momentum and smooth scrolling
   const applyMomentum = useCallback(() => {
-    const friction = 0.88;
-    const threshold = 0.01;
+    const friction = 0.90;
+    const threshold = 0.5;
 
     if (Math.abs(velocity.current) > threshold) {
       accumulatedDelta.current += velocity.current;
       velocity.current *= friction;
 
-      const scrollThreshold = lineHeight;
+      const scrollThreshold = lineHeight * 0.8;
       
       if (Math.abs(accumulatedDelta.current) >= scrollThreshold) {
         const direction = accumulatedDelta.current > 0 ? 1 : -1;
@@ -103,7 +103,7 @@ export const Manifesto = () => {
               cancelAnimationFrame(animationFrameId.current);
               animationFrameId.current = null;
             }
-            // Don't disable hijacking, just stop at the end
+            disableHijacking();
             return prev;
           }
           
@@ -114,7 +114,7 @@ export const Manifesto = () => {
               cancelAnimationFrame(animationFrameId.current);
               animationFrameId.current = null;
             }
-            // Don't disable hijacking, just stop at the start
+            disableHijacking();
             return prev;
           }
           
@@ -126,9 +126,11 @@ export const Manifesto = () => {
       animationFrameId.current = requestAnimationFrame(applyMomentum);
     } else {
       velocity.current = 0;
+      accumulatedDelta.current = 0;
       animationFrameId.current = null;
+      disableHijacking();
     }
-  }, [lineHeight]);
+  }, [lineHeight, disableHijacking]);
 
   // Wheel scrolling with velocity
   const handleWheel = useCallback(
@@ -187,14 +189,41 @@ export const Manifesto = () => {
 
   const handleTouchMove = useCallback(
     (e: React.TouchEvent<HTMLDivElement>) => {
-      if (!isTouchingContainer.current || !isHijacking || touchStartY.current === null) return;
+      if (!isTouchingContainer.current || touchStartY.current === null) return;
+
+      const touch = e.touches[0];
+      const currentY = touch.clientY;
+      
+      // Check if still inside container
+      if (scrollContainerRef.current) {
+        const rect = scrollContainerRef.current.getBoundingClientRect();
+        const isStillInside =
+          touch.clientX >= rect.left &&
+          touch.clientX <= rect.right &&
+          touch.clientY >= rect.top &&
+          touch.clientY <= rect.bottom;
+        
+        if (!isStillInside) {
+          // Left the container, release everything
+          touchStartY.current = null;
+          lastTouchY.current = null;
+          isTouchingContainer.current = false;
+          touchVelocities.current = [];
+          velocity.current = 0;
+          accumulatedDelta.current = 0;
+          disableHijacking();
+          return;
+        }
+      }
 
       e.preventDefault();
       e.stopPropagation();
       
+      if (!isHijacking) {
+        enableHijacking();
+      }
+      
       const now = Date.now();
-      const touch = e.touches[0];
-      const currentY = touch.clientY;
       
       if (lastTouchY.current !== null) {
         const deltaY = lastTouchY.current - currentY;
@@ -210,10 +239,10 @@ export const Manifesto = () => {
           }
         }
         
-        // Reduced sensitivity for slower, more controlled scrolling
-        accumulatedDelta.current += deltaY * 0.3;
+        // Increased sensitivity for smoother feel
+        accumulatedDelta.current += deltaY * 0.5;
         
-        const scrollThreshold = lineHeight;
+        const scrollThreshold = lineHeight * 0.8; // Lower threshold for smoother transitions
         
         if (Math.abs(accumulatedDelta.current) >= scrollThreshold) {
           const direction = accumulatedDelta.current > 0 ? 1 : -1;
@@ -224,10 +253,6 @@ export const Manifesto = () => {
             if (nextIndex >= flatText.length || nextIndex < 0) {
               velocity.current = 0;
               accumulatedDelta.current = 0;
-              isTouchingContainer.current = false;
-              touchStartY.current = null;
-              lastTouchY.current = null;
-              disableHijacking();
               return prev;
             }
             
@@ -240,19 +265,28 @@ export const Manifesto = () => {
       lastTouchY.current = currentY;
       lastTime.current = now;
     },
-    [isHijacking, lineHeight, disableHijacking]
+    [isHijacking, lineHeight, disableHijacking, enableHijacking]
   );
 
   const handleTouchEnd = useCallback(() => {
-    // Always release hijacking on touch end
+    // Apply momentum based on velocity
+    if (touchVelocities.current.length > 0 && isTouchingContainer.current) {
+      const avgVelocity = touchVelocities.current.reduce((a, b) => a + b, 0) / touchVelocities.current.length;
+      velocity.current = avgVelocity * 1.2; // Boost for better momentum feel
+      
+      if (!animationFrameId.current && Math.abs(velocity.current) > 0.5) {
+        animationFrameId.current = requestAnimationFrame(applyMomentum);
+      }
+    }
+    
+    // Clean up touch state
     touchStartY.current = null;
     lastTouchY.current = null;
     isTouchingContainer.current = false;
     touchVelocities.current = [];
-    velocity.current = 0;
-    accumulatedDelta.current = 0;
-    disableHijacking();
-  }, [disableHijacking]);
+    
+    // Don't disable hijacking immediately - let momentum finish
+  }, [applyMomentum]);
 
   return (
     <div className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4">
@@ -285,7 +319,7 @@ export const Manifesto = () => {
           className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none"
         >
           <div
-            className="transition-transform duration-300 ease-out"
+            className="transition-transform duration-200 ease-out"
             style={{
               transform: `translateY(calc(50% - ${
                 lineOffsets[currentIndex] + lineHeight / 2
