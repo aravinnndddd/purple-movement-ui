@@ -59,15 +59,15 @@ export const Footer = () => {
             <div className="grid grid-cols-2 gap-6">
               {/* Quick Links - Left side */}
               <div className="space-y-4 flex flex-col items-start pl-4">
-                <h4 className="text-left text-white text-xl font-extrabold font-roboto leading-loose">
+                <h4 className="text-left text-white text-base font-extrabold font-roboto leading-relaxed">
                   Quick Links
                 </h4>
-                <nav className="flex flex-col space-y-2 items-start">
+                <nav className="flex flex-col space-y-1.5 items-start">
                   {links.map((item) => (
                     <a
                       key={item.name}
                       href={item.href}
-                      className="text-left text-white text-xl font-normal font-poppins leading-loose hover:text-purple-400 transition-colors"
+                      className="text-left text-white text-sm font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                     >
                       {item.name}
                     </a>
@@ -77,16 +77,16 @@ export const Footer = () => {
 
               {/* Support Links - Right side */}
               <div className="space-y-4 flex flex-col items-end pr-4">
-                <h4 className="text-right text-white text-xl font-extrabold font-roboto leading-loose">
+                <h4 className="text-right text-white text-base font-extrabold font-roboto leading-relaxed">
                   Support
                 </h4>
-                <nav className="flex flex-col space-y-2 items-end">
+                <nav className="flex flex-col space-y-1.5 items-end">
                   {supportLinks.map((item) => (
                     item.action === 'feedback' ? (
                       <button
                         key={item.name}
                         onClick={() => setIsFeedbackOpen(true)}
-                        className="text-right text-white text-xl font-normal font-poppins leading-loose hover:text-purple-400 transition-colors"
+                        className="text-right text-white text-sm font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                       >
                         {item.name}
                       </button>
@@ -94,7 +94,7 @@ export const Footer = () => {
                       <a
                         key={item.name}
                         href={item.href}
-                        className="text-right text-white text-xl font-normal font-poppins leading-loose hover:text-purple-400 transition-colors"
+                        className="text-right text-white text-sm font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                       >
                         {item.name}
                       </a>
@@ -138,7 +138,7 @@ export const Footer = () => {
 
             {/* Quick Links */}
             <div className="space-y-4 flex flex-col items-center justify-center ml-16">
-              <h4 className="text-center text-white text-xl font-extrabold font-roboto leading-loose">
+              <h4 className="text-center text-white text-lg font-extrabold font-roboto leading-relaxed">
                 Quick Links
               </h4>
               <nav className="flex flex-col space-y-2 items-center">
@@ -146,7 +146,7 @@ export const Footer = () => {
                   <a
                     key={item.name}
                     href={item.href}
-                    className="text-center text-white text-xl font-normal font-poppins leading-loose hover:text-purple-400 transition-colors"
+                    className="text-center text-white text-base font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                   >
                     {item.name}
                   </a>
@@ -156,7 +156,7 @@ export const Footer = () => {
 
             {/* Support Links */}
             <div className="space-y-4 flex flex-col items-center justify-center ml-16 ">
-              <h4 className="text-center text-white text-xl font-extrabold font-roboto leading-loose">
+              <h4 className="text-center text-white text-lg font-extrabold font-roboto leading-relaxed">
                 Support
               </h4>
               <nav className="flex flex-col space-y-2 items-center">
@@ -165,7 +165,7 @@ export const Footer = () => {
                     <button
                       key={item.name}
                       onClick={() => setIsFeedbackOpen(true)}
-                      className="text-center text-white text-xl font-normal font-poppins leading-loose hover:text-purple-400 transition-colors"
+                      className="text-center text-white text-base font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                     >
                       {item.name}
                     </button>
@@ -173,7 +173,7 @@ export const Footer = () => {
                     <a
                       key={item.name}
                       href={item.href}
-                      className="text-center text-white text-xl font-normal font-poppins leading-loose hover:text-purple-400 transition-colors"
+                      className="text-center text-white text-base font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                     >
                       {item.name}
                     </a>
