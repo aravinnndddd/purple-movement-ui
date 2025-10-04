@@ -31,7 +31,7 @@ const sections = [
   ["And it starts now."],
 ];
 
-const flatText: { line: string; section: number }[] = sections.flatMap(
+const flatText = sections.flatMap(
   (section, sectionIndex) =>
     section.map((line) => ({
       line,
@@ -42,7 +42,12 @@ const flatText: { line: string; section: number }[] = sections.flatMap(
 export const Manifesto = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHijacking, setIsHijacking] = useState(false);
-  const isScrollingRef = useRef(false);
+  const scrollContainerRef = useRef(null);
+  
+  const accumulatedDelta = useRef(0);
+  const animationFrameId = useRef(null);
+  const velocity = useRef(0);
+  const lastTime = useRef(Date.now());
 
   const lineHeight = 35;
   const sectionGap = 40;
@@ -66,84 +71,192 @@ export const Manifesto = () => {
     if (isHijacking) {
       setIsHijacking(false);
       document.body.style.overflow = "auto";
+      // Don't reset velocity and accumulated delta here - let momentum finish
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current);
+        animationFrameId.current = null;
+      }
     }
   }, [isHijacking]);
 
-  // Wheel scrolling
+  // Apply momentum and smooth scrolling
+  const applyMomentum = useCallback(() => {
+    const friction = 0.88;
+    const threshold = 0.01;
+
+    if (Math.abs(velocity.current) > threshold) {
+      accumulatedDelta.current += velocity.current;
+      velocity.current *= friction;
+
+      const scrollThreshold = lineHeight;
+      
+      if (Math.abs(accumulatedDelta.current) >= scrollThreshold) {
+        const direction = accumulatedDelta.current > 0 ? 1 : -1;
+        
+        setCurrentIndex((prev) => {
+          const nextIndex = prev + direction;
+          
+          if (nextIndex >= flatText.length) {
+            velocity.current = 0;
+            accumulatedDelta.current = 0;
+            if (animationFrameId.current) {
+              cancelAnimationFrame(animationFrameId.current);
+              animationFrameId.current = null;
+            }
+            // Don't disable hijacking, just stop at the end
+            return prev;
+          }
+          
+          if (nextIndex < 0) {
+            velocity.current = 0;
+            accumulatedDelta.current = 0;
+            if (animationFrameId.current) {
+              cancelAnimationFrame(animationFrameId.current);
+              animationFrameId.current = null;
+            }
+            // Don't disable hijacking, just stop at the start
+            return prev;
+          }
+          
+          accumulatedDelta.current -= direction * scrollThreshold;
+          return nextIndex;
+        });
+      }
+
+      animationFrameId.current = requestAnimationFrame(applyMomentum);
+    } else {
+      velocity.current = 0;
+      animationFrameId.current = null;
+    }
+  }, [lineHeight]);
+
+  // Wheel scrolling with velocity
   const handleWheel = useCallback(
-    (event: React.WheelEvent) => {
+    (event) => {
       if (!isHijacking) return;
 
       event.preventDefault();
-      if (isScrollingRef.current) return;
-      isScrollingRef.current = true;
+      
+      const now = Date.now();
+      const deltaTime = now - lastTime.current;
+      lastTime.current = now;
 
-      setTimeout(() => (isScrollingRef.current = false), 200);
+      // Reduced sensitivity for slower, more controlled scrolling
+      const scrollSpeed = event.deltaY * 0.15;
+      velocity.current += scrollSpeed;
 
-      const direction = event.deltaY > 0 ? 1 : -1;
-
-      setCurrentIndex((prev) => {
-        const nextIndex = prev + direction;
-
-        if (nextIndex >= flatText.length) {
-          disableHijacking(); // Release scroll at the end
-          return prev;
-        }
-
-        if (nextIndex < 0) {
-          disableHijacking(); // Release scroll at the start
-          return prev;
-        }
-
-        return nextIndex;
-      });
+      if (!animationFrameId.current) {
+        animationFrameId.current = requestAnimationFrame(applyMomentum);
+      }
     },
-    [isHijacking, disableHijacking]
+    [isHijacking, applyMomentum]
   );
 
-  // Touch scrolling
-  const touchStartY = useRef<number | null>(null);
+  // Touch scrolling with velocity
+  const touchStartY = useRef(null);
+  const isTouchingContainer = useRef(false);
+  const lastTouchY = useRef(null);
+  const touchVelocities = useRef([]);
+
   const handleTouchStart = useCallback(
-    (e: React.TouchEvent) => {
-      touchStartY.current = e.touches[0].clientY;
-      enableHijacking();
+    (e) => {
+      // Check if touch is within the scroll container
+      if (scrollContainerRef.current) {
+        const rect = scrollContainerRef.current.getBoundingClientRect();
+        const touch = e.touches[0];
+        const isInside =
+          touch.clientX >= rect.left &&
+          touch.clientX <= rect.right &&
+          touch.clientY >= rect.top &&
+          touch.clientY <= rect.bottom;
+
+        if (isInside) {
+          touchStartY.current = touch.clientY;
+          lastTouchY.current = touch.clientY;
+          isTouchingContainer.current = true;
+          touchVelocities.current = [];
+          velocity.current = 0;
+          lastTime.current = Date.now();
+          enableHijacking();
+        } else {
+          isTouchingContainer.current = false;
+        }
+      }
     },
     [enableHijacking]
   );
 
   const handleTouchMove = useCallback(
-    (e: React.TouchEvent) => {
-      if (!isHijacking || touchStartY.current === null) return;
+    (e) => {
+      if (!isTouchingContainer.current || !isHijacking || touchStartY.current === null) return;
 
       e.preventDefault();
-      const touchEndY = e.touches[0].clientY;
-      const deltaY = touchStartY.current - touchEndY;
-
-      if (Math.abs(deltaY) > 20) {
-        if (isScrollingRef.current) return;
-        isScrollingRef.current = true;
-        setTimeout(() => (isScrollingRef.current = false), 200);
-
-        setCurrentIndex((prev) => {
-          const nextIndex = prev + (deltaY > 0 ? 1 : -1);
-
-          if (nextIndex >= flatText.length || nextIndex < 0) {
-            disableHijacking(); // Release scroll
-            return prev;
+      
+      const now = Date.now();
+      const touch = e.touches[0];
+      const currentY = touch.clientY;
+      
+      if (lastTouchY.current !== null) {
+        const deltaY = lastTouchY.current - currentY;
+        const deltaTime = now - lastTime.current;
+        
+        if (deltaTime > 0) {
+          const instantVelocity = deltaY / deltaTime * 16;
+          touchVelocities.current.push(instantVelocity);
+          
+          // Keep only last 5 velocities for averaging
+          if (touchVelocities.current.length > 5) {
+            touchVelocities.current.shift();
           }
-
-          return nextIndex;
-        });
-
-        touchStartY.current = touchEndY;
+        }
+        
+        // Reduced sensitivity for slower, more controlled scrolling
+        accumulatedDelta.current += deltaY * 0.3;
+        
+        const scrollThreshold = lineHeight;
+        
+        if (Math.abs(accumulatedDelta.current) >= scrollThreshold) {
+          const direction = accumulatedDelta.current > 0 ? 1 : -1;
+          
+          setCurrentIndex((prev) => {
+            const nextIndex = prev + direction;
+            
+            if (nextIndex >= flatText.length || nextIndex < 0) {
+              velocity.current = 0;
+              accumulatedDelta.current = 0;
+              isTouchingContainer.current = false;
+              // Don't disable hijacking
+              return prev;
+            }
+            
+            accumulatedDelta.current -= direction * scrollThreshold;
+            return nextIndex;
+          });
+        }
       }
+      
+      lastTouchY.current = currentY;
+      lastTime.current = now;
     },
-    [isHijacking, disableHijacking]
+    [isHijacking, lineHeight]
   );
 
   const handleTouchEnd = useCallback(() => {
+    if (touchVelocities.current.length > 0) {
+      // Calculate average velocity for momentum with reduced boost
+      const avgVelocity = touchVelocities.current.reduce((a, b) => a + b, 0) / touchVelocities.current.length;
+      velocity.current = avgVelocity * 0.8; // Reduced boost for slower momentum
+      
+      if (!animationFrameId.current) {
+        animationFrameId.current = requestAnimationFrame(applyMomentum);
+      }
+    }
+    
     touchStartY.current = null;
-  }, []);
+    lastTouchY.current = null;
+    isTouchingContainer.current = false;
+    touchVelocities.current = [];
+  }, [applyMomentum]);
 
   return (
     <div className="w-full py-10 bg-black flex flex-col justify-center items-center gap-6 px-4">
@@ -166,8 +279,12 @@ export const Manifesto = () => {
       </div>
       <div
         className="w-full flex justify-center items-center"
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
       >
         <div 
+          ref={scrollContainerRef}
           className="w-full max-w-3xl h-72 relative bg-slate-900 rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none"
         >
           <div
@@ -178,9 +295,6 @@ export const Manifesto = () => {
               }px))`,
             }}
             onWheel={handleWheel}
-            onTouchStart={handleTouchStart}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
             onMouseEnter={enableHijacking}
             onMouseLeave={disableHijacking}
           >
