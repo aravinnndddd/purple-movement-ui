@@ -98,7 +98,7 @@ export const Navbar = () => {
       className={`w-full fixed top-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'backdrop-blur-lg bg-black/30 border-b border-white/10 shadow-lg'
-          : 'bg-transparent'
+          : 'bg-transparent border-b border-transparent'
       }`}
     >
       <div className="mx-auto flex items-center justify-between px-4 sm:px-8 md:px-12 py-6 h-[10vh]">
