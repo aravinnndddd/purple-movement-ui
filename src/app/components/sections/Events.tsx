@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
+import Image from "next/image";
 
 const events = [
   {
@@ -65,8 +66,23 @@ const events = [
   },
 ];
 
+// Type definitions
+interface Event {
+  title: string;
+  imgPath: string;
+  desc: string;
+  size: string;
+}
+
+interface EventCardProps {
+  event: Event;
+  isActive?: boolean;
+  isAdjacent?: boolean;
+  isMobile?: boolean;
+}
+
 // Extracted EventCard component for better organization
-const EventCard = ({ event, isActive, isAdjacent, isMobile = false }) => {
+const EventCard = ({ event, isMobile = false }: EventCardProps) => {
   const cardClasses = isMobile
     ? "w-full bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 cursor-pointer"
     : "w-full h-full bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 overflow-hidden cursor-pointer";
@@ -87,7 +103,7 @@ const EventCard = ({ event, isActive, isAdjacent, isMobile = false }) => {
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
         <div className="flex flex-col items-center justify-center h-full px-4 pt-6 pb-20 z-0 relative">
           <div className="mb-6">
-            <img
+            <Image
               src={event.imgPath}
               alt={event.title}
               width={isMobile ? 180 : 160}
@@ -111,7 +127,13 @@ const EventCard = ({ event, isActive, isAdjacent, isMobile = false }) => {
 }
 
 // Navigation button component
-const NavButton = ({ direction, onClick, ariaLabel }) => (
+interface NavButtonProps {
+  direction: 'prev' | 'next';
+  onClick: () => void;
+  ariaLabel: string;
+}
+
+const NavButton = ({ direction, onClick, ariaLabel }: NavButtonProps) => (
   <button
     onClick={onClick}
     className="absolute top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
@@ -140,12 +162,12 @@ export default function Events() {
   const [isPaused, setIsPaused] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(true);
   
-  const viewportRef = useRef(null);
-  const touchStartX = useRef(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const touchStartX = useRef<number | null>(null);
   const touchDeltaX = useRef(0);
-  const autoPlayRef = useRef(null);
-  const carouselRef = useRef(null);
-  const dragStartX = useRef(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
+  const dragStartX = useRef<number | null>(null);
   const dragDeltaX = useRef(0);
   const [isDragging, setIsDragging] = useState(false);
 
@@ -242,7 +264,7 @@ export default function Events() {
 
   // Keyboard navigation
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "ArrowLeft") {
         prevSlide();
         setIsPaused(true);
@@ -262,13 +284,13 @@ export default function Events() {
     : 0;
 
   // Touch handlers for mobile
-  const handleTouchStart = (e) => {
+  const handleTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
     touchDeltaX.current = 0;
     setIsPaused(true);
   };
 
-  const handleTouchMove = (e) => {
+  const handleTouchMove = (e: React.TouchEvent) => {
     if (touchStartX.current === null) return;
     const currentX = e.touches[0].clientX;
     touchDeltaX.current = touchStartX.current - currentX;
@@ -289,7 +311,7 @@ export default function Events() {
   };
 
   // Mouse drag handlers for desktop
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
     dragStartX.current = e.clientX;
     dragDeltaX.current = 0;
@@ -297,14 +319,14 @@ export default function Events() {
     setIsPaused(true);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = useCallback((e: MouseEvent) => {
     if (!isDragging || dragStartX.current === null) return;
     const currentX = e.clientX;
     dragDeltaX.current = dragStartX.current - currentX;
     setDragOffset(-dragDeltaX.current);
-  };
+  }, [isDragging]);
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
     if (!isDragging) return;
     
     const DRAG_THRESHOLD = 100;
@@ -320,7 +342,7 @@ export default function Events() {
     dragDeltaX.current = 0;
     setDragOffset(0);
     setIsDragging(false);
-  };
+  }, [isDragging, nextSlide, prevSlide]);
 
   const handleMouseLeave = () => {
     if (isDragging) {
@@ -339,9 +361,9 @@ export default function Events() {
         window.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging]);
+  }, [isDragging, handleMouseMove, handleMouseUp]);
 
-  const handleNavClick = (direction) => {
+  const handleNavClick = (direction: 'prev' | 'next') => {
     if (direction === 'prev') {
       prevSlide();
     } else {
@@ -350,7 +372,7 @@ export default function Events() {
     setIsPaused(true);
   };
 
-  const handleCardClick = (idx) => {
+  const handleCardClick = (idx: number) => {
     // Only navigate if not dragging
     if (isDragging || Math.abs(dragDeltaX.current) > 5) return;
     if (idx !== currentIndex) {
