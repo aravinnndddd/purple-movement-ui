@@ -1,7 +1,6 @@
 "use client";
 
-import Image from "next/image";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 
 const events = [
   {
@@ -64,96 +63,319 @@ const events = [
     desc: "We're proud to have The Purple Movement as a partner for the AI+Compassion Global Forum 2025.",
     size: "large",
   },
-  // {
-  //   title: "Stay Tuned...",
-  //   desc: null,
-  //   imgPath: null,
-  //   size: "small",
-  // },
 ];
 
-export const Events = () => {
+// Extracted EventCard component for better organization
+const EventCard = ({ event, isActive, isAdjacent, isMobile = false }) => {
+  const cardClasses = isMobile
+    ? "w-full bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 cursor-pointer"
+    : "w-full h-full bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 overflow-hidden cursor-pointer";
+
+  if (!event.imgPath) {
+    return (
+      <div className={`${cardClasses} ${isMobile ? 'h-96' : ''} flex flex-col items-center justify-center relative p-6`}>
+        <div className="text-center text-white/70 text-xl font-semibold font-montserrat">
+          {event.title}
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className={cardClasses}>
+      <div className={`relative w-full ${isMobile ? 'h-96' : 'h-full'} rounded-lg overflow-hidden`}>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
+        <div className="flex flex-col items-center justify-center h-full px-4 pt-6 pb-20 z-0 relative">
+          <div className="mb-6">
+            <img
+              src={event.imgPath}
+              alt={event.title}
+              width={isMobile ? 180 : 160}
+              height={isMobile ? 160 : 130}
+              className="object-contain rounded-lg border border-white/50"
+              loading="lazy"
+            />
+          </div>
+        </div>
+        <div className="absolute bottom-6 left-6 right-6 z-20">
+          <div className="text-white text-lg font-semibold font-montserrat mb-1">
+            {event.title}
+          </div>
+          <div className="text-white/90 text-sm font-poppins leading-snug line-clamp-3">
+            {event.desc}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// Navigation button component
+const NavButton = ({ direction, onClick, ariaLabel }) => (
+  <button
+    onClick={onClick}
+    className="absolute top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50"
+    style={{ [direction === 'prev' ? 'left' : 'right']: '1rem' }}
+    aria-label={ariaLabel}
+  >
+    <svg
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="white"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <polyline points={direction === 'prev' ? "15 18 9 12 15 6" : "9 18 15 12 9 6"} />
+    </svg>
+  </button>
+);
+
+export default function Events() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(0);
+  const [dragOffset, setDragOffset] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(true);
+  
+  const viewportRef = useRef(null);
+  const touchStartX = useRef(null);
+  const touchDeltaX = useRef(0);
+  const autoPlayRef = useRef(null);
+  const carouselRef = useRef(null);
+  const dragStartX = useRef(null);
+  const dragDeltaX = useRef(0);
+  const [isDragging, setIsDragging] = useState(false);
 
   // Desktop card dimensions
-  const CARD_W = 300; // px — card width
-  const CARD_H = 360; // px — card height
-  const GAP = 24; // px gap between cards
+  const CARD_W = 300;
+  const CARD_H = 360;
+  const GAP = 24;
+  const AUTOPLAY_INTERVAL = 5000;
+  const SWIPE_THRESHOLD = 50;
 
-  const viewportRef = useRef<HTMLDivElement | null>(null);
-  const [viewportWidth, setViewportWidth] = useState<number>(0);
+  // Create infinite loop with more clones to prevent seeing the end
+  const cloneCount = 5; // Increased from 2 to 5 for smoother infinite scroll
+  const infiniteEvents = [
+    ...events.slice(-cloneCount),
+    ...events,
+    ...events.slice(0, cloneCount)
+  ];
 
+  // Initialize at first real item (after clones)
   useEffect(() => {
-    const update = () => {
+    setCurrentIndex(cloneCount);
+  }, []);
+
+  // Memoized navigation functions
+  const nextSlide = useCallback(() => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
+  }, []);
+
+  const prevSlide = useCallback(() => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
+  }, []);
+
+  // Handle seamless loop - instantly jump when reaching clones
+  useEffect(() => {
+    const handleTransitionEnd = () => {
+      // If we're past the real items into end clones
+      if (currentIndex >= events.length + cloneCount) {
+        setIsTransitioning(false);
+        setCurrentIndex(cloneCount);
+      }
+      // If we're before the real items into start clones
+      else if (currentIndex < cloneCount) {
+        setIsTransitioning(false);
+        setCurrentIndex(events.length + cloneCount - 1);
+      }
+    };
+
+    if (isTransitioning) {
+      const timer = setTimeout(handleTransitionEnd, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, isTransitioning]);
+
+  // Re-enable transitions after instant jump
+  useEffect(() => {
+    if (!isTransitioning) {
+      // Use requestAnimationFrame for smoother transition re-enable
+      const frameId = requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setIsTransitioning(true);
+        });
+      });
+      return () => cancelAnimationFrame(frameId);
+    }
+  }, [isTransitioning]);
+
+  // Viewport width tracking
+  useEffect(() => {
+    const updateViewportWidth = () => {
       if (viewportRef.current) {
         setViewportWidth(viewportRef.current.clientWidth);
       }
     };
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
+    
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+    return () => window.removeEventListener("resize", updateViewportWidth);
   }, []);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % events.length);
-  };
+  // Auto-play functionality
+  useEffect(() => {
+    if (isPaused) return;
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + events.length) % events.length);
-  };
+    autoPlayRef.current = setInterval(nextSlide, AUTOPLAY_INTERVAL);
 
-  // translateX so active card centers perfectly
-  const translateX =
-    viewportWidth > 0
-      ? Math.round(viewportWidth / 2 - (currentIndex * (CARD_W + GAP) + CARD_W / 2))
-      : 0;
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isPaused, nextSlide]);
 
-  // Mobile swipe tracking
-  const touchStartX = useRef<number | null>(null);
-  const touchDeltaX = useRef<number>(0);
-  const [dragOffset, setDragOffset] = useState(0);
+  // Keyboard navigation
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === "ArrowLeft") {
+        prevSlide();
+        setIsPaused(true);
+      } else if (e.key === "ArrowRight") {
+        nextSlide();
+        setIsPaused(true);
+      }
+    };
 
-  const handleTouchStart = (e: React.TouchEvent) => {
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [nextSlide, prevSlide]);
+
+  // Calculate desktop carousel translation
+  const translateX = viewportWidth > 0
+    ? Math.round(viewportWidth / 2 - (currentIndex * (CARD_W + GAP) + CARD_W / 2))
+    : 0;
+
+  // Touch handlers for mobile
+  const handleTouchStart = (e) => {
     touchStartX.current = e.touches[0].clientX;
     touchDeltaX.current = 0;
+    setIsPaused(true);
   };
 
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const handleTouchMove = (e) => {
     if (touchStartX.current === null) return;
-
     const currentX = e.touches[0].clientX;
     touchDeltaX.current = touchStartX.current - currentX;
-    setDragOffset(-touchDeltaX.current); // for smooth drag feedback
+    setDragOffset(-touchDeltaX.current);
   };
 
   const handleTouchEnd = () => {
-    const THRESHOLD = 50; // Minimum px to trigger a slide
-    if (touchDeltaX.current > THRESHOLD) {
-      nextSlide();
-    } else if (touchDeltaX.current < -THRESHOLD) {
-      prevSlide();
+    if (Math.abs(touchDeltaX.current) > SWIPE_THRESHOLD) {
+      if (touchDeltaX.current > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
     }
     touchStartX.current = null;
     touchDeltaX.current = 0;
     setDragOffset(0);
   };
 
+  // Mouse drag handlers for desktop
+  const handleMouseDown = (e) => {
+    e.preventDefault();
+    dragStartX.current = e.clientX;
+    dragDeltaX.current = 0;
+    setIsDragging(true);
+    setIsPaused(true);
+  };
+
+  const handleMouseMove = (e) => {
+    if (!isDragging || dragStartX.current === null) return;
+    const currentX = e.clientX;
+    dragDeltaX.current = dragStartX.current - currentX;
+    setDragOffset(-dragDeltaX.current);
+  };
+
+  const handleMouseUp = () => {
+    if (!isDragging) return;
+    
+    const DRAG_THRESHOLD = 100;
+    if (Math.abs(dragDeltaX.current) > DRAG_THRESHOLD) {
+      if (dragDeltaX.current > 0) {
+        nextSlide();
+      } else {
+        prevSlide();
+      }
+    }
+    
+    dragStartX.current = null;
+    dragDeltaX.current = 0;
+    setDragOffset(0);
+    setIsDragging(false);
+  };
+
+  const handleMouseLeave = () => {
+    if (isDragging) {
+      handleMouseUp();
+    }
+  };
+
+  // Add mouse event listeners for desktop drag
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging]);
+
+  const handleNavClick = (direction) => {
+    if (direction === 'prev') {
+      prevSlide();
+    } else {
+      nextSlide();
+    }
+    setIsPaused(true);
+  };
+
+  const handleCardClick = (idx) => {
+    // Only navigate if not dragging
+    if (isDragging || Math.abs(dragDeltaX.current) > 5) return;
+    if (idx !== currentIndex) {
+      setCurrentIndex(idx);
+    }
+  };
+
   return (
     <div
       className="w-full py-16 bg-black flex flex-col justify-center items-center gap-8 px-4"
       id="events"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
     >
       {/* Title */}
-      <div className="text-center text-white text-2xl sm:text-4xl md:text-5xl font-semibold font-montserrat">
+      <h2 className="text-center text-white text-2xl sm:text-4xl md:text-5xl font-semibold font-montserrat">
         Events
-      </div>
+      </h2>
 
       {/* Subtitle */}
-      <div className="max-w-2xl md:max-w-4xl text-center text-white/75 text-sm sm:text-base md:text-lg font-normal font-poppins px-2 sm:px-0">
+      <p className="max-w-2xl md:max-w-4xl text-center text-white/75 text-sm sm:text-base md:text-lg font-normal font-poppins px-2 sm:px-0">
         From creative challenges to impactful experiences, our events are
         designed to inspire, push boundaries, and open doors to new
         opportunities.
-      </div>
+      </p>
 
       {/* Mobile Carousel */}
       <div
@@ -164,121 +386,25 @@ export const Events = () => {
       >
         <div className="overflow-hidden">
           <div
-            className="flex transition-transform duration-300 ease-out"
-            style={{ transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))` }}
+            className={`flex ${isTransitioning ? 'transition-transform duration-300 ease-out' : ''}`}
+            style={{ 
+              transform: `translateX(calc(-${currentIndex * 100}% + ${dragOffset}px))`,
+              willChange: dragOffset !== 0 ? 'transform' : 'auto'
+            }}
           >
-            {events.map((event, idx) => (
-              <div key={idx} className="w-full flex-shrink-0 px-4">
-                {event.imgPath ? (
-                  <div className="w-full bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 cursor-pointer">
-                    <div className="relative w-full h-96 rounded-lg overflow-hidden">
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-                      <div className="flex flex-col items-center justify-center h-full px-4 pt-6 pb-20 z-0 relative">
-                        <div className="mb-6">
-                          <Image
-                            src={event.imgPath}
-                            alt={event.title}
-                            width={180}
-                            height={160}
-                            className="object-contain rounded-lg border border-white/50"
-                          />
-                        </div>
-                      </div>
-                      <div className="absolute bottom-6 left-6 right-6 z-20">
-                        <div className="text-white text-lg font-semibold font-montserrat mb-1">
-                          {event.title}
-                        </div>
-                        <div className="text-white/90 text-sm font-poppins leading-snug">
-                          {event.desc}
-                        </div>
-                      </div>
-                      <div className="absolute bottom-2 right-6 z-20">
-                        <Image
-                          src="/svgs/arrow.svg"
-                          alt="Arrow"
-                          width={22}
-                          height={22}
-                          className="opacity-100"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="w-full h-96 bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 flex flex-col items-center justify-center relative cursor-pointer p-6">
-                    <div className="text-center text-white/70 text-xl font-semibold font-montserrat">
-                      {event.title}
-                    </div>
-                    <div className="absolute bottom-2 right-6">
-                      <Image
-                        src="/svgs/arrow.svg"
-                        alt="Arrow"
-                        width={22}
-                        height={22}
-                        className="opacity-40"
-                      />
-                    </div>
-                  </div>
-                )}
+            {infiniteEvents.map((event, idx) => (
+              <div key={`mobile-${idx}`} className="w-full flex-shrink-0 px-4">
+                <EventCard event={event} isActive={idx === currentIndex} isMobile={true} />
               </div>
             ))}
           </div>
-        </div>
-
-        {/* Mobile Dots */}
-        <div className="flex justify-center gap-2 mt-6">
-          {events.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                idx === currentIndex ? "bg-white w-8" : "bg-white/40"
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
         </div>
       </div>
 
       {/* Desktop Carousel */}
       <div className="hidden md:block relative w-full max-w-[1400px] mt-8">
-        {/* Arrows */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/30"
-          aria-label="Previous event"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <button
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/30"
-          aria-label="Next event"
-        >
-          <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="white"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
+        <NavButton direction="prev" onClick={() => handleNavClick('prev')} ariaLabel="Previous event" />
+        <NavButton direction="next" onClick={() => handleNavClick('next')} ariaLabel="Next event" />
 
         <div
           ref={viewportRef}
@@ -288,23 +414,27 @@ export const Events = () => {
             width: "100%",
             maxWidth: "1200px",
           }}
+          onMouseLeave={handleMouseLeave}
         >
           <div
-            className="flex items-center flex-nowrap transition-transform duration-500 ease-in-out"
+            ref={carouselRef}
+            className={`flex items-center flex-nowrap ${isTransitioning && !isDragging ? 'transition-transform duration-500 ease-in-out' : ''}`}
             style={{
-              transform: `translateX(${translateX}px)`,
+              transform: `translateX(${translateX + dragOffset}px)`,
               gap: `${GAP}px`,
+              willChange: 'transform',
+              cursor: isDragging ? 'grabbing' : 'ew-resize',
+              userSelect: 'none'
             }}
+            onMouseDown={handleMouseDown}
           >
-            {events.map((event, idx) => {
+            {infiniteEvents.map((event, idx) => {
               const isActive = idx === currentIndex;
-              const isAdjacent =
-                idx === (currentIndex - 1 + events.length) % events.length ||
-                idx === (currentIndex + 1) % events.length;
+              const isAdjacent = idx === currentIndex - 1 || idx === currentIndex + 1;
 
               return (
                 <div
-                  key={idx}
+                  key={`desktop-${idx}`}
                   className="flex-shrink-0 transition-all duration-500 flex justify-center items-center"
                   style={{
                     width: `${CARD_W}px`,
@@ -316,78 +446,21 @@ export const Events = () => {
                       : "scale(0.9)",
                     opacity: isActive ? 1 : isAdjacent ? 0.65 : 0.32,
                     zIndex: isActive ? 30 : isAdjacent ? 20 : 10,
+                    pointerEvents: isDragging ? 'none' : 'auto'
                   }}
+                  onClick={() => handleCardClick(idx)}
+                  role="button"
+                  tabIndex={isActive ? 0 : -1}
                 >
-                  <div className="w-full h-full bg-gray-900 rounded-lg shadow-md shadow-black/25 border border-white/50 overflow-hidden cursor-pointer">
-                    {event.imgPath ? (
-                      <div className="relative w-full h-full">
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent z-10" />
-                        <div className="flex flex-col items-center justify-center h-full px-4 pt-6 pb-20 z-0 relative">
-                          <div className="mb-6">
-                            <Image
-                              src={event.imgPath}
-                              alt={event.title}
-                              width={160}
-                              height={130}
-                              className="object-contain rounded-lg border border-white/50"
-                            />
-                          </div>
-                        </div>
-                        <div className="absolute bottom-6 left-6 right-6 z-20">
-                          <div className="text-white text-lg font-semibold font-montserrat mb-1">
-                            {event.title}
-                          </div>
-                          <div className="text-white/90 text-sm font-poppins leading-snug">
-                            {event.desc}
-                          </div>
-                        </div>
-                        <div className="absolute bottom-2 right-6 z-20">
-                          <Image
-                            src="/svgs/arrow.svg"
-                            alt="Arrow"
-                            width={22}
-                            height={22}
-                            className="opacity-100"
-                          />
-                        </div>
-                      </div>
-                    ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center p-6">
-                        <div className="text-center text-white/70 text-xl font-semibold font-montserrat">
-                          {event.title}
-                        </div>
-                        <div className="absolute bottom-2 right-6">
-                          <Image
-                            src="/svgs/arrow.svg"
-                            alt="Arrow"
-                            width={22}
-                            height={22}
-                            className="opacity-40"
-                          />
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <EventCard event={event} isActive={isActive} isAdjacent={isAdjacent} />
                 </div>
               );
             })}
           </div>
         </div>
-
-        {/* Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {events.map((_, idx) => (
-            <button
-              key={idx}
-              onClick={() => setCurrentIndex(idx)}
-              className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                idx === currentIndex ? "bg-white w-8" : "bg-white/40"
-              }`}
-              aria-label={`Go to slide ${idx + 1}`}
-            />
-          ))}
-        </div>
       </div>
     </div>
   );
-};
+}
+
+export { Events };
