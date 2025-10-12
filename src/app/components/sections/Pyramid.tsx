@@ -6,33 +6,7 @@ import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Pyramid = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  const [mousePosition, setMousePosition] = useState({ x: 50, y: 50 });
   const containerRef = useRef<HTMLDivElement>(null);
-
-  const sectionContent = {
-    top: {
-      heading: "Beyond Borders",
-      paragraph: "Empowering curious minds to turn ideas into real-world skills, building the confidence to grow and create without limits."
-    },
-    'bottom-left': {
-      heading: "Beyond Gatekeepers",
-      paragraph: "Empowering curious minds to turn ideas into real-world skills, building the confidence to grow and create without limits."
-    },
-    'bottom-right': {
-      heading: "Beyond Syllabus",
-      paragraph: "Empowering curious minds to turn ideas into real-world skills, building the confidence to grow and create without limits."
-    }
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!containerRef.current) return;
-    
-    const rect = containerRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setMousePosition({ x, y });
-  };
 
   // Define the image source based on hovered section
   const getImageSrc = () => {
@@ -53,7 +27,6 @@ const Pyramid = () => {
       <div 
         ref={containerRef}
         className="relative w-full max-w-[750px] aspect-square"
-        onMouseMove={handleMouseMove}
       >
         <Image
           src={getImageSrc()}
