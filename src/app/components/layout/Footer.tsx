@@ -1,6 +1,7 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
+import { usePathname, useRouter } from 'next/navigation';
 import { FaXTwitter, FaInstagram, FaLinkedinIn } from 'react-icons/fa6';
 import FeedbackPopup from './FeedbackPopup';
 
@@ -18,6 +19,40 @@ const supportLinks = [
 
 export const Footer = () => {
   const [isFeedbackOpen, setIsFeedbackOpen] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    e.preventDefault();
+
+    if (href === '/#') {
+      if (pathname === '/') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        router.push('/');
+      }
+      return;
+    }
+
+    if (pathname !== '/') {
+      router.push(href);
+      return;
+    }
+
+    const targetId = href.replace('/#', '');
+    const element = document.getElementById(targetId);
+
+    if (element) {
+      const navbarHeight = 80; // Approximate navbar height (10vh)
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <>
@@ -67,6 +102,7 @@ export const Footer = () => {
                     <a
                       key={item.name}
                       href={item.href}
+                      onClick={(e) => handleLinkClick(e, item.href)}
                       className="text-left text-white text-sm font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                     >
                       {item.name}
@@ -146,6 +182,7 @@ export const Footer = () => {
                   <a
                     key={item.name}
                     href={item.href}
+                    onClick={(e) => handleLinkClick(e, item.href)}
                     className="text-center text-white text-base font-normal font-poppins leading-relaxed hover:text-purple-400 transition-colors"
                   >
                     {item.name}

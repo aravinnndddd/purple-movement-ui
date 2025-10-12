@@ -1,7 +1,7 @@
 'use client'
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface FeedbackPopupProps {
   isOpen: boolean
@@ -24,6 +24,19 @@ export default function FeedbackPopup({ isOpen, onClose }: FeedbackPopupProps) {
   const handleReactionClick = (reactionId: string) => {
     setSelectedReaction(selectedReaction === reactionId ? null : reactionId)
   }
+
+  // Prevent body scrolling when popup is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'auto'
+    }
+    
+    return () => {
+      document.body.style.overflow = 'auto'
+    }
+  }, [isOpen])
 
   const handleSubmit = async () => {
     if (!feedback.trim() && !selectedReaction) return
@@ -70,7 +83,7 @@ export default function FeedbackPopup({ isOpen, onClose }: FeedbackPopupProps) {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-sm p-2 sm:p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black p-2 sm:p-4"
       onClick={handleBackdropClick}
     >
       {/* Mobile Layout */}
@@ -91,12 +104,12 @@ export default function FeedbackPopup({ isOpen, onClose }: FeedbackPopupProps) {
         </div>
 
         {/* Reactions section */}
-        <div className="flex justify-center items-center gap-1 xs:gap-2 sm:gap-3 mb-4 sm:mb-6">
+        <div className="flex justify-center items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
           {reactions.map((reaction) => (
             <button
               key={reaction.id}
               onClick={() => handleReactionClick(reaction.id)}
-              className={`transition-all duration-200 hover:opacity-100 hover:scale-110 p-1 ${
+              className={`transition-all duration-200 hover:opacity-100 hover:scale-110 ${
                 selectedReaction === reaction.id 
                   ? 'opacity-100 scale-110' 
                   : 'opacity-25'
@@ -108,25 +121,19 @@ export default function FeedbackPopup({ isOpen, onClose }: FeedbackPopupProps) {
                 alt={reaction.alt}
                 width={48}
                 height={48}
-                className="object-contain w-6 h-6 xs:w-8 xs:h-8 sm:w-10 sm:h-10"
+                className="object-contain w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12"
               />
             </button>
           ))}
         </div>
 
         {/* Feedback input */}
-        <div className="relative w-full h-32 rounded border border-neutral-400 mb-6">
-          {!feedback && (
-            <div className="absolute left-4 top-4 text-neutral-400 text-sm font-normal font-poppins tracking-tight pointer-events-none">
-              Feedback
-            </div>
-          )}
+        <div className="w-full mb-6">
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            className={`w-full h-full px-4 pb-4 bg-transparent text-white text-sm font-poppins resize-none focus:outline-none ${
-              !feedback ? 'pt-10' : 'pt-4'
-            }`}
+            placeholder="Feedback"
+            className="w-full h-32 px-4 py-4 bg-transparent text-white text-sm font-poppins resize-none focus:outline-none border border-neutral-400 rounded placeholder:text-neutral-400"
           />
         </div>
 
@@ -160,7 +167,7 @@ export default function FeedbackPopup({ isOpen, onClose }: FeedbackPopupProps) {
         </div>
 
         {/* Reactions section */}
-        <div className="absolute left-[179px] top-[148px] flex justify-start items-start gap-6">
+        <div className="absolute left-1/2 -translate-x-1/2 top-[148px] flex justify-center items-center gap-6">
           {reactions.map((reaction) => (
             <button
               key={reaction.id}
@@ -185,17 +192,11 @@ export default function FeedbackPopup({ isOpen, onClose }: FeedbackPopupProps) {
 
         {/* Feedback input */}
         <div className="w-[544.59px] h-40 absolute left-[125.06px] top-[227.28px] rounded border border-neutral-400">
-          {!feedback && (
-            <div className="absolute left-[15.91px] top-[16.61px] text-neutral-400 text-lg font-normal font-poppins tracking-tight pointer-events-none">
-              Feedback
-            </div>
-          )}
           <textarea
             value={feedback}
             onChange={(e) => setFeedback(e.target.value)}
-            className={`w-full h-full px-4 pb-4 bg-transparent text-white text-lg font-poppins resize-none focus:outline-none ${
-              !feedback ? 'pt-12' : 'pt-4'
-            }`}
+            placeholder="Feedback"
+            className="w-full h-full px-4 py-4 bg-transparent text-white text-lg font-poppins resize-none focus:outline-none placeholder:text-neutral-400"
           />
         </div>
 

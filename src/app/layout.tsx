@@ -26,7 +26,7 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Purple Movement - Rebuilding How India Learns',
+  title: 'Purple Movement',
   description: 'We are building more than a movement — we are uniting dreamers, doers, and changemakers to shape a borderless future.',
 }
 
