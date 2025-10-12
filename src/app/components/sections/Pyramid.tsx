@@ -23,10 +23,10 @@ const Pyramid = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center px-4 py-4">
+    <div className="w-full flex items-center justify-center px-4 py-4 relative">
       <div 
         ref={containerRef}
-        className="relative w-full max-w-[750px] aspect-square"
+        className="relative w-full max-w-[750px] aspect-square z-10"
       >
         <Image
           src={getImageSrc()}
