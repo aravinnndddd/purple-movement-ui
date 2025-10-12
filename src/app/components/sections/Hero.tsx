@@ -1,17 +1,21 @@
-import Image from 'next/image'
 import Link from 'next/link'
 
 export function Hero() {
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
-      {/* Background image */}
-      <Image
-        src="/images/hero-img.png"
-        alt="Hero background"
-        fill
-        className="object-cover w-full h-full mt-20"
-        priority
-      />
+      {/* Background video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="absolute inset-0 w-full h-full object-cover"
+      >
+        <source src="/videos/hero-bg.mp4" type="video/mp4" />
+      </video>
+
+      {/* Dark overlay for better text readability */}
+      <div className="absolute inset-0 bg-black/40 z-[1]" />
 
       {/* Content overlay */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-4 md:-mt-40 -mt-20">
