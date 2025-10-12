@@ -26,8 +26,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Purple Movement',
-  description: 'We are building more than a movement — we are uniting dreamers, doers, and changemakers to shape a borderless future.',
+  title: 'The Purple Movement',
+  description: 'Beyond Syllabus, Beyond Gatekeepers, Beyond Borders',
 }
 
 export default function RootLayout({
