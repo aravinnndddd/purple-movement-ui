@@ -26,8 +26,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Purple Movement - Rebuilding How India Learns',
-  description: 'We are building more than a movement — we are uniting dreamers, doers, and changemakers to shape a borderless future.',
+  title: 'The Purple Movement',
+  description: 'Beyond Syllabus, Beyond Gatekeepers, Beyond Borders',
 }
 
 export default function RootLayout({
@@ -36,7 +36,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${montserrat.variable} ${poppins.variable} ${ibmPlexSansDevanagari.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`${inter.variable} ${montserrat.variable} ${poppins.variable} ${ibmPlexSansDevanagari.variable}`}>
       <body className="bg-slate-950 font-inter w-full min-h-screen">
         {children}
       </body>

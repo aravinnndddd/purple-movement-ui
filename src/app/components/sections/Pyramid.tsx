@@ -1,10 +1,12 @@
 'use client'
 
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 
 const Pyramid = () => {
   const [hoveredSection, setHoveredSection] = useState<string | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   // Define the image source based on hovered section
   const getImageSrc = () => {
@@ -21,45 +23,57 @@ const Pyramid = () => {
   };
 
   return (
-    <div className="w-full flex items-center justify-center px-4 py-4">
-      <div className="relative">
+    <div className="w-full flex items-center justify-center px-4 py-4 relative">
+      <div 
+        ref={containerRef}
+        className="relative w-full max-w-[750px] aspect-square z-10"
+      >
         <Image
           src={getImageSrc()}
           alt="Pyramid"
-          width={750}
-          height={750}
-          className="object-contain transition-all duration-300 ease-in-out"
+          fill
+          className="object-contain transition-opacity duration-300 ease-in-out"
+          priority
         />
         
-        {/* Interactive hover zones */}
+        {/* Click indicator animation - positioned at bottom right */}
+        <div className="absolute bottom-27 right-15 md:bottom-42 md:right-22 w-16 h-16 md:w-24 md:h-24 pointer-events-none z-10">
+          <DotLottieReact
+            src="https://lottie.host/166e1d3f-79dc-480f-8401-7d646839a4af/g8W5U9eM7Q.lottie"
+            loop
+            autoplay
+          />
+        </div>
+
+        {/* Interactive hover zones (invisible click areas) */}
         <div className="absolute inset-0 pointer-events-auto">
-          {/* Top section */}
+          {/* Top section - upper triangle */}
           <div
-            className="absolute top-0 left-1/2 transform -translate-x-1/2 w-2/3 h-1/2 cursor-pointer"
+            className="absolute inset-0 cursor-pointer"
             onMouseEnter={() => setHoveredSection('top')}
             onMouseLeave={() => setHoveredSection(null)}
             style={{
-              clipPath: 'polygon(50% 0%, 20% 100%, 80% 100%)'
+              clipPath: 'polygon(50% 7%, 70% 40%, 50% 51%, 30% 40%)'
             }}
           />
-          
+
           {/* Bottom Left section */}
           <div
-            className="absolute bottom-0 left-0 w-1/2 h-1/2 cursor-pointer"
+            className="absolute inset-0 cursor-pointer"
             onMouseEnter={() => setHoveredSection('bottom-left')}
             onMouseLeave={() => setHoveredSection(null)}
             style={{
-              clipPath: 'polygon(40% 0%, 0% 100%, 100% 100%)'
+              clipPath: 'polygon(28.5% 43%, 48% 54%, 48% 77%, 10% 77%)'
             }}
           />
-          
+
           {/* Bottom Right section */}
           <div
-            className="absolute bottom-0 right-0 w-1/2 h-1/2 cursor-pointer"
+            className="absolute inset-0 cursor-pointer"
             onMouseEnter={() => setHoveredSection('bottom-right')}
             onMouseLeave={() => setHoveredSection(null)}
             style={{
-              clipPath: 'polygon(0% 100%, 60% 0%, 100% 100%)'
+              clipPath: 'polygon(71.5% 43%, 52% 54%, 52% 77%, 90% 77%)'
             }}
           />
         </div>
@@ -69,5 +83,3 @@ const Pyramid = () => {
 };
 
 export default Pyramid;
-
-   
