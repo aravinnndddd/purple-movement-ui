@@ -95,7 +95,7 @@ export const Manifesto = () => {
 
     // Start immediately for smoother experience
     autoScrollTimer.current = setTimeout(scrollNext, 1500);
-  }, [currentIndex, isAutoScrolling, flatText.length]);
+  }, [currentIndex, isAutoScrolling]);
 
   const stopAutoScroll = useCallback(() => {
     if (autoScrollTimer.current) {
@@ -389,7 +389,7 @@ export const Manifesto = () => {
     touchVelocities.current = [];
 
     // Don't disable hijacking immediately - let momentum finish
-  }, [applyMomentum, flatText.length, startAutoScroll, stopAutoScroll]);
+  }, [applyMomentum, startAutoScroll, stopAutoScroll]);
 
   // Handle click for desktop users
   const handleClick = useCallback(() => {
@@ -399,7 +399,7 @@ export const Manifesto = () => {
         return nextIndex >= flatText.length ? 0 : nextIndex; // Loop back to start
       });
     }
-  }, [flatText.length]);
+  }, []);
 
   // Cleanup on unmount
   React.useEffect(() => {
@@ -443,7 +443,7 @@ export const Manifesto = () => {
       >
         <div
           ref={scrollContainerRef}
-          className="w-full max-w-3xl h-64 sm:h-72 md:h-80 lg:h-96 xl:h-[28rem] relative bg-white/10 backdrop-blur-sm rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none border border-white/10 shadow-xl"
+          className="w-full max-w-3xl h-64 sm:h-72 md:h-50 lg:h-86 xl:h-[20rem] relative bg-white/10 backdrop-blur-sm rounded-[20px] overflow-hidden flex items-center justify-center px-2 sm:px-6 cursor-pointer select-none border border-white/10 shadow-xl"
           onClick={handleClick}
         >
           <div
