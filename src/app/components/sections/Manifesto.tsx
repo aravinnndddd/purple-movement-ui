@@ -210,7 +210,7 @@ export const Manifesto = () => {
       lastTime.current = Date.now();
 
       // More responsive scrolling for better user experience
-      const scrollSpeed = event.deltaY * 0.3;
+      const scrollSpeed = event.deltaY * 0.1;
       velocity.current += scrollSpeed;
 
       if (!animationFrameId.current) {
@@ -416,7 +416,7 @@ export const Manifesto = () => {
   }, []);
 
   return (
-    <div className="w-full py-10 z-[999] bg-black flex flex-col justify-center items-center gap-6 px-4">
+    <div className="w-full py-10 z-[10] bg-black flex flex-col justify-center items-center gap-6 px-4">
       <div className="max-w-full text-center">
         <span className="text-white text-3xl sm:text-4xl md:text-5xl font-bold font-montserrat">
           Our{" "}

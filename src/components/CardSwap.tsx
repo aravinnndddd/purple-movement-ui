@@ -77,10 +77,10 @@ const placeNow = (el: HTMLElement, slot: Slot, skew: number) =>
 
 const CardSwap: React.FC<CardSwapProps> = ({
   width = 500,
-  height = 150,
+  height = 200,
   cardDistance = 60,
   verticalDistance = 70,
-  delay = 5000,
+  delay = 3000,
   pauseOnHover = false,
   onCardClick,
   skewAmount = 6,
@@ -112,7 +112,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   );
   const refs = useMemo<CardRef[]>(
     () => childArr.map(() => React.createRef<HTMLDivElement>()),
-    [childArr]
+    [childArr.length]
   );
 
   const order = useRef<number[]>(
@@ -120,7 +120,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   );
 
   const tlRef = useRef<gsap.core.Timeline | null>(null);
-  const intervalRef = useRef<number | undefined>(undefined);
+  const intervalRef = useRef<number>(null!);
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -218,21 +218,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
       };
     }
     return () => clearInterval(intervalRef.current);
-  }, [
-    cardDistance,
-    verticalDistance,
-    delay,
-    pauseOnHover,
-    skewAmount,
-    easing,
-    refs,
-    config.durDrop,
-    config.durMove,
-    config.durReturn,
-    config.ease,
-    config.promoteOverlap,
-    config.returnDelay,
-  ]);
+  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement<CardProps>(child)
@@ -251,7 +237,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   return (
     <div
       ref={container}
-      className="absolute top-[10%] right-[50%] transform translate-x-[50%] translate-y-[50%] origin-bottom-right perspective-[900px] overflow-visible max-[768px]:translate-x-[25%] max-[768px]:translate-y-[25%] max-[768px]:scale-[0.75] max-[480px]:translate-x-[25%] max-[480px]:translate-y-[25%] max-[480px]:scale-[0.55]"
+      className="absolute flex w-[60%] z-[5] bottom-10 right-0 transform -translate-x-[19%] translate-y-[20%] origin-bottom-right perspective-[900px] scale-[0.75] overflow-visible max-[768px]:-translate-x-[15%] max-[768px]:translate-y-[10%] max-[768px]:scale-[0.55] max-[480px]:-translate-x-[10%] max-[480px]:translate-y-[5%] max-[480px]:scale-[0.55]"
       style={{ width, height }}
     >
       {rendered}
