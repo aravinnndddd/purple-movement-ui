@@ -1,36 +1,33 @@
-'use client'
+"use client";
 
-import Image from 'next/image'
+import Image from "next/image";
 
 interface StepOneProps {
-  selectedOption: string | null
-  onCardClick: (optionId: string) => void
+  selectedOption: string | null;
+  onCardClick: (optionId: string) => void;
 }
 
-export default function StepOne({
-  selectedOption,
-  onCardClick,
-}: StepOneProps) {
+export default function StepOne({ selectedOption, onCardClick }: StepOneProps) {
   const options = [
     {
-      id: 'individual',
-      label: 'Individual',
+      id: "individual",
+      label: "Individual",
       text: "Students, creators, and entrepreneurs collaborating, contributing, and networking to drive meaningful impact together.",
-      svgPath: '/svgs/ind.svg',
+      svgPath: "/svgs/ind.svg",
     },
     {
-      id: 'organization',
-      label: 'Organization',
+      id: "organization",
+      label: "Organization",
       text: "Nonprofit organizations, startups, universities, and research labs enabling learning, fostering innovation, and creating scalable solutions.",
-      svgPath: '/svgs/org.svg',
+      svgPath: "/svgs/org.svg",
     },
     {
-      id: 'government',
-      label: 'Government',
+      id: "government",
+      label: "Government",
       text: "Government departments, policymakers, and public institutions shaping programs, fostering the ecosystem, and enabling impactful collaboration.",
-      svgPath: '/svgs/gov.svg',
+      svgPath: "/svgs/gov.svg",
     },
-  ]
+  ];
 
   return (
     <div className="space-y-8 sm:space-y-12 w-full">
@@ -50,20 +47,21 @@ export default function StepOne({
           <button
             key={option.id}
             onClick={() => onCardClick(option.id)}
-            className={`w-[90%] xs:w-64 sm:w-60 md:w-64 h-32 xs:h-40 sm:h-64 md:h-72 relative bg-slate-900/75 rounded-xl shadow-lg border transition-all duration-300 group overflow-hidden cursor-pointer ${
+            className={`w-[90%] xs:w-64 sm:w-60 md:w-64 h-32 xs:h-40 sm:h-64 md:h-72 relative bg-slate-900/75 rounded-xl shadow-lg border   group overflow-hidden cursor-pointer transform transition-transform duration-300 ease-out hover:scale-110 hover:shadow-violet-500/30 hover:shadow-lg ${
               selectedOption === option.id
-                ? 'border-violet-700 bg-slate-800/90'
-                : 'border-black/40 hover:border-violet-700/50'
+                ? "border-violet-700 bg-slate-800/90"
+                : "border-black/40 hover:border-violet-700/50"
             }`}
           >
             {/* Icon */}
-            <div className="absolute top-6 left-5 w-10 h-10 bg-white rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute top-6 left-5 w-10 h-10  rounded flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <Image
                 src={option.svgPath}
                 alt={option.label}
                 width={24}
                 height={24}
-                style={{ height: 'auto' }}
+                color="white"
+                style={{ height: "auto" }}
               />
             </div>
 
@@ -75,7 +73,7 @@ export default function StepOne({
             </div>
 
             {/* Hover Text */}
-            <div className="absolute inset-0 flex items-start justify-start p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute  inset-0 flex items-start justify-start p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
               <div className="w-full text-left text-white/75 text-xs sm:text-sm font-normal font-poppins capitalize mt-14 overflow-hidden text-ellipsis leading-snug">
                 {option.text}
               </div>
@@ -84,5 +82,5 @@ export default function StepOne({
         ))}
       </div>
     </div>
-  )
+  );
 }
