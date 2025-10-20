@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json(
       { 
         message: 'Question submitted successfully',
-        id: data[0]?.id 
+        id: Array.isArray(data) && data.length > 0 ? data[0]?.id : null
       },
       { status: 201 }
     )

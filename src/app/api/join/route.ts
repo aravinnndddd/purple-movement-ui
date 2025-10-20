@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
       { 
         success: true, 
         message: 'Application submitted successfully',
-        applicationId: data[0].id 
+        applicationId: Array.isArray(data) && data.length > 0 ? data[0].id : null
       },
       { status: 201 }
     )
