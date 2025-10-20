@@ -2,8 +2,8 @@
 
 import CardSwap, { Card } from "@/components/CardSwap";
 import Image from "next/image";
-import { useState, useRef } from "react";
-import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { useRef } from "react";
+
 // import Image from "next/image";
 // import { useState, useRef } from "react";
 // import { DotLottieReact } from "@lottiefiles/dotlottie-react";

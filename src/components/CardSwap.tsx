@@ -87,24 +87,27 @@ const CardSwap: React.FC<CardSwapProps> = ({
   easing = "elastic",
   children,
 }) => {
-  const config =
-    easing === "elastic"
-      ? {
-          ease: "elastic.out(0.6,0.9)",
-          durDrop: 2,
-          durMove: 2,
-          durReturn: 2,
-          promoteOverlap: 0.9,
-          returnDelay: 0.05,
-        }
-      : {
-          ease: "power1.inOut",
-          durDrop: 0.8,
-          durMove: 0.8,
-          durReturn: 0.8,
-          promoteOverlap: 0.45,
-          returnDelay: 0.2,
-        };
+  const config = useMemo(
+    () =>
+      easing === "elastic"
+        ? {
+            ease: "elastic.out(0.6,0.9)",
+            durDrop: 2,
+            durMove: 2,
+            durReturn: 2,
+            promoteOverlap: 0.9,
+            returnDelay: 0.05,
+          }
+        : {
+            ease: "power1.inOut",
+            durDrop: 0.8,
+            durMove: 0.8,
+            durReturn: 0.8,
+            promoteOverlap: 0.45,
+            returnDelay: 0.2,
+          },
+    [easing]
+  );
 
   const childArr = useMemo(
     () => Children.toArray(children) as ReactElement<CardProps>[],
@@ -112,7 +115,7 @@ const CardSwap: React.FC<CardSwapProps> = ({
   );
   const refs = useMemo<CardRef[]>(
     () => childArr.map(() => React.createRef<HTMLDivElement>()),
-    [childArr.length]
+    [childArr]
   );
 
   const order = useRef<number[]>(
@@ -218,7 +221,15 @@ const CardSwap: React.FC<CardSwapProps> = ({
       };
     }
     return () => clearInterval(intervalRef.current);
-  }, [cardDistance, verticalDistance, delay, pauseOnHover, skewAmount, easing]);
+  }, [
+    cardDistance,
+    verticalDistance,
+    delay,
+    pauseOnHover,
+    skewAmount,
+    refs,
+    config,
+  ]);
 
   const rendered = childArr.map((child, i) =>
     isValidElement<CardProps>(child)
