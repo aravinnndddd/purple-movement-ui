@@ -82,11 +82,19 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Safely extract ID from response
+    let applicationId = null
+    if (data && Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && 'id' in data[0]) {
+      applicationId = data[0].id
+    } else if (data && typeof data === 'object' && 'id' in data) {
+      applicationId = data.id
+    }
+
     return NextResponse.json(
       { 
         success: true, 
         message: 'Application submitted successfully',
-        applicationId: Array.isArray(data) && data.length > 0 ? data[0].id : null
+        applicationId: applicationId
       },
       { status: 201 }
     )

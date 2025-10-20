@@ -47,10 +47,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Safely extract ID from response
+    let questionId = null
+    if (data && Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && 'id' in data[0]) {
+      questionId = data[0].id
+    } else if (data && typeof data === 'object' && 'id' in data) {
+      questionId = data.id
+    }
+
     return NextResponse.json(
       { 
         message: 'Question submitted successfully',
-        id: Array.isArray(data) && data.length > 0 ? data[0]?.id : null
+        id: questionId
       },
       { status: 201 }
     )

@@ -48,10 +48,18 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Safely extract ID from response
+    let feedbackId = null
+    if (data && Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && 'id' in data[0]) {
+      feedbackId = data[0].id
+    } else if (data && typeof data === 'object' && 'id' in data) {
+      feedbackId = data.id
+    }
+
     return NextResponse.json(
       { 
         message: 'Feedback submitted successfully',
-        id: Array.isArray(data) && data.length > 0 ? data[0]?.id : null
+        id: feedbackId
       },
       { status: 201 }
     )
