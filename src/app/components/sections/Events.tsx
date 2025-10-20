@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from 'react';
+import Image from 'next/image';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Mousewheel } from 'swiper/modules';
 import type { Swiper as SwiperType } from 'swiper';
@@ -188,11 +189,13 @@ export default function Events() {
                 >
                   {/* Image Container */}
                   <div className="absolute inset-0 overflow-hidden">
-                    <img
+                    <Image
                       src={event.image}
                       alt={event.text}
+                      fill
                       className="w-full h-full object-cover transition-all duration-500 group-hover:scale-105"
-                      loading="lazy"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                      priority={false}
                     />
                     
                     {/* Gradient Overlay */}
