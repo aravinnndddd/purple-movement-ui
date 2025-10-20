@@ -25,19 +25,19 @@ export async function POST(request: NextRequest) {
     const realIp = request.headers.get('x-real-ip')
     const clientIp = forwardedFor?.split(',')[0] || realIp || 'unknown'
 
-    // Prepare data for insertion
-    const feedbackRecord = {
+    // Prepare data for insertion as array
+    const feedbackData = [{
       reaction: body.reaction || null,
       feedback_text: body.feedback?.trim() || null,
       user_agent: body.userAgent || null,
       ip_address: clientIp,
       created_at: new Date().toISOString(),
-    }
+    }]
 
     // Insert into Supabase
     const { data, error } = await supabaseAdmin
       .from('feedback_submissions')
-      .insert([feedbackRecord])
+      .insert(feedbackData)
       .select()
 
     if (error) {
@@ -50,10 +50,16 @@ export async function POST(request: NextRequest) {
 
     // Safely extract ID from response
     let feedbackId = null
-    if (data && Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && 'id' in data[0]) {
-      feedbackId = data[0].id
-    } else if (data && typeof data === 'object' && 'id' in data) {
-      feedbackId = data.id
+    try {
+      if (data) {
+        if (Array.isArray(data) && data.length > 0) {
+          feedbackId = data[0]?.id || null
+        } else if (typeof data === 'object' && 'id' in data) {
+          feedbackId = data.id
+        }
+      }
+    } catch (parseError) {
+      console.error('Error parsing response data:', parseError)
     }
 
     return NextResponse.json(

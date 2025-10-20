@@ -57,21 +57,24 @@ export async function POST(request: NextRequest) {
     const forwarded = request.headers.get('x-forwarded-for')
     const ipAddress = forwarded ? forwarded.split(',')[0] : request.headers.get('x-real-ip') || ''
 
+    // Prepare application data as array
+    const applicationData = [{
+      selected_role: body.selectedRole,
+      defining_category: body.defining,
+      why_here: body.whyHere,
+      portfolio_link: body.portfolioLink || null,
+      name: body.notInterested ? null : body.name,
+      email: body.notInterested ? null : body.email,
+      phone: body.notInterested ? null : body.phone,
+      not_interested: body.notInterested,
+      user_agent: userAgent,
+      ip_address: ipAddress || null,
+    }]
+
     // Insert into Supabase
     const { data, error } = await supabaseAdmin
       .from('join_applications')
-      .insert({
-        selected_role: body.selectedRole,
-        defining_category: body.defining,
-        why_here: body.whyHere,
-        portfolio_link: body.portfolioLink || null,
-        name: body.notInterested ? null : body.name,
-        email: body.notInterested ? null : body.email,
-        phone: body.notInterested ? null : body.phone,
-        not_interested: body.notInterested,
-        user_agent: userAgent,
-        ip_address: ipAddress || null,
-      })
+      .insert(applicationData)
       .select()
 
     if (error) {
@@ -84,10 +87,16 @@ export async function POST(request: NextRequest) {
 
     // Safely extract ID from response
     let applicationId = null
-    if (data && Array.isArray(data) && data.length > 0 && typeof data[0] === 'object' && 'id' in data[0]) {
-      applicationId = data[0].id
-    } else if (data && typeof data === 'object' && 'id' in data) {
-      applicationId = data.id
+    try {
+      if (data) {
+        if (Array.isArray(data) && data.length > 0) {
+          applicationId = data[0]?.id || null
+        } else if (typeof data === 'object' && 'id' in data) {
+          applicationId = data.id
+        }
+      }
+    } catch (parseError) {
+      console.error('Error parsing response data:', parseError)
     }
 
     return NextResponse.json(
