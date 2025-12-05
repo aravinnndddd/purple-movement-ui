@@ -57,8 +57,6 @@ const events = [
 export default function Events() {
   const swiperRef = useRef<SwiperType | null>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const [isBeginning, setIsBeginning] = useState(true);
-  const [isEnd, setIsEnd] = useState(false);
 
   const handlePrevClick = () => {
     swiperRef.current?.slidePrev();
@@ -80,9 +78,7 @@ export default function Events() {
 
       {/* Subtitle */}
       <p className="max-w-2xl md:max-w-4xl text-center text-white/75 text-sm sm:text-base md:text-lg font-normal font-poppins px-2 sm:px-0">
-        From creative challenges to impactful experiences, our events are
-        designed to inspire, push boundaries, and open doors to new
-        opportunities.
+        Your next skill. Your next project.  Your next big idea. It all starts here.
       </p>
 
       {/* Swiper with Navigation Arrows */}
@@ -90,12 +86,7 @@ export default function Events() {
         {/* Previous Arrow */}
         <button
           onClick={handlePrevClick}
-          disabled={isBeginning}
-          className={`absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-40 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border focus:outline-none focus:ring-2 focus:ring-white/50 ${
-            isBeginning 
-              ? 'bg-white/5 border-white/10 cursor-not-allowed opacity-50' 
-              : 'bg-white/10 hover:bg-white/20 border-white/30 hover:scale-110 cursor-pointer'
-          }`}
+          className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 hover:scale-110"
           aria-label="Previous event"
         >
           <svg
@@ -115,12 +106,7 @@ export default function Events() {
         {/* Next Arrow */}
         <button
           onClick={handleNextClick}
-          disabled={isEnd}
-          className={`absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-40 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border focus:outline-none focus:ring-2 focus:ring-white/50 ${
-            isEnd 
-              ? 'bg-white/5 border-white/10 cursor-not-allowed opacity-50' 
-              : 'bg-white/10 hover:bg-white/20 border-white/30 hover:scale-110 cursor-pointer'
-          }`}
+          className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-40 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all duration-300 border border-white/30 focus:outline-none focus:ring-2 focus:ring-white/50 hover:scale-110"
           aria-label="Next event"
         >
           <svg
@@ -144,7 +130,7 @@ export default function Events() {
             centeredSlides={true}
             slidesPerView="auto"
             spaceBetween={20}
-            loop={false}
+            loop={true}
             mousewheel={{
               enabled: true,
               forceToAxis: true,
@@ -153,17 +139,14 @@ export default function Events() {
             }}
             pagination={{
               clickable: true,
-              dynamicBullets: false
+              dynamicBullets: true,
+              dynamicMainBullets: 3
             }}
             onSwiper={(swiper) => {
               swiperRef.current = swiper;
-              setIsBeginning(swiper.isBeginning);
-              setIsEnd(swiper.isEnd);
             }}
             onSlideChange={(swiper) => {
-              setActiveIndex(swiper.activeIndex);
-              setIsBeginning(swiper.isBeginning);
-              setIsEnd(swiper.isEnd);
+              setActiveIndex(swiper.realIndex);
             }}
             speed={500}
             className="w-full h-full events-swiper"
@@ -284,8 +267,8 @@ export default function Events() {
         
         .swiper-pagination-bullet-active {
           background: white;
-          width: 10px;
-          height: 10px;
+          width: 24px;
+          border-radius: 4px;
         }
 
         .events-swiper {

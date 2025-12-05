@@ -34,8 +34,13 @@ export function Hero() {
 
             {/* Subtext */}
             <p className="text-white/75 text-base sm:text-lg md:text-xl font-thin font-poppins capitalize px-2">
-              A people-powered network that connects learners, professionals, and changemakers to overcome challenges, build confidence and create impact.
+             Where purposeful people gather to explore, tackle issues, and create 
+meaningful change. 
+A community without barriers, where your skills matter and open new 
+possibilities. 
+Sounds like you? 
             </p>
+            
 
             {/* CTA Button */}
             <Link
