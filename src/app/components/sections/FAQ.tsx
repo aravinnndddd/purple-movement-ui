@@ -13,27 +13,35 @@ const FAQs: FAQItem[] = [
   {
     question: "What is The Purple Movement?",
     answer:
-      "It is a people-powered network that helps everyone’s talent reach their potential. It creates platforms and connections where opportunities are earned through skills and real work.",
+      `The Purple Movement is where curious, purpose-driven people come together to explore big 
+ideas, solve real problems, and spark meaningful change. 
+A barrier-free community where your skills actually matter.`,
   },
   {
     question: "Who can join?",
     answer:
-      "Everyone. If you're a student, teacher, professional, startup, or policy maker, we welcome you to learn, share, and grow with us.",
+     `If you’re driven by purpose, you belong here. No limitations. A place to connect and grow alongside 
+others on the same path. `,
   },
   {
     question: "What does 'Beyond Syllabus' mean?",
     answer:
-      "It means giving curious minds the chance to learn skills beyond syllabus, turning ideas into real-world abilities and building confidence to grow and create without limits.",
+      `Beyond Syllabus is where learning stops being boring. It is about picking up real skills, trying 
+new things, and exploring what actually excites you, not just what is written in textbooks.`,
   },
   {
     question: "What does 'Beyond Gatekeepers' mean?",
     answer:
-      "It means removing barriers like privilege, money, and status, and giving everyone a chance to learn and grow to their potential.",
+      `Beyond Gatekeepers gives everyone a real chance to grow. By lifting each other up, we create a space 
+where anyone with purpose can connect, contribute, and move forward without limitations.`,
   },
   {
     question: "What does 'Beyond Borders' mean?",
     answer:
-      "It means removing limits on growth, connecting people globally to talent, markets, and opportunities through collaboration and innovation, so ambition isn’t held back by location or boundaries.",
+     `Beyond Borders is all about breaking limits. It helps people connect, share ideas, and 
+access opportunities without being held back by geography, systems, or labels. It’s a 
+space where ambition isn’t boxed in and you can dream big, build big, and grow 
+beyond any boundary. `,
   },
   {
     question: "How can I contribute?",
@@ -65,9 +73,8 @@ export const FAQ = () => {
 
       {/* Subtitle */}
       <div className="w-full max-w-3xl text-center text-white/75 text-sm sm:text-base md:text-lg font-normal font-poppins px-2 sm:px-0">
-        From creative challenges to impactful experiences, our events are
-        designed to inspire, push boundaries, and open doors to new
-        opportunities.
+        Got questions? We&apos;ve got answers. Here are some of the most common things people ask 
+about the Purple Movement. 
       </div>
 
       {/* FAQ List */}

@@ -78,9 +78,7 @@ export default function Events() {
 
       {/* Subtitle */}
       <p className="max-w-2xl md:max-w-4xl text-center text-white/75 text-sm sm:text-base md:text-lg font-normal font-poppins px-2 sm:px-0">
-        From creative challenges to impactful experiences, our events are
-        designed to inspire, push boundaries, and open doors to new
-        opportunities.
+        Your next skill. Your next project.  Your next big idea. It all starts here.
       </p>
 
       {/* Swiper with Navigation Arrows */}
