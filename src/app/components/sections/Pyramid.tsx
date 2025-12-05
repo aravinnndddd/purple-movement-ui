@@ -1,94 +1,56 @@
 "use client";
+import React, { useState } from "react";
+import PyramidChart, { LevelData } from "./PyramidChart";
 
-import CardSwap, { Card } from "@/components/CardSwap";
-import Image from "next/image";
-import { useRef } from "react";
+const DEFAULT_DATA: LevelData[] = [
+  {
+    id: 1,
+    title: "Beyond Borders",
+    description:
+      "Beyond Borders means enabling global access to the best talent, markets, and opportunities. It’s about creating a space where purposeful people can connect, collaborate, and grow without limits, without boundaries.",
+  },
+  {
+    id: 2,
+    title: "Beyond Gatekeepers",
+    description:
+      "We believe in sharing opportunities so everyone can showcase their best selves and grow to their full potential. By lifting others, we build a community where growth and success are open, fair, and accessible to all.",
+  },
+  {
+    id: 3,
+    title: "Beyond Syllabus ",
+    description:
+      "The syllabus should be a starting point, not a cage. Real growth happens when curious minds explore beyond the lines, and those who step off the usual path aren’t rebels but pioneers we uplift and support.",
+  },
+];
 
-// import Image from "next/image";
-// import { useState, useRef } from "react";
-// import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-const Pyramid = () => {
-  // const [hoveredSection, setHoveredSection] = useState<string | null>(null);
-  // const containerRef = useRef<HTMLDivElement>(null);
+const Pyramid: React.FC = () => {
+  const [data, setData] = useState<LevelData[]>(DEFAULT_DATA);
+  const [topic, setTopic] = useState<string>("");
+  const [isGenerating, setIsGenerating] = useState<boolean>(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // // Define the image source based on hovered section
-  // const getImageSrc = () => {
-  //   switch (hoveredSection) {
-  //     case 'top':
-  //       return '/svgs/pyramid-t.svg';
-  //     case 'bottom-left':
-  //       return '/svgs/pyramid-bl.svg';
-  //     case 'bottom-right':
-  //       return '/svgs/pyramid-br.svg';
-  //     default:
-  //       return '/svgs/pyramid.svg';
-  //   }
-  // };
-
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  // Define the image source based on hovered section
-  // const getImageSrc = () => {
-  //   switch (hoveredSection) {
-  //     case "top":
-  //       return "/svgs/pyramid-t.svg";
-  //     case "bottom-left":
-  //       return "/svgs/pyramid-bl.svg";
-  //     case "bottom-right":
-  //       return "/svgs/pyramid-br.svg";
-  //     default:
-  //       return "/svgs/pyramid.svg";
-  //   }
-  // };
+  const handleUpdate = (
+    id: number,
+    field: "title" | "description",
+    value: string
+  ) => {
+    setData((prev) =>
+      prev.map((item) => (item.id === id ? { ...item, [field]: value } : item))
+    );
+  };
 
   return (
-    <div className="w-full bg-black flex h-[90vh]  lg:h-[70vh] lg:items-center  relative">
-      <div
-        ref={containerRef}
-        className="relative md:top-10 md:left-20 -top-20 w-[280px] sm:w-[360px] md:w-[700px] aspect-square z-10"
-      >
-        <Image
-          src="/svgs/pyramid.svg"
-          alt="Pyramid"
-          fill
-          className="object-contain transition-opacity duration-300 ease-in-out"
-          priority
-        />
-      </div>
-      <CardSwap
-        cardDistance={60}
-        verticalDistance={70}
-        delay={3000}
-        pauseOnHover={true}
-      >
-        <Card className="">
-          <h3 className=" text-[#6f00cd] text-[35px] font-bold border-b-1 mx-5 border-purple-500 pb-1 mb-4">
-            Beyond Syllabus
-          </h3>
-          <p className="pl-5 text-[22px]">
-            Empowering curious minds to turn ideas into real-world skills,
-            building the confidence to grow and create without limits.
-          </p>
-        </Card>
-        <Card className="">
-          <h3 className="  text-[#6f00cd] text-[35px] font-bold border-b-1 mx-5 border-purple-500 pb-1 mb-4">
-            Beyond Gatekeepers
-          </h3>
-          <p className="pl-5 text-[22px]">
-            Empowering curious minds to turn ideas into real-world skills,
-            building the confidence to grow and create without limits.
-          </p>
-        </Card>
-        <Card className="">
-          <h3 className="  text-[#6f00cd] text-[35px] font-bold border-b-1 mx-5 border-purple-500 pb-1 mb-4">
-            Beyond Borders
-          </h3>
-          <p className="pl-5 text-[22px]">
-            Empowering curious minds to turn ideas into real-world skills,
-            building the confidence to grow and create without limits.
-          </p>
-        </Card>
-      </CardSwap>
+    <div className="min-h-screen bg-bg-dark text-gray-100 font-sans selection:bg-pyramid-p2 selection:text-white">
+      {/* Main Content */}
+      <main className="max-w-7xl mx-auto px-4 py-12 flex flex-col items-center">
+        <div className="w-full bg-card-dark rounded-3xl shadow-glow p-6 md:p-12 border border-gray-800 relative overflow-hidden">
+          {/* Decorative background elements */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-pyramid-p1 rounded-full mix-blend-screen filter blur-[100px] -z-0 opacity-10 pointer-events-none"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-pyramid-p3 rounded-full mix-blend-screen filter blur-[100px] -z-0 opacity-10 pointer-events-none"></div>
+
+          <PyramidChart data={data} onUpdate={handleUpdate} />
+        </div>
+      </main>
     </div>
   );
 };

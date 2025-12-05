@@ -11,7 +11,10 @@ export const VisionMission = () => {
           Our Goal
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-left">
-          A world where opportunity isn&apos;t limited by barriers or privilege, allowing the curious to gain confidence, the bold to build networks, and the determined to find direction, empowering everyone to connect, grow, and create impact.
+          We aim to build a world free of barriers and privilege, where
+          compassion and fairness open the door for everyone to rise and realize
+          their potential. By helping people grow and encouraging them to uplift
+          others, we create a community that thrives together.
         </p>
       </div>
 
@@ -25,7 +28,11 @@ export const VisionMission = () => {
           Our Purpose
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-right">
-          To build a people-powered network that breaks barriers and empowers students, professionals and changemakers to go beyond syllabus, borders and gatekeepers, turning curiosity into impact.
+          A community that rises beyond borders, syllabus limits, and
+          gatekeepers, where curiosity and generosity guide how we learn and
+          grow. Together, we create an open cycle of shared learning, mutual
+          support, and lifelong empowerment because real progress begins with
+          generosity.
         </p>
       </div>
     </section>
