@@ -11,15 +11,10 @@ export const VisionMission = () => {
           Our Goal
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-left">
-          We strive to create a world where people are not held back by barriers, 
-privilege, or circumstances. We believe opportunity should be driven by 
-compassion and fairness, not by advantage. Everyone deserves a chance to 
-rise, prove themselves, and discover what they are capable of. 
-By helping individuals grow into stronger versions of themselves and 
-encouraging them to return the favour we build a community where people 
-lift one another, share knowledge openly, and create meaningful impact 
-together. 
-
+          We aim to build a world free of barriers and privilege, where
+          compassion and fairness open the door for everyone to rise and realize
+          their potential. By helping people grow and encouraging them to uplift
+          others, we create a community that thrives together
         </p>
       </div>
 
@@ -33,16 +28,11 @@ together.
           Our Purpose
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-right">
-          We strive to create a world where people are not held back by barriers, 
-          privilege, or circumstances. We believe opportunity should be driven by 
-          compassion and fairness, not by advantage. Everyone deserves a chance to 
-          rise, prove themselves, and discover what they are capable of. 
-
-          By helping individuals grow into stronger versions of themselves and 
-          encouraging them to return the favour we build a community where people 
-          lift one another, share knowledge openly, and create meaningful impact 
-          together. 
-
+          A community that rises beyond borders, syllabus limits, and
+          gatekeepers, where curiosity and generosity guide how we learn and
+          grow. Together, we create an open cycle of shared learning, mutual
+          support, and lifelong empowerment because real progress begins with
+          generosity.
         </p>
       </div>
     </section>

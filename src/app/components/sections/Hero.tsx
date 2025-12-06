@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 export function Hero() {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -10,7 +11,7 @@ export function Hero() {
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
       {/* Placeholder Image (visible until video loads) */}
       {!videoLoaded && (
-        <img
+        <Image
           src="/images/hero.webp"
           alt="Hero fallback"
           className="absolute inset-0 w-full h-full object-cover"
