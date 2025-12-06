@@ -40,8 +40,8 @@ const PyramidChart: React.FC<PyramidChartProps> = ({ data, onUpdate }) => {
   const renderSplitText = (
     text: string,
     x: number,
-    y: number,
-    fontSize: number
+    _y: number,
+    _fontSize: number
   ) => {
     const words = text.split(" ");
     return words.map((word, i) => (

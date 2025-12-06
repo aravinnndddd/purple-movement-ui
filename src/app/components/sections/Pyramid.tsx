@@ -39,9 +39,6 @@ grow, and create their own way forward. `,
 
 const Pyramid: React.FC = () => {
   const [data, setData] = useState<LevelData[]>(DEFAULT_DATA);
-  const [topic, setTopic] = useState<string>("");
-  const [isGenerating, setIsGenerating] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
 
   const handleUpdate = (
     id: number,
