@@ -1,15 +1,32 @@
-import Link from 'next/link'
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
 
 export function Hero() {
+  const [videoLoaded, setVideoLoaded] = useState(false);
+
   return (
     <section className="relative h-screen flex items-center justify-center overflow-hidden">
+      {/* Placeholder Image (visible until video loads) */}
+      {!videoLoaded && (
+        <img
+          src="/images/hero.webp"
+          alt="Hero fallback"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      )}
+
       {/* Background video */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover"
+        onLoadedData={() => setVideoLoaded(true)}
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+          videoLoaded ? "opacity-100" : "opacity-0"
+        }`}
       >
         <source src="/videos/hero-bg.mp4" type="video/mp4" />
       </video>
@@ -27,20 +44,19 @@ export function Hero() {
             </h1>
 
             {/* Heading 2 */}
-            <h2 className="bg-gradient-to-t from-[#8E00FF] to-[#D8B0FA] bg-clip-text text-transparent 
-              text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase font-montserrat">
+            <h2
+              className="bg-gradient-to-t from-[#8E00FF] to-[#D8B0FA] bg-clip-text text-transparent 
+              text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold uppercase font-montserrat"
+            >
               Purple Movement
             </h2>
 
             {/* Subtext */}
             <p className="text-white/75 text-base sm:text-lg md:text-xl font-thin font-poppins capitalize px-2">
-             Where purposeful people gather to explore, tackle issues, and create 
-meaningful change. 
-A community without barriers, where your skills matter and open new 
-possibilities. 
-Sounds like you? 
+              Where purposeful people gather to explore, tackle issues, and
+              create meaningful change. A community without barriers, where your
+              skills matter and open new possibilities. Sounds like you?
             </p>
-            
 
             {/* CTA Button */}
             <Link
@@ -55,5 +71,5 @@ Sounds like you?
         </main>
       </div>
     </section>
-  )
+  );
 }
