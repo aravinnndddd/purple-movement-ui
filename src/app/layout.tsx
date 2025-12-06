@@ -26,8 +26,8 @@ const poppins = Poppins({
 })
 
 export const metadata: Metadata = {
-  title: 'Purple Movement - Rebuilding How India Learns',
-  description: 'We are building more than a movement — we are uniting dreamers, doers, and changemakers to shape a borderless future.',
+  title: 'Purple Movement | Uniting Purposeful People Worldwide',
+  description: 'The Purple Movement is a global force of purposeful people, changemakers, and visionaries, coming together to create a borderless future full of impact and possibility.',
 }
 
 export default function RootLayout({

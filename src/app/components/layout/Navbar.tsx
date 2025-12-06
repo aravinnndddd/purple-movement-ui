@@ -71,7 +71,14 @@ export const Navbar = () => {
     const element = document.getElementById(targetId);
 
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const navbarHeight = 80; // Approximate navbar height (10vh)
+      const elementPosition = element.getBoundingClientRect().top + window.scrollY;
+      const offsetPosition = elementPosition - navbarHeight;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 
@@ -98,7 +105,7 @@ export const Navbar = () => {
       className={`w-full fixed top-0 z-50 transition-all duration-300 ${
         isScrolled
           ? 'backdrop-blur-lg bg-black/30 border-b border-white/10 shadow-lg'
-          : 'bg-transparent'
+          : 'bg-transparent border-b border-transparent'
       }`}
     >
       <div className="mx-auto flex items-center justify-between px-4 sm:px-8 md:px-12 py-6 h-[10vh]">

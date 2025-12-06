@@ -11,7 +11,15 @@ export const VisionMission = () => {
           Our Goal
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-left">
-          A world where opportunity isn&apos;t limited by barriers or privilege, allowing the curious to gain confidence, the bold to build networks, and the determined to find direction, empowering everyone to connect, grow, and create impact.
+          We strive to create a world where people are not held back by barriers, 
+privilege, or circumstances. We believe opportunity should be driven by 
+compassion and fairness, not by advantage. Everyone deserves a chance to 
+rise, prove themselves, and discover what they are capable of. 
+By helping individuals grow into stronger versions of themselves and 
+encouraging them to return the favour we build a community where people 
+lift one another, share knowledge openly, and create meaningful impact 
+together. 
+
         </p>
       </div>
 
@@ -25,7 +33,16 @@ export const VisionMission = () => {
           Our Purpose
         </h2>
         <p className="mt-4 text-white/75 text-sm sm:text-base md:text-lg leading-relaxed font-poppins text-justify md:text-right">
-          To build a people-powered network that breaks barriers and empowers students, professionals and changemakers to go beyond syllabus, borders and gatekeepers, turning curiosity into impact.
+          We strive to create a world where people are not held back by barriers, 
+          privilege, or circumstances. We believe opportunity should be driven by 
+          compassion and fairness, not by advantage. Everyone deserves a chance to 
+          rise, prove themselves, and discover what they are capable of. 
+
+          By helping individuals grow into stronger versions of themselves and 
+          encouraging them to return the favour we build a community where people 
+          lift one another, share knowledge openly, and create meaningful impact 
+          together. 
+
         </p>
       </div>
     </section>

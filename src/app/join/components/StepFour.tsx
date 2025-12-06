@@ -1,6 +1,8 @@
 'use client'
 
 import { FaWhatsapp } from "react-icons/fa6"
+import Link from "next/link"
+import { MdHome } from "react-icons/md"
 
 interface StepFourProps {
   userName?: string
@@ -17,10 +19,18 @@ export default function StepFour({ userName = "Friend", isAnonymous = false }: S
     return (
       <div className="w-full px-4 sm:px-6">
         <div className="max-w-6xl mx-auto flex justify-center">
-          <div className="w-[904px] h-96 bg-slate-900 rounded-[10px] flex items-center justify-center">
-            <div className="w-80 h-24 relative">
-              <div className="left-[19px] top-0 absolute text-center justify-start text-white text-5xl font-bold font-montserrat capitalize">Thank You!</div>
-              <div className="left-0 top-[74px] absolute text-center justify-start text-white text-xl font-normal font-poppins capitalize">We&apos;ve received your response.</div>
+          <div className="w-[904px] bg-slate-900 rounded-[10px] flex flex-col items-center justify-center py-10 gap-8">
+            <div className="w-80 space-y-6 flex flex-col items-center">
+              <div className="text-center text-white text-5xl font-bold font-montserrat capitalize">Thank You!</div>
+              <div className="text-center text-white text-xl font-normal font-poppins capitalize">We&apos;ve received your response.</div>
+              
+              {/* Go Home Button */}
+              <Link href="/" className="mt-4">
+                <div className="px-7 py-3.5 bg-purple-700 hover:bg-purple-600 rounded inline-flex justify-center items-center gap-1.5 transition-all duration-300 cursor-pointer">
+                  <div className="text-center text-white text-xl font-bold font-montserrat capitalize">Go Home</div>
+                  <MdHome className="w-5 h-5 text-white" />
+                </div>
+              </Link>
             </div>
           </div>
         </div>
@@ -39,8 +49,7 @@ export default function StepFour({ userName = "Friend", isAnonymous = false }: S
 
           {/* Subtext */}
           <p className="text-sm sm:text-base md:text-lg font-poppins text-white/80 max-w-xl mx-auto leading-relaxed">
-            We&apos;ve received your response.<br />
-            Our team will get back to you shortly.
+            We&apos;ve received your response.
           </p>
 
           <div className="text-center justify-start sm:text-base md:text-lg text-white text-xl font-semibold font-poppins capitalize">Join our WhatsApp for updates.</div>
